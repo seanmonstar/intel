@@ -1,4 +1,4 @@
-# intel
+# intel [![Build Status](https://travis-ci.org/seanmonstar/intel.png?branch=master)](https://travis-ci.org/seanmonstar/intel)
 
 An abbreviation of intelligence. In this case, the acquirement of information.
 

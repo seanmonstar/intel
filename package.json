@@ -9,8 +9,10 @@
     "q": "0.9.7"
   },
   "devDependencies": {
+    "coveralls": "2.3.0",
     "jshint": "2.1.2",
     "mocha": "1.12.1",
+    "mocha-lcov-reporter": "0.0.1",
     "walk": "2.2.1"
   },
   "readmeFilename": "README.md",
