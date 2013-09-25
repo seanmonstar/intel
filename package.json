@@ -1,0 +1,38 @@
+{
+  "name": "intel",
+  "version": "0.0.0",
+  "dependencies": {
+    "chalk": "0.2.1",
+    "datetime": "0.0.3",
+    "printf": "0.1.2",
+    "stack-trace": "0.0.7",
+    "q": "0.9.7"
+  },
+  "devDependencies": {
+    "jshint": "2.1.2",
+    "mocha": "1.12.1",
+    "walk": "2.2.1"
+  },
+  "readmeFilename": "README.md",
+  "description": "I need more intel.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "mocha --check-leaks --ui exports"
+  },
+  "bugs": "https://github.com/seanmonstar/intel/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seanmonstar/intel.git"
+  },
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "keywords": [
+    "log",
+    "logging",
+    "logger",
+    "console"
+  ],
+  "author": "Sean McArthur <sean.monstar@gmail.com>",
+  "license": "MPLv2.0"
+}
