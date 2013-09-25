@@ -5,7 +5,6 @@ test:
 
 test-coveralls:
 	$(MAKE) test
-	$(MAKE) test REPORTER=mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js --verbose
-	rm -rf lib-cov
+	$(MAKE) test REPORTER=mocha-lcov-reporter --require blanket | ./node_modules/coveralls/bin/coveralls.js --verbose
 
 .PHONY: test

@@ -9,6 +9,7 @@
     "q": "0.9.7"
   },
   "devDependencies": {
+    "blanket": "1.1.5",
     "coveralls": "2.3.0",
     "jshint": "2.1.2",
     "mocha": "1.12.1",
@@ -19,7 +20,11 @@
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha --check-leaks --ui exports"
+    "test": "mocha --check-leaks --ui exports",
+    "blanket": {
+      "pattern": "lib",
+      "data-cover-never": "node_modules"
+    }
   },
   "bugs": "https://github.com/seanmonstar/intel/issues",
   "repository": {
