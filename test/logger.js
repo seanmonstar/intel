@@ -26,6 +26,24 @@ function spy(cb) {
   return fn;
 }
 
+function aliasLog(alias, shouldCall) {
+  return function() {
+    var n = unique();
+    var a = new Logger(n);
+    a.propagte = false;
+    
+    var args;
+    a[shouldCall] = function() {
+      args = [].slice.call(arguments);
+    };
+
+    a[alias]('foo', 'bar');
+
+    assert.equal(args[0], 'foo');
+    assert.equal(args[1], 'bar');
+  };
+}
+
 module.exports = {
   'Logger': {
     'constructor': {
@@ -115,8 +133,12 @@ module.exports = {
             assert.equal(reason.message, 'foo');
           }).done(done);
         }
-      }
-    }
+      },
+      'warning should alias warn': aliasLog('warning', 'warn'),
+      'o_O should alias warn': aliasLog('o_O', 'warn'),
+      'O_O should alias error': aliasLog('O_O', 'error')
+    },
+
   }
 };
 
