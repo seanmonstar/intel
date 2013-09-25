@@ -4,8 +4,8 @@ test:
 	@NODE_ENV=test ./node_modules/.bin/mocha -b --check-leaks --ui exports --reporter $(REPORTER)
 
 test-coveralls:
-	$(MAKE) test REPORTER=spec
-	$(MAKE) test REPORTER=mocha-lcov-reporter | ./node_modules/bin/coveralls.js --verbose
+	$(MAKE) test
+	$(MAKE) test REPORTER=mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js --verbose
 	rm -rf lib-cov
 
 .PHONY: test
