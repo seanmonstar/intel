@@ -3,9 +3,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const assert = require('assert');
+const os = require('os');
+const path = require('path');
 const util = require('util');
 
 const intel = require('../');
+
+const NOW = Date.now();
+var counter = 1;
+function tmp() {
+  return path.join(os.tmpDir(),
+      'intel-' + NOW + '-' + process.pid + '-' + (counter++));
+}
 
 function spy() {
   var args = [];
@@ -27,11 +36,52 @@ SpyHandler.prototype.emit = function spyEmit(record, callback) {
   callback();
 };
 
-
+var oldBasic;
+var oldLevel;
 module.exports = {
   'basicConfig': {
-    'root logger calls basicConfig': function() {
-      
+    'before': function() {
+      oldBasic = intel.basicConfig;
+      oldLevel = intel._level;
+    },
+    'root logger calls basicConfig': function(done) {
+      var val;
+      var stream = {
+        write: function(out, cb) {
+          val = out;
+          cb();
+        }
+      };
+
+      intel.basicConfig = function() {
+        oldBasic({ stream: stream });
+      };
+
+      intel.info('danger').then(function() {
+        assert.equal(val, 'root.INFO: danger\n');
+        assert.equal(intel._level, oldLevel);
+      }).done(done);
+
+    },
+
+    'works with file option': function() {
+      var name = tmp();
+      intel.basicConfig({ file: name });
+      assert.equal(intel._handlers.length, 1);
+      assert.equal(intel._handlers[0]._file, name);
+    },
+    'works with level': function() {
+      intel.basicConfig({ level: 'error' });
+      assert.equal(intel._level, intel.ERROR);
+    },
+    'works with format': function() {
+      intel.basicConfig({ format: '%(foo)s'});
+      assert.equal(intel._handlers[0]._formatter._format, '%(foo)s');
+    },
+    'afterEach': function() {
+      intel.basicConfig = oldBasic;
+      intel.setLevel(oldLevel);
+      intel._handlers = [];
     }
   },
   'config': {

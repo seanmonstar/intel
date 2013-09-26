@@ -27,7 +27,7 @@ module.exports = {
       intel.console();
     },
     'can inject into global scope': function() {
-      console.log('test');
+      console.warn('test');
       
       assert(spy._lastRecord);
       assert.equal(spy._lastRecord.message, 'test');
