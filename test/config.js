@@ -29,6 +29,11 @@ SpyHandler.prototype.emit = function spyEmit(record, callback) {
 
 
 module.exports = {
+  'basicConfig': {
+    'root logger calls basicConfig': function() {
+      
+    }
+  },
   'config': {
     'should be able to configure logging': function(done) {
       intel.config({
