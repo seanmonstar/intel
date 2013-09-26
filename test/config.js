@@ -63,7 +63,14 @@ module.exports = {
       }).done(done);
 
     },
+    'only works once': function() {
+      intel.basicConfig();
+      assert.equal(intel._level, oldLevel);
 
+      intel.basicConfig({ level: 'critical' });
+      assert.equal(intel._handlers.length, 1);
+      assert.equal(intel._level, oldLevel);
+    },
     'works with file option': function() {
       var name = tmp();
       intel.basicConfig({ file: name });

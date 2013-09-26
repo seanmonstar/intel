@@ -37,6 +37,28 @@ module.exports = {
         var h = new intel.Handler(intel.WARN);
         assert.equal(h.level, intel.WARN);
       }
+    },
+    'handle': {
+      'requires emit to accept a callback argument': function() {
+        var h = new intel.Handler();
+        h.emit = function(){};
+
+        assert.throws(h.handle.bind(h), function(err) {
+          return err.message === 'Handler.emit requires a callback argument';
+        });
+
+        h = new intel.Handler();
+        h.emit = function(record, callback){
+          record = callback;
+        };
+        assert.doesNotThrow(h.handle.bind(h));
+      }
+    },
+    'emit': {
+      'must be overriden by subclasses': function() {
+        var h = new intel.Handler();
+        assert.throws(h.emit);
+      }
     }
   },
   'Stream': {

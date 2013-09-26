@@ -55,6 +55,14 @@ module.exports = {
         assert.equal(a, a2);
       }
     },
+    'removeHandler': function() {
+      var n = unique();
+      var a = new Logger(n);
+      a.addHandler(new intel.handlers.Null());
+      assert.equal(a._handlers.length, 1);
+      a.removeHandler(a._handlers[0]);
+      assert.equal(a._handlers.length, 0);
+    },
     'getEffectiveLevel': {
       'should have an effective level': function() {
         var n = unique();

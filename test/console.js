@@ -28,7 +28,6 @@ module.exports = {
     },
     'can inject into global scope': function() {
       console.warn('test');
-      
       assert(spy._lastRecord);
       assert.equal(spy._lastRecord.message, 'test');
     },
@@ -38,6 +37,11 @@ module.exports = {
 
       consoleLib('bar');
       assert.equal(spy._lastRecord.name, 'test.lib.console');
+    },
+    'overrides console.dir()': function() {
+      var obj = { foo: 'bar' };
+      console.dir(obj);
+      assert.equal(spy._lastRecord.message, "{ foo: 'bar' }");
     },
     'after': function() {
       intel.console.restore();
