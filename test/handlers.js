@@ -148,6 +148,47 @@ module.exports = {
       }
     }
   },
+  'Console': {
+    'constructor': {
+      'should use stdout and stderr': function() {
+        var h = new intel.handlers.Console();
+        assert.equal(h._out._stream, process.stdout);
+        assert.equal(h._err._stream, process.stderr);
+      }
+    },
+    'handle': {
+      'should send low priority messages to stdout': function(done) {
+        var h = new intel.handlers.Console();
+        var val;
+        h._out._stream = {
+          write: function(out, callback) {
+            val = out;
+            callback();
+            return true;
+          }
+        };
+
+        h.handle({ level: intel.INFO, message: 'oscar mike' }).then(function() {
+          assert.equal(val, 'oscar mike\n');
+        }).done(done);
+      },
+      'should send warn and higher messages to stderr': function(done) {
+        var h = new intel.handlers.Console();
+        var val;
+        h._err._stream = {
+          write: function(out, callback) {
+            val = out;
+            callback();
+            return true;
+          }
+        };
+
+        h.handle({ level: intel.WARN, message: 'mayday' }).then(function() {
+          assert.equal(val, 'mayday\n');
+        }).done(done);
+      }
+    }
+  },
   'RotatingFileHandler': {
     'handle': {
       /*skip
