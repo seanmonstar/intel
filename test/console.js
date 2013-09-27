@@ -6,7 +6,7 @@ const assert = require('assert');
 const util = require('util');
 
 const intel = require('../');
-const consoleLib = require('./lib/console');
+const consoleUtil = require('./util/console');
 
 var spy = new intel.handlers.Null();
 spy.handle = function(record) {
@@ -35,8 +35,8 @@ module.exports = {
       console.log('foo');
       assert.equal(spy._lastRecord.name, 'test.console');
 
-      consoleLib('bar');
-      assert.equal(spy._lastRecord.name, 'test.lib.console');
+      consoleUtil('bar');
+      assert.equal(spy._lastRecord.name, 'test.util.console');
     },
     'overrides console.dir()': function() {
       var obj = { foo: 'bar' };

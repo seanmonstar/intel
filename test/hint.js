@@ -8,6 +8,7 @@ const path = require('path');
 const util = require('util');
 
 const jshint = require('jshint').JSHINT;
+const Q = require('q');
 const walk = require('walk');
 
 // read jshintrc
@@ -42,34 +43,29 @@ module.exports = {
     },
 
     'should yield no errors': function(done) {
+      this.slow(500); // can be slow reading all the files :(
       var errors = [];
 
-      function checkNext() {
-        if (!filesToLint.length) {
-          if (errors.length) {
-            var buf = util.format("\n        %d errors:\n        * ",
-                                  errors.length);
-            buf += errors.join("\n        * ");
-            done(buf);
-          } else {
-            done(null);
-          }
-          return;
-        }
-        var f = filesToLint.shift();
-        fs.readFile(f.toString(), function(err, data) {
-          // now
-          f = path.relative(process.cwd(), f);
-          if (!jshint(data.toString(), jshintrc)) {
+      Q.all(filesToLint.map(function(fileName) {
+        return Q.nfcall(fs.readFile, String(fileName)).then(function(data) {
+          var f = path.relative(process.cwd(), fileName);
+          if (!jshint(String(data), jshintrc)) {
             jshint.errors.forEach(function(e) {
               errors.push(
                 util.format("%s %s:%d - %s", e.id, f, e.line, e.reason));
             });
           }
-          checkNext();
         });
-      }
-      checkNext();
+      })).done(function() {
+        if (errors.length) {
+          var buf = util.format("\n        %d errors:\n        * ",
+                                errors.length);
+          buf += errors.join("\n        * ");
+          done(buf);
+        } else {
+          done(null);
+        }
+      });
     }
 
   }

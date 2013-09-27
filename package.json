@@ -1,6 +1,6 @@
 {
   "name": "intel",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "chalk": "0.2.1",
     "datetime": "0.0.3",
@@ -11,8 +11,8 @@
   "devDependencies": {
     "blanket": "1.1.5",
     "coveralls": "2.3.0",
-    "jshint": "2.1.2",
-    "mocha": "1.12.1",
+    "jshint": "2.1.11",
+    "mocha": "1.13.0",
     "mocha-lcov-reporter": "0.0.1",
     "walk": "2.2.1"
   },
@@ -20,7 +20,7 @@
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha --check-leaks --ui exports",
+    "test": "mocha --check-leaks --ui exports -R spec",
     "blanket": {
       "pattern": "lib",
       "data-cover-never": "node_modules"
