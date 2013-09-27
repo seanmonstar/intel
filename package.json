@@ -1,6 +1,6 @@
 {
   "name": "intel",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "dependencies": {
     "chalk": "0.2.1",
     "datetime": "0.0.3",
@@ -20,7 +20,7 @@
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha --check-leaks --ui exports -R spec",
+    "test": "mocha --check-leaks --ui exports",
     "blanket": {
       "pattern": "lib",
       "data-cover-never": "node_modules"
