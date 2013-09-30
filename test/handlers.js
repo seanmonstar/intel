@@ -52,6 +52,23 @@ module.exports = {
           record = callback;
         };
         assert.doesNotThrow(h.handle.bind(h));
+      },
+      'should use filters on record': function(done) {
+        var h = new intel.Handler();
+        var lastRecord;
+        h.emit = function(record, callback){
+          lastRecord = record;
+          callback();
+        };
+
+        h.addFilter(new intel.Filter('foo'));
+        h.handle({ name: 'foo' }).then(function() {
+          assert.equal(lastRecord.name, 'foo');
+
+          return h.handle({ name: 'foobar' });
+        }).then(function() {
+          assert.notEqual(lastRecord.name, 'foobar');
+        }).done(done);
       }
     },
     'emit': {

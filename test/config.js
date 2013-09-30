@@ -102,10 +102,14 @@ module.exports = {
             'format': 'foo! %(levelname)s: %(message)s'
           }
         },
+        filters: {
+          'user': /\buser\b/g
+        },
         handlers: {
           'null': {
             'class': SpyHandler,
-            'formatter': 'foo'
+            'formatter': 'foo',
+            'filters': ['user']
           }
         },
         loggers: {
@@ -126,13 +130,17 @@ module.exports = {
       var msg = handler.format({ message: 'hi', levelname: 'BAR'});
       assert.equal(msg, 'foo! BAR: hi');
 
-      log.debug('asdf').then(function() {
+      log.debug('user').then(function() {
         assert.equal(handler.spy.getCallCount(), 0);
 
-        return log.info('qwer');
+        return log.info('user foo');
       }).then(function() {
         assert.equal(handler.spy.getCallCount(), 1);
-        assert.equal(handler.spy.getLastArgs()[0].message, 'qwer');
+        assert.equal(handler.spy.getLastArgs()[0].message, 'user foo');
+
+        return log.info('ignore me');
+      }).then(function() {
+        assert.equal(handler.spy.getCallCount(), 1);
       }).done(done);
     }
   }

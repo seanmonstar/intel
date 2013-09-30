@@ -32,6 +32,7 @@ Really? Another logger? Well, yes. But here's why:
   - [FileHandler](#filehandler)
   - [NullHandler](#nullhandler)
   - [Creating a Custom Handler](#creating-a-custom-handler)
+- [Filters](#filters)
 - [Formatters](#formatters)
   - [LogRecord Formatting](#logrecord)
 - [config](#config)
@@ -193,6 +194,22 @@ CustomHandler.prototype.emit = function customEmit(record, callback) {
 }
 ```
 
+## Filters
+
+You can already plug together handlers and loggers, with varying levels, to get powerful filtering of messages. However, sometimes you really need to filter on a specific detail on a message. You can add these filters to a [Handler](#handlers) or [Logger](#logging).
+
+```js
+intel.addFilter(new intel.Filter(/^foo/g));
+intel.addFilter(new intel.Filter('patrol.db'));
+intel.addFilter(new intel.Filter(filterFunction));
+```
+
+Filters come in 3 forms:
+
+- **string** - pass a string to filter based on Logger name. So, `Filter('foo.bar')` will allow messages from `foo.bar`, `foo.bar.baz`, but not `foo.barstool`.
+- **regexp** - pass a RegExp to filter based on the text content of the log message. So, `Filter(/^foo/g)` will allow messages like `log.info('foo bar')` but not `log.info('bar baz foo')`;
+- **function** - pass a function that receives a [LogRecord](#logrecord) object, and returns true if the record meets the filter.
+
 ## Formatters
 
 ```js
@@ -262,7 +279,10 @@ intel.config({
     'details': {
       'format': '[%(date)s] %(name)s.%(levelname)s: %(message)s'
     }
-  }
+  },
+  filters: {
+    'db': 'patrol.db'
+  },
   handlers: {
     'terminal': {
       'class': intel.handlers.Console,
@@ -273,7 +293,8 @@ intel.config({
       'class': intel.handlers.File,
       'level': intel.WARN,
       'file': '/var/log/report.log',
-      'formatter': 'details'
+      'formatter': 'details',
+      'filters': ['db']
     }
   },
   loggers: {

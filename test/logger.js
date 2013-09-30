@@ -76,6 +76,22 @@ module.exports = {
       }
     },
     'log': {
+      'should filter messages': function() {
+        var n = unique();
+        var a = new Logger(n);
+        a.propagate = false;
+
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+
+        a.addFilter(new intel.Filter(/^foo/g));
+
+        a.debug('bar');
+        assert.equal(spyA.getCallCount(), 0);
+
+        a.info('foobar');
+        assert.equal(spyA.getCallCount(), 1);
+      },
       'should propagate': function() {
         // C should propagate to B, but B should not propagate to A,
         // since we set propagate to false.
