@@ -69,6 +69,19 @@ module.exports = {
         }).then(function() {
           assert.notEqual(lastRecord.name, 'foobar');
         }).done(done);
+      },
+      'should timeout if taking too long': function(done) {
+        var h = new intel.Handler({ timeout: 10 });
+        h.emit = function(record, callback) {
+          record = callback;
+          // never call callback, so it should timeout
+        };
+
+        h.handle({ message: 'foo' }).then(function() {
+          assert(false); // shouldn't be called
+        }, function(reason) {
+          assert(reason);
+        }).done(done);
       }
     },
     'emit': {

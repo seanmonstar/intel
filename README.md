@@ -115,12 +115,13 @@ require('intel').warn('report in').then(rogerThat);
 
 Loggers build a message and try to pass the message to all of it's handlers and to it's parent. Handlers determine exactly what to do with that message, whether it's sending it to console, to a file, over a socket, or nothing at all.
 
-All Handlers have a `level` and a [`Formatter`](#formatters).
+All Handlers have a `level`, `timeout`, and a [`Formatter`](#formatters). The `timeout` will cause the promise returned by `log` to be rejects if the handler doesn't complete within the time frame.
 
 ```js
 new intel.Handler({
   level: intel.WARN, // default is NOTSET
-  formatter: new intel.Formatter() // default formatter
+  formatter: new intel.Formatter(), // default formatter
+  timeout: 5000 // default is 5seconds
 });
 ```
 
