@@ -24,8 +24,8 @@ winston.add(winston.transports.File, { stream: stdout });
 winston.remove(winston.transports.Console);
 
 module.exports = {
-  'logging': {
-    bench: {
+  'logging.info()': {
+    'bench': {
       'console.info': function() {
         _console.info('asdf');
       },
