@@ -12,15 +12,18 @@
     "blanket": "1.1.5",
     "coveralls": "2.3.0",
     "jshint": "2.1.11",
+    "matcha": "0.3.0",
     "mocha": "1.13.0",
     "mocha-lcov-reporter": "0.0.1",
-    "walk": "2.2.1"
+    "walk": "2.2.1",
+    "winston": "0.7.2"
   },
   "readmeFilename": "README.md",
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
     "test": "mocha --check-leaks --ui exports",
+    "matcha": "matcha -I exports",
     "blanket": {
       "pattern": "lib",
       "data-cover-never": "node_modules"
