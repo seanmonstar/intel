@@ -4,7 +4,6 @@
   "dependencies": {
     "chalk": "0.2.1",
     "datetime": "0.0.3",
-    "printf": "0.1.2",
     "stack-trace": "0.0.7",
     "q": "0.9.7"
   },
