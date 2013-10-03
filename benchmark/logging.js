@@ -30,7 +30,7 @@ module.exports = {
         _console.info('asdf');
       },
       'intel.info': function() {
-        intel.info('asdf');
+        intel.log(intel.INFO, 'asdf');
       },
       'winston.info': function() {
         winston.info('asdf');

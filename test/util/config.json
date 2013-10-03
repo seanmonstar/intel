@@ -1,0 +1,21 @@
+{
+  "formatters": {
+    "basic": "basic: %(message)s"
+  },
+  "filters": {},
+  "handlers": {
+    "empty": {
+      "class": "intel/handlers/null"
+    },
+    "spy": {
+      "class": "./test/util/spyhandler"
+    }
+  },
+  "loggers": {
+    "test.config.json": {
+      "level": "INFO",
+      "propagate": false,
+      "handlers": ["empty", "spy"]
+    }
+  }
+}

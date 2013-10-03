@@ -122,7 +122,6 @@ module.exports = {
       });
 
       var log = intel.getLogger('qqq.zzz');
-      //TODO: not touch _private property
       var handler = log._handlers[0];
       assert.equal(log._handlers.length, 1);
       assert(!log.propagate);
@@ -142,6 +141,12 @@ module.exports = {
       }).then(function() {
         assert.equal(handler.spy.getCallCount(), 1);
       }).done(done);
+    },
+    'should be able to config with just JSON': function() {
+      intel.config(require('./util/config.json'));
+
+      var log = intel.getLogger('test.config.json');
+      assert.equal(log._handlers.length, 2);
     }
   }
 };
