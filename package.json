@@ -29,6 +29,7 @@
     }
   },
   "bugs": "https://github.com/seanmonstar/intel/issues",
+  "homepage": "http://seanmonstar.github.io/intel",
   "repository": {
     "type": "git",
     "url": "https://github.com/seanmonstar/intel.git"
@@ -42,6 +43,6 @@
     "logger",
     "console"
   ],
-  "author": "Sean McArthur <sean.monstar@gmail.com>",
+  "author": "Sean McArthur <sean.monstar@gmail.com> (http://seanmonstar.com)",
   "license": "MPLv2.0"
 }
