@@ -115,7 +115,7 @@ require('intel').warn('report in').then(rogerThat);
 
 Loggers build a message and try to pass the message to all of it's handlers and to it's parent. Handlers determine exactly what to do with that message, whether it's sending it to console, to a file, over a socket, or nothing at all.
 
-All Handlers have a `level`, `timeout`, and a [`Formatter`](#formatters). The `timeout` will cause the promise returned by `log` to be rejects if the handler doesn't complete within the time frame.
+All Handlers have a `level`, `timeout`, and a [`Formatter`](#formatters). The `timeout` will cause the promise returned by `log` to be rejected if the handler doesn't complete within the time frame.
 
 ```js
 new intel.Handler({
@@ -317,6 +317,24 @@ intel.config({
 ```
 
 We set up 2 handlers, one [Console](#consolehandler) with a level of `VERBOSE` and a simple format, and one [File](#filehandler) with a level of `WARN` and a detailed format. We then set up a few options on loggers. Not all loggers need to be defined here, as child loggers will inherit from their parents. So, the root logger that we'll use in this application is `patrol`. It will send all messages that are `INFO` and greater to the the terminal. We also specifically want database errors to be logged to the our log file. And, there's a logger for express? What's that all about? See the [intel.console](#console) section.
+
+Config also accepts JSON, simply put a require path in any `class` properties.
+
+```js
+// logging.json
+{
+  "handlers": {
+    "foo": {
+      "class": "intel/handlers/console"
+    }
+  }
+  // ...
+}
+```
+
+```js
+intel.config(require('./logging.json'));
+```
 
 ## console
 
