@@ -172,8 +172,6 @@ module.exports = {
             assert.equal(contents.toString(), 'recon\n');
             done();
           });
-        }).finally(function() {
-          handler.close();
         }).done();
       }
     }
