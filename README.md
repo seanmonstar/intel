@@ -348,6 +348,11 @@ Intel has the ability to override the global `console`, such that calling any of
 
 It tries its darndest to best guess a name, by comparing the relative paths from the `root` and the module accessing `console`. By default, the `root` is equal to the `dirname` of the module where you call `intel.console()`.
 
+Options:
+
+- **root** - String to define root logger, defaults to calling module's filename
+- **ignore** - Array of strings of log names that should be ignored and use standard `console` methods. Ex: `['intel.node_modules.mocha']`
+
 ```js
 // file: patrol/index.js
 require('intel').console(); // root is '/path/to/patrol'

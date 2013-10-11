@@ -15,6 +15,10 @@ spy.handle = function(record) {
 };
 
 var prevLog;
+var lastMock;
+function mockLog() {
+  lastMock = arguments;
+}
 
 module.exports = {
 
@@ -22,6 +26,7 @@ module.exports = {
     'before': function() {
       intel.addHandler(spy);
       prevLog = console.log;
+      console.log = mockLog;
       // not passing root means this file becomes root.
       // which means dirname.basename, or test.console
       intel.console();
@@ -38,6 +43,18 @@ module.exports = {
       consoleUtil('bar');
       assert.equal(spy._lastRecord.name, 'test.util.console');
     },
+    'can ignore paths': function() {
+      intel.console({ ignore: ['test.util'] });
+
+      console.log('quux');
+      assert.equal(spy._lastRecord.message, 'quux');
+
+      consoleUtil('baz');
+      assert.notEqual(spy._lastRecord.message, 'baz');
+      assert.equal(lastMock[0], 'baz');
+
+      intel.console();
+    },
     'overrides console.dir()': function() {
       var obj = { foo: 'bar' };
       console.dir(obj);
@@ -45,7 +62,8 @@ module.exports = {
     },
     'after': function() {
       intel.console.restore();
-      assert.equal(console.log, prevLog);
+      assert.equal(console.log, mockLog);
+      console.log = prevLog;
       intel._handlers = [];
     }
   }

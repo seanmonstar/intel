@@ -1,5 +1,9 @@
 # intel ChangeLog
 
+## v0.3.0-dev - Current master
+
+- added ignore options to intel.console()
+
 ## v0.2.0 - 2013-10-04
 
 - added Filters for Handlers and Loggers
