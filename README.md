@@ -30,6 +30,7 @@ Really? Another logger? Well, yes. But here's why:
   - [ConsoleHandler](#consolehandler)
   - [StreamHandler](#streamhandler)
   - [FileHandler](#filehandler)
+  - [RotatingFileHandler](#rotatingfilehandler)
   - [NullHandler](#nullhandler)
   - [Creating a Custom Handler](#creating-a-custom-handler)
 - [Filters](#filters)
@@ -160,6 +161,19 @@ The File handler will write messages to a file on disk. It extends the [Stream](
 - Plus options from [Handler](#handlers)
 
 As a shortcut, you can pass the `file` String directly to the constructor, and all other options will just use default values.
+
+### RotatingFileHandler
+
+```js
+new intel.handlers.Rotating(options);
+```
+
+The Rotating handler extends the [File](#filehandler) handler, making sure log files don't go over a specified size.
+
+- **maxSize** - A number of bytes to restrict the size of log files.
+- **maxFiles** - A number of log files to create after the size restriction is met.
+
+As files reach the max size, the files will get moved to a the same name, with a number attached to the end. So, `intel.log` will become `intel.log.1`, and `intel.log.1` would move to `intel.log.2`, up to the maxFiles number.
 
 ### NullHandler
 

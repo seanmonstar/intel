@@ -8,6 +8,8 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
+const Q = require('q');
+
 const intel = require('../');
 
 const NOW = Date.now();
@@ -17,14 +19,14 @@ function tmp() {
       'intel-' + NOW + '-' + process.pid + '-' + (counter++));
 }
 
-/*
+
 function bytes(x) {
   var b = new Buffer(x);
   b[0] = '<'.charCodeAt(0);
   b[b.length - 1] = '>'.charCodeAt(0);
   b.fill('a', 1, b.length - 1);
   return b.toString();
-}*/
+}
 
 module.exports = {
   'Handler': {
@@ -219,21 +221,40 @@ module.exports = {
   },
   'RotatingFileHandler': {
     'handle': {
-      /*skip
       'with maxSize should create new files': function(done) {
         var filename = tmp();
         var handler = new intel.handlers.Rotating({
           file: filename,
-          maxSize: 512
+          maxSize: 64
         });
 
         assert.equal(handler._file, filename);
-        handler.handle({ message: bytes(500) }).then(function() {
-          return handler.handle({ message: bytes(50) });
-        }).then(function() {
-          assert.equal(handler._file, filename);
+        handler.handle({ message: bytes(60) });
+        handler.handle({ message: bytes(50) });
+        handler.handle({ message: bytes(45) }).then(function() {
+          assert.equal(fs.statSync(filename).size, 46);
+          assert.equal(fs.statSync(filename + '.1').size, 51);
+          assert.equal(fs.statSync(filename + '.2').size, 61);
         }).done(done);
-      }*/
+      },
+      'with maxFiles should not create more than max': function(done) {
+        var filename = tmp();
+        var handler = new intel.handlers.Rotating({
+          file: filename,
+          maxSize: 64,
+          maxFiles: 3
+        });
+
+        handler.handle({ message: bytes(50) });
+        handler.handle({ message: bytes(55) });
+        handler.handle({ message: bytes(60) });
+        handler.handle({ message: bytes(45) }).then(function() {
+          assert.equal(fs.statSync(filename).size, 46);
+          assert.equal(fs.statSync(filename + '.1').size, 61);
+          assert.equal(fs.statSync(filename + '.2').size, 56);
+          assert(!fs.existsSync(filename + '.3'));
+        }).done(done);
+      }
     }
   }
 };
