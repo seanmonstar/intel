@@ -16,6 +16,25 @@ module.exports = {
     },
     'should print %O': function() {
       assert.equal(printf('%O', { foo: 'bar' }), '{"foo":"bar"}');
+    },
+    'should pad if value less then padding': function() {
+      assert.equal(printf('%5s', 'abc'), '  abc');
+      assert.equal(printf('%-5s', 'abc'), 'abc  ');
+    },
+    'should not pad if value more or equal padding': function() {
+      assert.equal(printf('%3s', 'abc'), 'abc');
+      assert.equal(printf('%-3s', 'abc'), 'abc');
+    },
+    'should not truncate if value more or equal trunc value': function() {
+      assert.equal(printf('%.3s', 'abc'), 'abc');
+      assert.equal(printf('%.-3s', 'abc'), 'abc');
+    },
+    'should truncate if value less then trunc value': function() {
+      assert.equal(printf('%.2s', 'abc'), 'bc');
+      assert.equal(printf('%.-2s', 'abc'), 'ab');
+    },
+    'should first truncate and them pad': function() {
+      assert.equal(printf('%5.2s', 'abc'), '   bc');
     }
   }
 };
