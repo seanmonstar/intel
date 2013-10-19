@@ -125,7 +125,7 @@ module.exports = {
 
         var handler = new intel.handlers.Stream(stream);
         handler.handle({ message: 'foo' }).then(function() {
-          assert.equal(out, 'foo\n');
+          assert.equal(out, 'foo');
           done();
         });
       },
@@ -140,7 +140,7 @@ module.exports = {
         };
         var handler = new intel.handlers.Stream(stream);
         handler.handle({ message: 'secret' }).then(function() {
-          assert.equal(out, 'secret\n');
+          assert.equal(out, 'secret');
         }).done(done);
       }
     }
@@ -171,7 +171,7 @@ module.exports = {
         handler.handle({ message: 'recon' }).then(function() {
           fs.readFile(filename, function(err, contents) {
             assert.ifError(err);
-            assert.equal(contents.toString(), 'recon\n');
+            assert.equal(contents.toString(), 'recon');
             done();
           });
         }).done();
@@ -199,7 +199,7 @@ module.exports = {
         };
 
         h.handle({ level: intel.INFO, message: 'oscar mike' }).then(function() {
-          assert.equal(val, 'oscar mike\n');
+          assert.equal(val, 'oscar mike');
         }).done(done);
       },
       'should send warn and higher messages to stderr': function(done) {
@@ -214,7 +214,7 @@ module.exports = {
         };
 
         h.handle({ level: intel.WARN, message: 'mayday' }).then(function() {
-          assert.equal(val, 'mayday\n');
+          assert.equal(val, 'mayday');
         }).done(done);
       }
     }
@@ -232,9 +232,9 @@ module.exports = {
         handler.handle({ message: bytes(60) });
         handler.handle({ message: bytes(50) });
         handler.handle({ message: bytes(45) }).then(function() {
-          assert.equal(fs.statSync(filename).size, 46);
-          assert.equal(fs.statSync(filename + '.1').size, 51);
-          assert.equal(fs.statSync(filename + '.2').size, 61);
+          assert.equal(fs.statSync(filename).size, 45);
+          assert.equal(fs.statSync(filename + '.1').size, 50);
+          assert.equal(fs.statSync(filename + '.2').size, 60);
         }).done(done);
       },
       'with maxFiles should not create more than max': function(done) {
@@ -249,9 +249,9 @@ module.exports = {
         handler.handle({ message: bytes(55) });
         handler.handle({ message: bytes(60) });
         handler.handle({ message: bytes(45) }).then(function() {
-          assert.equal(fs.statSync(filename).size, 46);
-          assert.equal(fs.statSync(filename + '.1').size, 61);
-          assert.equal(fs.statSync(filename + '.2').size, 56);
+          assert.equal(fs.statSync(filename).size, 45);
+          assert.equal(fs.statSync(filename + '.1').size, 60);
+          assert.equal(fs.statSync(filename + '.2').size, 55);
           assert(!fs.existsSync(filename + '.3'));
         }).done(done);
       }
