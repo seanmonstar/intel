@@ -2,10 +2,10 @@
   "name": "intel",
   "version": "0.3.0-dev",
   "dependencies": {
+    "bluebird": "0.8.3-3",
     "chalk": "0.3.0",
     "stack-trace": "0.0.7",
-    "strftime": "0.6.2",
-    "q": "0.9.7"
+    "strftime": "0.6.2"
   },
   "devDependencies": {
     "blanket": "1.1.5",
@@ -44,5 +44,8 @@
     "console"
   ],
   "author": "Sean McArthur <sean.monstar@gmail.com> (http://seanmonstar.com)",
-  "license": "MPLv2.0"
+  "licenses" : [{
+    "type": "MPL 2.0",
+    "url": "https://mozilla.org/MPL/2.0/"
+  }]
 }

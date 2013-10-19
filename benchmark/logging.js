@@ -31,10 +31,20 @@ module.exports = {
         _console.info('asdf');
       },
       'intel.info': function() {
-        intel.log(intel.INFO, 'asdf');
+        intel.info('asdf');
       },
       'winston.info': function() {
         winston.info('asdf');
+      }
+    }
+  },
+  'async': {
+    'bench': {
+      'intel promises': function(done) {
+        intel.info('asdf').then(done);
+      },
+      'intel callback': function(done) {
+        intel.info('asdf', done);
       }
     }
   }
