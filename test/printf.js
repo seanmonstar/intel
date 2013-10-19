@@ -12,10 +12,10 @@ module.exports = {
       assert.equal(printf('%(foo)s:%(bar)s', { foo: 'a', bar: 'b' }), 'a:b');
     },
     'should print args': function() {
-      assert.equal(printf('%s,%s,%d', 'a', 2, 3), 'a,2,3');
+      assert.equal(printf('%s,%s,%d', { args: ['a', 2, 3] } ), 'a,2,3');
     },
     'should print %O': function() {
-      assert.equal(printf('%O', { foo: 'bar' }), '{"foo":"bar"}');
+      assert.equal(printf('%O', { args: [{ foo: 'bar' }] }), '{"foo":"bar"}');
     }
   }
 };
