@@ -7,6 +7,8 @@ const os = require('os');
 const path = require('path');
 const util = require('util');
 
+const EOL = os.EOL;
+
 const intel = require('../');
 
 const NOW = Date.now();
@@ -58,7 +60,7 @@ module.exports = {
       };
 
       intel.info('danger').then(function() {
-        assert.equal(val, 'root.INFO: danger\n');
+        assert.equal(val, 'root.INFO: danger' + EOL);
         assert.equal(intel._level, oldLevel);
       }).done(done);
 

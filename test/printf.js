@@ -16,6 +16,9 @@ module.exports = {
     },
     'should print %O': function() {
       assert.equal(printf('%O', { foo: 'bar' }), '{"foo":"bar"}');
+    },
+    'should print os specific line end on %(n)s': function() {
+      assert.equal(printf('%(n)s', {}), '\n');
     }
   }
 };
