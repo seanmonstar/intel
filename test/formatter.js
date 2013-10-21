@@ -31,6 +31,20 @@ module.exports = {
 
 
     'format': {
+      'should use printf': function() {
+        var formatter = new intel.Formatter('%(name)s: %(message)s');
+        assert.equal(formatter.format({ name: 'foo', message: 'bar' }),
+            'foo: bar');
+      },
+      'should be able to output record args': function() {
+        var formatter = new intel.Formatter('%(name)s: %(message)s [%(args)s]');
+        var record = {
+          name: 'foo',
+          message: 'bar',
+          args: ['baz', 3, new Error('quux')]
+        };
+        assert.equal(formatter.format(record), 'foo: bar [baz,3,Error: quux]');
+      },
       'datefmt': {
         'should format the date': function() {
           var formatter = new intel.Formatter({
@@ -53,7 +67,6 @@ module.exports = {
           assert.equal(formatter.format(record), expected);
         }
       },
-      
       'colorize': {
         'should colorize the output': function() {
           var formatter = new intel.Formatter({
