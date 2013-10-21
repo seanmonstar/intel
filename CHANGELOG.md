@@ -5,6 +5,7 @@
 - added intel.handlers.Rotating
 - added ignore options to intel.console()
 - added chalk.enabled when colorize is used
+- changed datetime to strftime, adds `%L` to output milliseconds
 
 ## v0.2.0 - 2013-10-04
 
