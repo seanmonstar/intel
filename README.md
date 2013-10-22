@@ -25,6 +25,7 @@ Really? Another logger? Well, yes. But here's why:
   - [Setting the Log Level](#setting-the-log-level)
   - [Adding a Handler](#adding-a-handler)
   - [Getting Named Loggers](#getting-a-named-logger)
+  - [Logging Exceptions](#logging-exceptions)
   - [Async Logging](#async-logging)
 - [Handlers](#handlers)
   - [ConsoleHandler](#consolehandler)
@@ -103,6 +104,27 @@ bravo.warn('enemy spotted'); // logged to alpha.log
 ```
 
 The power of logger hierarchies can seen more when using [intel.config](#config).
+
+### Logging Exceptions
+
+Any time you pass an exception (an `Error`!) to a log method, the stack
+will be included in the output. In most cases, it will be appended at
+the end of the message. If the format is `%O`, meaning JSON output, a
+stack property will be included.
+
+```js
+intel.error('ermahgawd', new Error('boom'));
+```
+
+Loggers can also handle `uncaughtException`, passing it to its handlers,
+and optionally exiting afterwards.
+
+```js
+var logger = intel.getLogger('medbay');
+logger.handleExceptions(exitOnError);
+```
+
+Pass a boolean for `exitOnError`. Default is `true` if no value is passed.
 
 ### Async logging
 
@@ -316,6 +338,8 @@ intel.config({
     'patrol': {
       'handlers': ['terminal'],
       'level': 'INFO',
+      'handleExceptions': true,
+      'exitOnError': false,
       'propagate': false
     },
     'patrol.db': {

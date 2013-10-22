@@ -3,6 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const assert = require('assert');
+const cp = require('child_process');
+const path = require('path');
 const util = require('util');
 
 const intel = require('../');
@@ -44,6 +46,14 @@ function aliasLog(alias, shouldCall) {
   };
 }
 
+function spawn(exitOnError, done) {
+  var exec = 'node ' + path.join(__dirname, 'util', 'error.js');
+  if (exitOnError) {
+    exec += ' --noexit';
+  }
+  cp.exec(exec, done);
+}
+
 module.exports = {
   'Logger': {
     'constructor': {
@@ -73,6 +83,27 @@ module.exports = {
         var b = new Logger(n2);
 
         assert.equal(b.getEffectiveLevel(), Logger.ERROR);
+      }
+    },
+    'makeRecord': {
+      'should make a record with a simple message': function() {
+        var n = unique();
+        var a = new Logger(n);
+        var record = a.makeRecord(n, intel.DEBUG, "foo", ["foo"]);
+        assert.equal(record.name, n);
+        assert.equal(record.level, intel.DEBUG);
+        assert.equal(record.levelname, 'DEBUG');
+        assert.equal(record.message, 'foo');
+        assert.equal(record.pid, process.pid);
+        assert.equal(record.args.length, 1);
+      },
+      'should make a record without a string message': function() {
+        var n = unique();
+        var a = new Logger(n);
+        var foo = { bar: 'baz' };
+        var record = a.makeRecord(n, intel.DEBUG, foo, [foo, 'quux', true]);
+
+        assert.equal(record.message, '{ bar: \'baz\' } quux true');
       }
     },
     'log': {
@@ -163,6 +194,28 @@ module.exports = {
       'O_O should alias error': aliasLog('O_O', 'error')
     },
 
+    'handleExceptions': {
+      'should catch uncaughtErrors': function(done) {
+        this.slow(300);
+
+        spawn(false, function(err, stdout, stderr) {
+          stderr = stderr.substring(0, stderr.indexOf('\n'));
+          assert.equal(stderr, 'root.ERROR: [Error: catch me if you can]');
+          assert(!stdout);
+          done();
+        });
+      },
+      'should not exit if exitOnError is false': function(done) {
+        this.slow(300);
+
+        spawn(true, function(err, stdout, stderr) {
+          stderr = stderr.substring(0, stderr.indexOf('\n'));
+          assert.equal(stderr, 'root.ERROR: [Error: catch me if you can]');
+          assert.equal(stdout, 'root.INFO: noexit\n');
+          done();
+        });
+      }
+    }
   }
 };
 

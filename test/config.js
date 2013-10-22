@@ -117,9 +117,20 @@ module.exports = {
             'level': 'INFO',
             'propagate': false,
             'handlers': ['null']
+          },
+          'qqq.ww.zzz': {
+            'level': 'INFO',
+            'propagate': false,
+            'handleExceptions': true,
+            'exitOnError': false,
+            'handlers': ['null']
           }
         }
       });
+
+      var excepts = intel.getLogger('qqq.ww.zzz');
+      assert(excepts._uncaughtException);
+      assert(!excepts._exitOnError);
 
       var log = intel.getLogger('qqq.zzz');
       var handler = log._handlers[0];

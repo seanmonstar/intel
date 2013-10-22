@@ -4,6 +4,8 @@
 
 const assert = require('assert');
 
+const stacktrace = require('stack-trace');
+
 const intel = require('../');
 
 module.exports = {
@@ -44,6 +46,33 @@ module.exports = {
           args: ['baz', 3, new Error('quux')]
         };
         assert.equal(formatter.format(record), 'foo: bar [baz,3,Error: quux]');
+      },
+      'should output as JSON with %O': function() {
+        var formatter = new intel.Formatter('%O');
+        var e = new Error('boom');
+        var trace = stacktrace.parse(e.stack);
+        trace.shift();
+        var record = {
+          name: 'foo',
+          message: 'oh noes:',
+          args: ['oh noes:', e],
+          stack: trace
+        };
+
+        assert.equal(formatter.format(record), JSON.stringify(record));
+      },
+      'should output an Error stack': function() {
+        var formatter = new intel.Formatter('%(name)s: %(message)s');
+        var e = new Error('boom');
+        var trace = e.stack.substr(e.stack.indexOf('\n'));
+        var record = {
+          name: 'foo',
+          message: 'oh noes: ',
+          args: ['oh noes:', e],
+          stack: trace
+        };
+
+        assert.equal(formatter.format(record), 'foo: oh noes: ' + trace);
       },
       'datefmt': {
         'should format the date': function() {

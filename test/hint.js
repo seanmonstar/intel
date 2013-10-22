@@ -43,7 +43,7 @@ module.exports = {
     },
 
     'should yield no errors': function(done) {
-      this.slow(500); // can be slow reading all the files :(
+      this.slow(800); // can be slow reading all the files :(
       var errors = [];
 
       Q.all(filesToLint.map(function(fileName) {
