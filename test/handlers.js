@@ -184,6 +184,11 @@ module.exports = {
         var h = new intel.handlers.Console();
         assert.equal(h._out._stream, process.stdout);
         assert.equal(h._err._stream, process.stderr);
+      },
+      'should pass options to StreamHandlers': function() {
+        var f = new intel.Formatter({ colorize: true });
+        var h = new intel.handlers.Console({ formatter: f });
+        assert(h._out._formatter._colorize);
       }
     },
     'handle': {
