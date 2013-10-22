@@ -12,4 +12,4 @@ setTimeout(function() {
 
 setTimeout(function() {
   intel.info('noexit');
-}, 25);
+}, 225);
