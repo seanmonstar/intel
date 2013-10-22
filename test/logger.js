@@ -107,6 +107,18 @@ module.exports = {
       }
     },
     'log': {
+      'should be usable without alias': function() {
+        var n = unique();
+        var a = new Logger(n);
+        a.propagate = false;
+
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+
+        a.log('info', 'foo');
+
+        assert.equal(spyA.getCallCount(), 1);
+      },
       'should filter messages': function() {
         var n = unique();
         var a = new Logger(n);
