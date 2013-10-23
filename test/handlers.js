@@ -8,8 +8,6 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const Q = require('q');
-
 const intel = require('../');
 
 const NOW = Date.now();
