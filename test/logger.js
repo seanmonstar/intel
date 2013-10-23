@@ -48,7 +48,7 @@ function aliasLog(alias, shouldCall) {
 
 function spawn(exitOnError, done) {
   var exec = 'node ' + path.join(__dirname, 'util', 'error.js');
-  if (exitOnError) {
+  if (!exitOnError) {
     exec += ' --noexit';
   }
   cp.exec(exec, done);
@@ -181,22 +181,16 @@ module.exports = {
         a.addHandler(new intel.handlers.Null());
         a.propagate = false;
 
-        a.debug('some foo %s baz', 'bar', function(err, record) {
-          assert.ifError(err);
-          assert.equal(record.message, 'some foo bar baz');
-          done();
-        });
+        a.debug('some foo %s baz', 'bar', done);
       },
       'should return a promise': {
-        'that resolves with a record': function(done) {
+        'that resolves': function(done) {
           var n = unique();
           var a = new Logger(n);
           a.addHandler(new intel.handlers.Null());
           a.propagate = false;
 
-          a.debug('some foo %s baz', 'bar').then(function(record) {
-            assert.equal(record.message, 'some foo bar baz');
-          }).done(done);
+          a.debug('some foo %s baz', 'bar').done(done);
         },
         'that rejects with an error': function(done) {
           var n = unique();
@@ -224,7 +218,7 @@ module.exports = {
       'should catch uncaughtErrors': function(done) {
         this.slow(300);
 
-        spawn(false, function(err, stdout, stderr) {
+        spawn(true, function(err, stdout, stderr) {
           stderr = stderr.substring(0, stderr.indexOf('\n'));
           assert.equal(stderr, 'root.ERROR: [Error: catch me if you can]');
           assert(!stdout);
@@ -234,7 +228,7 @@ module.exports = {
       'should not exit if exitOnError is false': function(done) {
         this.slow(300);
 
-        spawn(true, function(err, stdout, stderr) {
+        spawn(false, function(err, stdout, stderr) {
           stderr = stderr.substring(0, stderr.indexOf('\n'));
           assert.equal(stderr, 'root.ERROR: [Error: catch me if you can]');
           assert.equal(stdout, 'root.INFO: noexit\n');

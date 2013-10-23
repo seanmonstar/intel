@@ -38,6 +38,19 @@ module.exports = {
       }
     }
   },
+  'string interpolation': {
+    'bench': {
+      'console': function() {
+        _console.info('foo', 'bar');
+      },
+      'intel': function() {
+        intel.info('foo', 'bar');
+      },
+      'winston': function() {
+        winston.info('foo', 'bar');
+      }
+    }
+  },
   'async': {
     'bench': {
       'intel promises': function(done) {
