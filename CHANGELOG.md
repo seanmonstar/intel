@@ -1,6 +1,6 @@
 # intel ChangeLog
 
-## v0.3.0-dev - Current master
+## v0.3.0 - 2013-10-22
 
 - added intel.handlers.Rotating
 - added ignore options to intel.console()
