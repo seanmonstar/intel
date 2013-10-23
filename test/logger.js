@@ -107,6 +107,20 @@ module.exports = {
       }
     },
     'log': {
+      'should output arguments': function() {
+      
+        var n = unique();
+        var a = new Logger(n);
+        a.propagate = false;
+
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+
+        a.info('foo', { bar: 'baz' });
+
+        assert.equal(spyA.getCallCount(), 1);
+        assert.equal(spyA.getLastArgs()[0].message, "foo { bar: 'baz' }");
+      },
       'should be usable without alias': function() {
         var n = unique();
         var a = new Logger(n);
