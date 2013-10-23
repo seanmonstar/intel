@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="intel : I need more intel!" />
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>intel by seanmonstar</title>
+    <title>intel</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>intel</h1>
-        <h2>I need more intel!</h2>
-        <a href="https://github.com/seanmonstar/intel" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/seanmonstar/intel">View on GitHub</a>
+
+          <h1 id="project_title">intel</h1>
+          <h2 id="project_tagline">I need more intel!</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/seanmonstar/intel/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/seanmonstar/intel/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
 <a name="intel" class="anchor" href="#intel"><span class="octicon octicon-link"></span></a>intel</h1>
 
 <p><a href="https://travis-ci.org/seanmonstar/intel"><img src="https://travis-ci.org/seanmonstar/intel.png?branch=master" alt="Build Status"></a>
@@ -61,6 +65,7 @@
 <li><a href="#setting-the-log-level">Setting the Log Level</a></li>
 <li><a href="#adding-a-handler">Adding a Handler</a></li>
 <li><a href="#getting-a-named-logger">Getting Named Loggers</a></li>
+<li><a href="#logging-exceptions">Logging Exceptions</a></li>
 <li><a href="#async-logging">Async Logging</a></li>
 </ul>
 </li>
@@ -71,6 +76,7 @@
 <li><a href="#consolehandler">ConsoleHandler</a></li>
 <li><a href="#streamhandler">StreamHandler</a></li>
 <li><a href="#filehandler">FileHandler</a></li>
+<li><a href="#rotatingfilehandler">RotatingFileHandler</a></li>
 <li><a href="#nullhandler">NullHandler</a></li>
 <li><a href="#creating-a-custom-handler">Creating a Custom Handler</a></li>
 </ul>
@@ -156,6 +162,26 @@
 <p>The power of logger hierarchies can seen more when using <a href="#config">intel.config</a>.</p>
 
 <h3>
+<a name="logging-exceptions" class="anchor" href="#logging-exceptions"><span class="octicon octicon-link"></span></a>Logging Exceptions</h3>
+
+<p>Any time you pass an exception (an <code>Error</code>!) to a log method, the stack
+will be included in the output. In most cases, it will be appended at
+the end of the message. If the format is <code>%O</code>, meaning JSON output, a
+stack property will be included.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'ermahgawd'</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">'boom'</span><span class="p">));</span>
+</pre></div>
+
+<p>Loggers can also handle <code>uncaughtException</code>, passing it to its handlers,
+and optionally exiting afterwards.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">getLogger</span><span class="p">(</span><span class="s1">'medbay'</span><span class="p">);</span>
+<span class="nx">logger</span><span class="p">.</span><span class="nx">handleExceptions</span><span class="p">(</span><span class="nx">exitOnError</span><span class="p">);</span>
+</pre></div>
+
+<p>Pass a boolean for <code>exitOnError</code>. Default is <code>true</code> if no value is passed.</p>
+
+<h3>
 <a name="async-logging" class="anchor" href="#async-logging"><span class="octicon octicon-link"></span></a>Async logging</h3>
 
 <p>With Nodejs' async nature, many handlers will be dealing with asynchronous APIs. In most cases, that shouldn't be your concern, and you can ignore this. However, if you need to execute code after a log message has been completely handled, every log method returns a promise. The promise only gets resolved after all handlers have finished handling that message.</p>
@@ -217,6 +243,21 @@
 <li>Plus options from <a href="#handlers">Handler</a>
 </li>
 </ul><p>As a shortcut, you can pass the <code>file</code> String directly to the constructor, and all other options will just use default values.</p>
+
+<h3>
+<a name="rotatingfilehandler" class="anchor" href="#rotatingfilehandler"><span class="octicon octicon-link"></span></a>RotatingFileHandler</h3>
+
+<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">Rotating</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+</pre></div>
+
+<p>The Rotating handler extends the <a href="#filehandler">File</a> handler, making sure log files don't go over a specified size.</p>
+
+<ul>
+<li>
+<strong>maxSize</strong> - A number of bytes to restrict the size of log files.</li>
+<li>
+<strong>maxFiles</strong> - A number of log files to create after the size restriction is met.</li>
+</ul><p>As files reach the max size, the files will get moved to a the same name, with a number attached to the end. So, <code>intel.log</code> will become <code>intel.log.1</code>, and <code>intel.log.1</code> would move to <code>intel.log.2</code>, up to the maxFiles number.</p>
 
 <h3>
 <a name="nullhandler" class="anchor" href="#nullhandler"><span class="octicon octicon-link"></span></a>NullHandler</h3>
@@ -376,6 +417,8 @@
     <span class="s1">'patrol'</span><span class="o">:</span> <span class="p">{</span>
       <span class="s1">'handlers'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'terminal'</span><span class="p">],</span>
       <span class="s1">'level'</span><span class="o">:</span> <span class="s1">'INFO'</span><span class="p">,</span>
+      <span class="s1">'handleExceptions'</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="s1">'exitOnError'</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
       <span class="s1">'propagate'</span><span class="o">:</span> <span class="kc">false</span>
     <span class="p">},</span>
     <span class="s1">'patrol.db'</span><span class="o">:</span> <span class="p">{</span>
@@ -420,7 +463,15 @@
 
 <p>It tries its darndest to best guess a name, by comparing the relative paths from the <code>root</code> and the module accessing <code>console</code>. By default, the <code>root</code> is equal to the <code>dirname</code> of the module where you call <code>intel.console()</code>.</p>
 
-<div class="highlight highlight-js"><pre><span class="c1">// file: patrol/index.js</span>
+<p>Options:</p>
+
+<ul>
+<li>
+<strong>root</strong> - String to define root logger, defaults to calling module's filename</li>
+<li>
+<strong>ignore</strong> - Array of strings of log names that should be ignored and use standard <code>console</code> methods. Ex: <code>['intel.node_modules.mocha']</code>
+</li>
+</ul><div class="highlight highlight-js"><pre><span class="c1">// file: patrol/index.js</span>
 <span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">console</span><span class="p">();</span> <span class="c1">// root is '/path/to/patrol'</span>
 </pre></div>
 
@@ -429,26 +480,18 @@
 <div class="highlight highlight-js"><pre><span class="c1">// file: patrol/lib/utils/log.js</span>
 <span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">console</span><span class="p">({</span> <span class="nx">root</span><span class="o">:</span> <span class="s1">'/path/to/patrol'</span> <span class="p">});</span>
 </pre></div>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/seanmonstar/intel/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/seanmonstar/intel/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/seanmonstar/intel"></a> is maintained by <a href="https://github.com/seanmonstar">seanmonstar</a>.</p>
-
-          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-            <script type="text/javascript">
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">intel maintained by <a href="https://github.com/seanmonstar">seanmonstar</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -458,6 +501,7 @@
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
