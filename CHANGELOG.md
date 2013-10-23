@@ -9,7 +9,9 @@
 - added Logger#handleExceptions to catch uncaught exceptions
 - added stack traces when an exception is logged
 - changed datetime to strftime, adds `%L` to output milliseconds
+- changed Promises from Q to bluebird, significantly faster
 - fixed Console handler from using accepting format options
+- optimizations for common cases, big boost
 
 ## v0.2.0 - 2013-10-04
 
