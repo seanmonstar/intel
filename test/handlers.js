@@ -261,6 +261,21 @@ module.exports = {
           assert.equal(fs.statSync(filename + '.2').size, 56);
           assert(!fs.existsSync(filename + '.3'));
         }).done(done);
+      },
+      'should continue to write after buffer is flushed': function(done) {
+        this.timeout(5000);
+
+        var filename = tmp();
+        var handler = new intel.handlers.Rotating({
+          file: filename,
+          maxSize: 64
+        });
+
+        handler.handle({ message: bytes(29) }).then(function(){
+          return handler.handle({ message: bytes(31) });
+        }).then(function(){
+          assert.equal(fs.statSync(filename).size, 62);
+        }).done(done);
       }
     }
   }
