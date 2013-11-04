@@ -1,8 +1,8 @@
 {
   "name": "intel",
-  "version": "0.4.0-dev",
+  "version": "0.3.1",
   "dependencies": {
-    "bluebird": "0.9.1-1",
+    "bluebird": "0.9.8-0",
     "chalk": "0.3.0",
     "stack-trace": "0.0.7",
     "strftime": "0.6.2"

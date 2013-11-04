@@ -1,5 +1,9 @@
 # intel ChangeLog
 
+## v0.3.1 - 2013-11-04
+
+- fixed Rotating handler writing lock (thanks @chopachom)
+
 ## v0.3.0 - 2013-10-22
 
 - added intel.handlers.Rotating
