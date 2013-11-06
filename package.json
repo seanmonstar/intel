@@ -5,11 +5,14 @@
     "bluebird": "0.9.8-0",
     "chalk": "0.3.0",
     "stack-trace": "0.0.7",
-    "strftime": "0.6.2"
+    "strftime": "0.6.2",
+    "utcstring": "0.1.0"
   },
   "devDependencies": {
     "blanket": "1.1.5",
     "coveralls": "2.3.0",
+    "dbug": "0.1.2",
+    "debug": "0.6.0",
     "jshint": "2.3.0",
     "matcha": "0.4.0",
     "mocha": "1.13.0",
@@ -39,6 +42,8 @@
   },
   "keywords": [
     "log",
+    "debug",
+    "dbug",
     "logging",
     "logger",
     "console"

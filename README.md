@@ -41,6 +41,7 @@ Really? Another logger? Well, yes. But here's why:
   - [basicConfig](#basicconfig)
   - [Full Configuration](#full-configuration)
 - [console](#console)
+  - [debug()](#console.debug)
 
 ## Logging
 
@@ -390,6 +391,7 @@ Options:
 
 - **root** - String to define root logger, defaults to calling module's filename
 - **ignore** - Array of strings of log names that should be ignored and use standard `console` methods. Ex: `['intel.node_modules.mocha']`
+- **debug** - boolean or String. `true` will set `process.env.DEBUG='*'``. Otherwise, String is used, ex: `'request,express'`
 
 ```js
 // file: patrol/index.js
@@ -401,5 +403,19 @@ If you override the console in a file deep inside some directories, you can manu
 ```js
 // file: patrol/lib/utils/log.js
 require('intel').console({ root: '/path/to/patrol' });
+```
+### console.debug
+
+The `debug` option for `intel.console()`, huh? Yea, so many libraries use the `debug()` library to handle their internal logging needs. It works by not outputing any logs unless you opt-in with an environment variable. In many case, it would make sense to just leave this off, to keep the noise down. However, you can use this option to turn on a libraries logging, and route it into properly named loggers. Since the `debug` module checks `process.env` at require time, you will need to use this option firstmost, before requiring anything else that may require `debug`.
+
+Example
+
+```js
+// file: patrol/index.js
+require('intel').console({ debug: 'request,express' });
+var request = require('request');
+
+request.get('http://example.domain');
+// log messages will appear from "patrol.node_modules.request"
 ```
 

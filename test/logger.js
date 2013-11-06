@@ -226,7 +226,7 @@ module.exports = {
         });
       },
       'should not exit if exitOnError is false': function(done) {
-        this.slow(300);
+        this.slow(500);
 
         spawn(false, function(err, stdout, stderr) {
           stderr = stderr.substring(0, stderr.indexOf('\n'));

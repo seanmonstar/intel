@@ -14,7 +14,7 @@ spy.handle = function(record) {
   return intel.handlers.Null.prototype.handle.call(this, record);
 };
 
-var prevLog;
+var prevLog = console.log;
 var lastMock;
 function mockLog() {
   lastMock = arguments;
@@ -25,7 +25,6 @@ module.exports = {
   'console': {
     'before': function() {
       intel.addHandler(spy);
-      prevLog = console.log;
       console.log = mockLog;
       // not passing root means this file becomes root.
       // which means dirname.basename, or test.console
@@ -63,6 +62,69 @@ module.exports = {
     'after': function() {
       intel.console.restore();
       assert.equal(console.log, mockLog);
+      console.log = prevLog;
+      intel._handlers = [];
+    }
+  },
+
+  'console.debug': {
+    'before': function() {
+      intel.addHandler(spy);
+    },
+    'with true sets debug to star': function() {
+      intel.console({ debug: true });
+      assert.equal(process.env.DEBUG, '*');
+    },
+    'with string adds to DEBUG': function() {
+      process.env.DEBUG = 'quux';
+      intel.console({ debug: 'foo:bar,baz'});
+      assert.equal(process.env.DEBUG, 'quux,foo:bar,baz');
+    },
+    'intecerpts debug() messages': function() {
+      intel.console({ debug: 'platoon:*' });
+
+      var debug = require('debug')('platoon:cpl');
+      debug('hoaah');
+      
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.message, 'hoaah +0ms');
+      assert.equal(spy._lastRecord.name, 'test.console.platoon.cpl');
+      assert.equal(spy._lastRecord.level, intel.DEBUG);
+    },
+    'intercepts dbug() messages': function() {
+      intel.console({ debug: 'platoon' });
+
+      var dbug = require('dbug')('platoon:sarge:squad');
+      dbug('oscar mike');
+      
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.message, 'oscar mike');
+      assert.equal(spy._lastRecord.name, 'test.console.platoon.sarge.squad');
+      assert.equal(spy._lastRecord.level, intel.DEBUG);
+
+      dbug.warn('boom');
+      assert.equal(spy._lastRecord.message, 'boom');
+      assert.equal(spy._lastRecord.level, intel.WARN);
+
+    },
+    'intercepts dbug() colorless messages': function() {
+      intel.console({ debug: 'company' });
+
+      process.env.DEBUG_COLOR = false;
+      var dbug = require('dbug')('company:bravo');
+      dbug('oscar mike');
+      
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.message, 'oscar mike');
+      assert.equal(spy._lastRecord.name, 'test.console.company.bravo');
+      assert.equal(spy._lastRecord.level, intel.DEBUG);
+
+      dbug.warn('boom');
+      assert.equal(spy._lastRecord.message, 'boom');
+      assert.equal(spy._lastRecord.level, intel.WARN);
+    },
+    'after': function() {
+      intel.console.restore();
       console.log = prevLog;
       intel._handlers = [];
     }
