@@ -30,6 +30,9 @@ module.exports = {
       // which means dirname.basename, or test.console
       intel.console();
     },
+    'beforeEach': function() {
+      delete spy._lastRecord;
+    },
     'can inject into global scope': function() {
       console.warn('test');
       assert(spy._lastRecord);
@@ -71,6 +74,9 @@ module.exports = {
     'before': function() {
       intel.addHandler(spy);
     },
+    'beforeEach': function() {
+      delete spy._lastRecord;
+    },
     'with true sets debug to star': function() {
       intel.console({ debug: true });
       assert.equal(process.env.DEBUG, '*');
@@ -79,17 +85,6 @@ module.exports = {
       process.env.DEBUG = 'quux';
       intel.console({ debug: 'foo:bar,baz'});
       assert.equal(process.env.DEBUG, 'quux,foo:bar,baz');
-    },
-    'intecerpts debug() messages': function() {
-      intel.console({ debug: 'platoon:*' });
-
-      var debug = require('debug')('platoon:cpl');
-      debug('hoaah');
-      
-      assert(spy._lastRecord);
-      assert.equal(spy._lastRecord.message, 'hoaah +0ms');
-      assert.equal(spy._lastRecord.name, 'test.console.platoon.cpl');
-      assert.equal(spy._lastRecord.level, intel.DEBUG);
     },
     'intercepts dbug() messages': function() {
       intel.console({ debug: 'platoon' });

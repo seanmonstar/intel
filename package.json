@@ -12,7 +12,6 @@
     "blanket": "1.1.5",
     "coveralls": "2.3.0",
     "dbug": "0.1.2",
-    "debug": "0.6.0",
     "jshint": "2.3.0",
     "matcha": "0.4.0",
     "mocha": "1.13.0",
