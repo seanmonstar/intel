@@ -50,15 +50,5 @@ module.exports = {
         winston.info('foo', 'bar');
       }
     }
-  },
-  'async': {
-    'bench': {
-      'intel promises': function(done) {
-        intel.info('asdf').then(done);
-      },
-      'intel callback': function(done) {
-        intel.info('asdf', done);
-      }
-    }
   }
 };
