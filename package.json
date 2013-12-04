@@ -1,6 +1,6 @@
 {
   "name": "intel",
-  "version": "0.4.0-dev",
+  "version": "0.4.0",
   "dependencies": {
     "bluebird": "0.11.5-0",
     "chalk": "0.3.0",

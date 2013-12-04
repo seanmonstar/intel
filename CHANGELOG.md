@@ -1,6 +1,6 @@
 # intel ChangeLog
 
-## v0.4.0-dev - Current master
+## v0.4.0 0 2013-12-04
 
 - added intel.console({ debug: 'foo' }) option
 - performance gains
