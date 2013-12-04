@@ -3,6 +3,7 @@
 ## v0.4.0-dev - Current master
 
 - added intel.console({ debug: 'foo' }) option
+- performance gains
 
 ## v0.3.1 - 2013-11-04
 
