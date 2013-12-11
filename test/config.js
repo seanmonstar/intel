@@ -2,10 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const assert = require('assert');
 const os = require('os');
 const path = require('path');
 const util = require('util');
+
+const assert = require('insist');
 
 const intel = require('../');
 
@@ -158,6 +159,22 @@ module.exports = {
 
       var log = intel.getLogger('test.config.json');
       assert.equal(log._handlers.length, 2);
+
+      var s = log._handlers[0]._filters[0];
+      var r = log._handlers[0]._filters[1];
+      var f = log._handlers[0]._filters[2];
+
+      assert(s.filter({ name: 'foo.bar' }));
+      assert(!s.filter({ name: 'food' }));
+
+      assert(r.filter({ message: 'FOO' }));
+      assert(!r.filter({ message: '' }));
+
+      assert(f.filter({ args: [1, 2, 3] }));
+      assert(!f.filter({ args: [1] }));
+
+      var custom = log._handlers[0]._formatter;
+      assert.equal(custom.format({ message: 'foo' }), 'FOO');
     }
   }
 };

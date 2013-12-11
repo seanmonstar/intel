@@ -1,5 +1,10 @@
 # intel ChangeLog
 
+## Current dev
+
+- added `formatFn` for Formatters and `regex`, `flags`, and `function`
+  for Filters to ease `intel.config()`
+
 ## v0.4.0 0 2013-12-04
 
 - added intel.console({ debug: 'foo' }) option

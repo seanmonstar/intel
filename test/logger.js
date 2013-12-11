@@ -2,10 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const assert = require('assert');
 const cp = require('child_process');
 const path = require('path');
 const util = require('util');
+
+const assert = require('insist');
 
 const intel = require('../');
 const Logger = intel.Logger;

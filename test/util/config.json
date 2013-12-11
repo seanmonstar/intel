@@ -1,11 +1,25 @@
 {
   "formatters": {
-    "basic": "basic: %(message)s"
+    "basic": "basic: %(message)s",
+    "custom": {
+      "formatFn": "function format(record) { return record.message.toUpperCase(); }"
+    }
   },
-  "filters": {},
+  "filters": {
+    "s": "foo",
+    "r": {
+      "regex": "foo",
+      "flags": "gi"
+    },
+    "f": {
+      "function": "function filter(record) { return record.args.length > 2; }"
+    }
+  },
   "handlers": {
     "empty": {
-      "class": "intel/handlers/null"
+      "class": "intel/handlers/null",
+      "formatter": "custom",
+      "filters": ["s", "r", "f"]
     },
     "spy": {
       "class": "./test/util/spyhandler"
