@@ -2,20 +2,20 @@
   "name": "intel",
   "version": "0.5.0-dev",
   "dependencies": {
-    "bluebird": "0.11.5-0",
-    "chalk": "0.3.0",
+    "bluebird": "0.11.6-0",
+    "chalk": "0.4.0",
     "stack-trace": "0.0.7",
-    "strftime": "0.6.2",
+    "strftime": "0.7.0",
     "utcstring": "0.1.0"
   },
   "devDependencies": {
-    "blanket": "1.1.5",
-    "coveralls": "2.5.0",
-    "dbug": "0.1.2",
+    "blanket": "1.1.x",
+    "coveralls": "2.6.x",
+    "dbug": "0.x",
     "insist": "0.x",
-    "jshint": "2.3.0",
+    "jshint": "2.x",
     "matcha": "0.4.1",
-    "mocha": "1.15.1",
+    "mocha": "1.x",
     "mocha-lcov-reporter": "0.0.1",
     "walk": "2.2.1",
     "winston": "0.7.2"
