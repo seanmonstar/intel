@@ -101,6 +101,9 @@ module.exports = {
           },
           'foo': {
             'format': 'foo! %(levelname)s: %(message)s'
+          },
+          'fn': {
+            'formatFn': function() {}
           }
         },
         filters: {
@@ -124,14 +127,18 @@ module.exports = {
             'propagate': false,
             'handleExceptions': true,
             'exitOnError': false,
+            'filters': ['foo'],
             'handlers': ['null']
           }
-        }
+        },
+        console: true
       });
+      intel.console.restore();
 
       var excepts = intel.getLogger('qqq.ww.zzz');
       assert(excepts._uncaughtException);
       assert(!excepts._exitOnError);
+      assert.equal(excepts._filters.length, 1);
 
       var log = intel.getLogger('qqq.zzz');
       var handler = log._handlers[0];
@@ -175,6 +182,17 @@ module.exports = {
 
       var custom = log._handlers[0]._formatter;
       assert.equal(custom.format({ message: 'foo' }), 'FOO');
+    },
+    'should error if formatFn is not a function': function() {
+      assert.throws(function() {
+        intel.config({
+          formatters: {
+            'foo': {
+              formatFn: 'this'
+            }
+          }
+        });
+      }, /function parameter did not parse as a function$/);
     },
     'should assign a NullHandler to ROOT if handlers object': function() {
       intel._handlers = [];

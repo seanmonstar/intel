@@ -25,12 +25,12 @@ module.exports = {
     'before': function() {
       intel.addHandler(spy);
       console.log = mockLog;
-      // not passing root means this file becomes root.
-      // which means dirname.basename, or test.console
-      intel.console();
     },
     'beforeEach': function() {
       delete spy._lastRecord;
+      // not passing root means this file becomes root.
+      // which means dirname.basename, or test.console
+      intel.console();
     },
     'can inject into global scope': function() {
       console.warn('test');
@@ -60,6 +60,9 @@ module.exports = {
       var obj = { foo: 'bar' };
       console.dir(obj);
       assert.equal(spy._lastRecord.message, "{ foo: 'bar' }");
+    },
+    'afterEach': function() {
+      intel.console.restore();
     },
     'after': function() {
       intel.console.restore();

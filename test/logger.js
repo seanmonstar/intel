@@ -117,6 +117,7 @@ module.exports = {
 
         var spyA = spy();
         a.addHandler({ handle: spyA, level: 0 });
+        a.addHandler({ handle: spy(), level: 0 });
 
         a.log('info', 'foo');
 
