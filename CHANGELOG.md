@@ -2,8 +2,8 @@
 
 ## Current dev
 
-- added `formatFn` for Formatters and `regex`, `flags`, and `function`
-  for Filters to ease `intel.config()`
+- added `formatFn` for Formatters and `regex`, `flags`, and `function` for Filters to ease `intel.config()`
+- changed `intel.config` to remove default ROOT console handler
 
 ## v0.4.0 0 2013-12-04
 

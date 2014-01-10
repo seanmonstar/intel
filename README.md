@@ -375,6 +375,8 @@ Config also accepts JSON, simply put a require path in any `class` properties.
 intel.config(require('./logging.json'));
 ```
 
+Passing a `handlers` option to `intel.config` will remove the default ROOT console handler, unless you've previously manually assigned handlers to `intel`.
+
 ## console
 
 ```js

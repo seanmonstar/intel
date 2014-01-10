@@ -175,6 +175,16 @@ module.exports = {
 
       var custom = log._handlers[0]._formatter;
       assert.equal(custom.format({ message: 'foo' }), 'FOO');
+    },
+    'should assign a NullHandler to ROOT if handlers object': function() {
+      intel._handlers = [];
+      intel.config({
+        handlers: {},
+        loggers: {
+          'port': {},
+        }
+      });
+      assert(intel._handlers[0] instanceof intel.handlers.Null);
     }
   }
 };
