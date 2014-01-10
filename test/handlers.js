@@ -62,13 +62,18 @@ module.exports = {
           callback();
         };
 
-        h.addFilter(new intel.Filter('foo'));
+        var filter = new intel.Filter('foo');
+        h.addFilter(filter);
         h.handle({ name: 'foo' }).then(function() {
           assert.equal(lastRecord.name, 'foo');
-
           return h.handle({ name: 'foobar' });
         }).then(function() {
           assert.notEqual(lastRecord.name, 'foobar');
+
+          h.removeFilter(filter);
+          return h.handle({ name: 'foobar' });
+        }).then(function() {
+          assert.equal(lastRecord.name, 'foobar');
         }).done(done);
       },
       'should timeout if taking too long': function(done) {

@@ -25,7 +25,9 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "mocha --check-leaks --ui exports",
-    "matcha": "matcha -I exports",
+    "matcha": "matcha -I exports"
+  },
+  "config": {
     "blanket": {
       "pattern": "lib",
       "data-cover-never": "node_modules"

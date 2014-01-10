@@ -2,8 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const cp = require('child_process');
-const path = require('path');
+const EventEmitter = require('events').EventEmitter;
 
 const assert = require('insist');
 
@@ -33,7 +32,6 @@ function aliasLog(alias, shouldCall) {
     var n = unique();
     var a = new Logger(n);
     a.propagte = false;
-    
     var args;
     a[shouldCall] = function() {
       args = [].slice.call(arguments);
@@ -44,14 +42,6 @@ function aliasLog(alias, shouldCall) {
     assert.equal(args[0], 'foo');
     assert.equal(args[1], 'bar');
   };
-}
-
-function spawn(exitOnError, done) {
-  var exec = 'node ' + path.join(__dirname, 'util', 'error.js');
-  if (!exitOnError) {
-    exec += ' --noexit';
-  }
-  cp.exec(exec, done);
 }
 
 module.exports = {
@@ -108,7 +98,6 @@ module.exports = {
     },
     'log': {
       'should output arguments': function() {
-      
         var n = unique();
         var a = new Logger(n);
         a.propagate = false;
@@ -216,24 +205,42 @@ module.exports = {
 
     'handleExceptions': {
       'should catch uncaughtErrors': function(done) {
-        this.slow(300);
+        var logger = new Logger(unique());
+        var p = logger._process = new EventEmitter();
+        p.exit = spy();
 
-        spawn(true, function(err, stdout, stderr) {
-          stderr = stderr.substring(0, stderr.indexOf('\n'));
-          assert.equal(stderr, 'root.ERROR: [Error: catch me if you can]');
-          assert(!stdout);
+        var handlerSpy = spy();
+        logger.addHandler({ handle: handlerSpy, level: 0 });
+        logger.propagate = false;
+
+        logger.handleExceptions();
+        p.emit('uncaughtException', new Error("catch me if you can"));
+
+        setTimeout(function() {
+          assert.equal(handlerSpy.getCallCount(), 1);
+          var record = handlerSpy.getLastArgs()[0];
+          assert.equal(record.level, Logger.ERROR);
+          assert.equal(record.message, '[Error: catch me if you can]');
+          assert.equal(p.exit.getCallCount(), 1);
           done();
-        });
+        }, 10);
       },
       'should not exit if exitOnError is false': function(done) {
-        this.slow(500);
+        var logger = new Logger(unique());
+        var p = logger._process = new EventEmitter();
+        p.exit = spy();
 
-        spawn(false, function(err, stdout, stderr) {
-          stderr = stderr.substring(0, stderr.indexOf('\n'));
-          assert.equal(stderr, 'root.ERROR: [Error: catch me if you can]');
-          assert.equal(stdout, 'root.INFO: noexit\n');
+        var handlerSpy = spy();
+        logger.addHandler({ handle: handlerSpy, level: 0 });
+        logger.propagate = false;
+
+        logger.handleExceptions(false);
+        p.emit('uncaughtException', new Error("catch me if you can"));
+
+        setTimeout(function() {
+          assert.equal(p.exit.getCallCount(), 0);
           done();
-        });
+        }, 10);
       }
     }
   }
