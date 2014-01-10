@@ -12,6 +12,7 @@
     "blanket": "1.1.x",
     "coveralls": "2.6.x",
     "dbug": "0.x",
+    "debug": "0.x",
     "insist": "0.x",
     "jshint": "2.x",
     "matcha": "0.4.1",

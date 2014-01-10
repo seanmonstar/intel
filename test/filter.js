@@ -8,6 +8,12 @@ const intel = require('../');
 
 module.exports = {
   'Filter': {
+    'with nothing': {
+      'should throw an error': function() {
+        var f = new intel.Filter();
+        assert.throws(f.filter, /Filter type was not defined.$/);
+      }
+    },
     'with regexp': {
       'should filter records based on message': function() {
         var f = new intel.Filter(/^foo/g);

@@ -90,7 +90,7 @@ module.exports = {
 
       var dbug = require('dbug')('platoon:sarge:squad');
       dbug('oscar mike');
-      
+
       assert(spy._lastRecord);
       assert.equal(spy._lastRecord.message, 'oscar mike');
       assert.equal(spy._lastRecord.name, 'test.console.platoon.sarge.squad');
@@ -104,10 +104,10 @@ module.exports = {
     'intercepts dbug() colorless messages': function() {
       intel.console({ debug: 'company' });
 
-      process.env.DEBUG_COLOR = false;
+      process.env.DEBUG_COLORS = false;
       var dbug = require('dbug')('company:bravo');
       dbug('oscar mike');
-      
+
       assert(spy._lastRecord);
       assert.equal(spy._lastRecord.message, 'oscar mike');
       assert.equal(spy._lastRecord.name, 'test.console.company.bravo');
@@ -116,6 +116,23 @@ module.exports = {
       dbug.warn('boom');
       assert.equal(spy._lastRecord.message, 'boom');
       assert.equal(spy._lastRecord.level, intel.WARN);
+    },
+    'intercepts debug() messages': function() {
+      intel.console({ debug: 'recon' });
+      delete require.cache[require.resolve('debug')];
+
+      var debug = require('debug')('recon');
+      assert(debug.enabled);
+      debug('report');
+
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.message, 'report +0ms');
+      assert.equal(spy._lastRecord.name, 'test.console.recon');
+      assert.equal(spy._lastRecord.level, intel.DEBUG);
+
+    },
+    'afterEach': function() {
+      process.env.DEBUG_COLORS = "";
     },
     'after': function() {
       intel.console.restore();

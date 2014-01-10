@@ -13,6 +13,8 @@ module.exports = {
     },
     'should print args': function() {
       assert.equal(printf('%s,%s,%d', 'a', 2, 3), 'a,2,3');
+      assert.equal(printf('%%s', 'a'), '%s');
+      assert.equal(printf('%Z', 'a'), '%Z');
     },
     'should print %O': function() {
       assert.equal(printf('%O', { foo: 'bar' }), '{"foo":"bar"}');
