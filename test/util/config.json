@@ -3,6 +3,9 @@
     "basic": "basic: %(message)s",
     "custom": {
       "formatFn": "function format(record) { return record.message.toUpperCase(); }"
+    },
+    "klass": {
+      "class": "intel/formatter"
     }
   },
   "filters": {
@@ -13,6 +16,9 @@
     },
     "f": {
       "function": "function filter(record) { return record.args.length > 2; }"
+    },
+    "c": {
+      "class": "intel/filter"
     }
   },
   "handlers": {
