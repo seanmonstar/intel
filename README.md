@@ -233,6 +233,8 @@ CustomHandler.prototype.emit = function customEmit(record, callback) {
 }
 ```
 
+A list of known Handlers is kept on the [wiki](https://github.com/seanmonstar/intel/wiki/Custom-Handlers).
+
 ## Filters
 
 You can already plug together handlers and loggers, with varying levels, to get powerful filtering of messages. However, sometimes you really need to filter on a specific detail on a message. You can add these filters to a [Handler](#handlers) or [Logger](#logging).
