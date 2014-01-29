@@ -5,5 +5,5 @@ test:
 
 test-coveralls:
 	$(MAKE) test
-	@INTEL_COVERAGE=1 $(MAKE) test REPORTER=mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
+	-@INTEL_COVERAGE=1 $(MAKE) test REPORTER=mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 .PHONY: test
