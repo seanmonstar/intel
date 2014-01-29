@@ -2,6 +2,7 @@
 
 ## Current dev
 
+- added `Logger.removeAllHandlers()`
 - added `formatFn` for Formatters and `regex`, `flags`, and `function` for Filters to ease `intel.config()`
 - changed `intel.config` to remove default ROOT console handler
 

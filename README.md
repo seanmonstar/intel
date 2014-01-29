@@ -84,6 +84,8 @@ intel.addHandler(new intel.handlers.File('/path/to/file.log'));
 intel.info('going to a file!');
 ```
 
+You can remove all handlers from a particular logger with `logger.removeAllHandlers()`.
+
 ### Getting a Named Logger
 
 Using named loggers gives you a lot of power in `intel`. First, the logger name can be included in the log message, so you can more easily understand where log messages are happening inside your application.
