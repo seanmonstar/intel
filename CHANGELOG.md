@@ -4,6 +4,8 @@
 
 - added `Logger.removeAllHandlers()`
 - added `formatFn` for Formatters and `regex`, `flags`, and `function` for Filters to ease `intel.config()`
+- added `Logger#trace` and `intel.TRACE` level
+- added `exception: boolean` and `uncaughtException: boolean` to LogRecord
 - changed `intel.config` to remove default ROOT console handler
 
 ## v0.4.0 0 2013-12-04

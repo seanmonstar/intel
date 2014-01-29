@@ -127,7 +127,7 @@ module.exports = {
             'propagate': false,
             'handleExceptions': true,
             'exitOnError': false,
-            'filters': ['foo'],
+            'filters': ['user'],
             'handlers': ['null']
           }
         },
@@ -139,6 +139,7 @@ module.exports = {
       assert(excepts._uncaughtException);
       assert(!excepts._exitOnError);
       assert.equal(excepts._filters.length, 1);
+      excepts.unhandleExceptions();
 
       var log = intel.getLogger('qqq.zzz');
       var handler = log._handlers[0];

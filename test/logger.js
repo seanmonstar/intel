@@ -221,10 +221,42 @@ module.exports = {
             error.stack.substr(error.stack.indexOf('\n')));
         var obj = JSON.parse(JSON.stringify(record.stack));
         assert(obj[0].fileName);
+        assert.equal(record.exception, true);
       },
       'warning should alias warn': aliasLog('warning', 'warn'),
       'o_O should alias warn': aliasLog('o_O', 'warn'),
       'O_O should alias error': aliasLog('O_O', 'error')
+    },
+    
+    'trace': {
+      'should include a stacktrace in message': function() {
+        var a = new Logger(unique());
+        a.propagate = false;
+        a.setLevel(Logger.TRACE);
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+        
+        a.trace('intrusion');
+        var record = spyA.getLastArgs()[0];
+        assert.equal(record.level, Logger.TRACE);
+        assert.equal(record.message, "intrusion");
+        assert(record.stack);
+
+        a.trace();
+        var record = spyA.getLastArgs()[0];
+        assert.equal(record.message, "Trace");
+        assert(record.stack);
+        
+        a.trace('red %s', 'alert');
+        var record = spyA.getLastArgs()[0];
+        assert.equal(record.message, "red alert");
+        assert(record.stack);
+        
+        a.trace({ a: 'b' });
+        var record = spyA.getLastArgs()[0];
+        assert.equal(record.message, "Trace { a: 'b' }");
+        assert(record.stack);
+      }
     },
 
     'handleExceptions': {
@@ -245,6 +277,7 @@ module.exports = {
           var record = handlerSpy.getLastArgs()[0];
           assert.equal(record.level, Logger.ERROR);
           assert.equal(record.message, '[Error: catch me if you can]');
+          assert.equal(record.uncaughtException, true);
           assert.equal(p.exit.getCallCount(), 1);
           done();
         }, 10);

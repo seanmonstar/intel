@@ -73,6 +73,18 @@ intel.warn('i made it!');
 intel.debug('nobody loves me');
 ```
 
+All levels by order: (each level has a corresponding method on a Logger)
+
+```js
+intel.TRACE // intel.trace()
+intel.VERBOSE // intel.verbose()
+intel.DEBUG // intel.debug()
+intel.INFO // intel.info()
+intel.WARN // intel.warn()
+intel.ERROR // intel.error()
+intel.CRITICAL // intel.critical()
+```
+
 ### Adding a Handler
 
 The default logger will use a [ConsoleHandler](#consolehandler) if you don't specify anything else. You can add handlers to any logger:
@@ -272,11 +284,14 @@ The record that is created by loggers is passed to each handler, and handlers pa
 ```js
 {
   name: "foo.bar",
-  level: 20,
+  level: 30,
   levelname: "DEBUG",
   timestamp: new Date(),
   message: "all clear",
-  args: []
+  args: [],
+  stack: undefined, // if an Error was passed, or trace()
+  exception: false, // if an Error was passed
+  uncaughtException: false // if passed Error was from process.on('uncaughtException')
 }
 ```
 

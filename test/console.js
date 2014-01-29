@@ -24,6 +24,7 @@ module.exports = {
   'console': {
     'before': function() {
       intel.addHandler(spy);
+      intel.setLevel(intel.TRACE);
       console.log = mockLog;
     },
     'beforeEach': function() {
@@ -60,6 +61,11 @@ module.exports = {
       var obj = { foo: 'bar' };
       console.dir(obj);
       assert.equal(spy._lastRecord.message, "{ foo: 'bar' }");
+    },
+    'overrides console.trace()': function() {
+      console.trace("foo");
+      assert.equal(spy._lastRecord.message, "foo");
+      assert(spy._lastRecord.stack);
     },
     'afterEach': function() {
       intel.console.restore();
@@ -139,6 +145,7 @@ module.exports = {
     },
     'after': function() {
       intel.console.restore();
+      intel.setLevel(intel.DEBUG);
       console.log = prevLog;
       intel._handlers = [];
     }
