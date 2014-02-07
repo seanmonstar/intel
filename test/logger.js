@@ -223,6 +223,29 @@ module.exports = {
         assert(obj[0].fileName);
         assert.equal(record.exception, true);
       },
+      'ALL should receive all levels': function() {
+        var a = new Logger(unique());
+        a.propagate = false;
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+        a.setLevel(Logger.ALL);
+
+        a.log(0, 'hallo');
+        var record = spyA.getLastArgs()[0];
+        assert.equal(record.message, 'hallo');
+      },
+      'NONE should receive no levels': function() {
+        var a = new Logger(unique());
+        a.propagate = false;
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+        a.setLevel(Logger.NONE);
+
+        a.error('poof');
+        assert.equal(spyA.getCallCount(), 0);
+        a.log(1000, 'hallo');
+        assert.equal(spyA.getCallCount(), 0);
+      },
       'warning should alias warn': aliasLog('warning', 'warn'),
       'o_O should alias warn': aliasLog('o_O', 'warn'),
       'O_O should alias error': aliasLog('O_O', 'error')

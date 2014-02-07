@@ -85,6 +85,8 @@ intel.ERROR // intel.error()
 intel.CRITICAL // intel.critical()
 ```
 
+Useful levels that don't have accompanying logger methods are `intel.NONE` and `intel.ALL`.
+
 ### Adding a Handler
 
 The default logger will use a [ConsoleHandler](#consolehandler) if you don't specify anything else. You can add handlers to any logger:
