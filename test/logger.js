@@ -82,6 +82,18 @@ module.exports = {
         var b = new Logger(n2);
 
         assert.equal(b.getEffectiveLevel(), Logger.ERROR);
+      },
+      'should change if parent changes': function() {
+        var n = unique();
+        var a = new Logger(n);
+        a.setLevel('error');
+
+        var n2 = n + '.' + unique();
+        var b = new Logger(n2);
+        assert.equal(b.getEffectiveLevel(), Logger.ERROR);
+
+        a.setLevel('info');
+        assert.equal(b.getEffectiveLevel(), Logger.INFO);
       }
     },
     'makeRecord': {

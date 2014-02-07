@@ -8,6 +8,7 @@
 - added `exception: boolean` and `uncaughtException: boolean` to LogRecord
 - added `Logger.NONE` and `Logger.ALL` levels
 - changed `intel.config` to remove default ROOT console handler
+- performance improved for `Logger#getEffectiveLevel()`
 
 ## v0.4.0 0 2013-12-04
 
