@@ -25,7 +25,7 @@
 - changed `intel.console` to remove "lib" from logger names like "connect.lib.session" to be "connect.session"
 - performance improved for `Logger#getEffectiveLevel()`
 
-## v0.4.0 0 2013-12-04
+## v0.4.0 - 2013-12-04
 
 - added intel.console({ debug: 'foo' }) option
 - performance gains
