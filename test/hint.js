@@ -33,12 +33,9 @@ module.exports = {
 
   'jshint': {
 
-    'before': function(done) {
-      var w = walk.walkSync(path.join(__dirname, '../lib'));
-      w.on('file', options.listeners.file);
-      w = walk.walkSync(__dirname);
-      w.on('file', options.listeners.file);
-      w.once('end', done);
+    'before': function() {
+      walk.walkSync(path.join(__dirname, '../lib'), options);
+      walk.walkSync(__dirname, options);
     },
 
     'should yield no errors': function(done) {
