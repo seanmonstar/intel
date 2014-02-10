@@ -2,7 +2,7 @@
   "name": "intel",
   "version": "0.5.0-dev",
   "dependencies": {
-    "bluebird": "1.0.3",
+    "bluebird": "1.0.x",
     "chalk": "0.4.0",
     "dbug": "0.2.x",
     "stack-trace": "0.0.8",
