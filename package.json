@@ -4,6 +4,7 @@
   "dependencies": {
     "bluebird": "1.0.3",
     "chalk": "0.4.0",
+    "dbug": "0.2.x",
     "stack-trace": "0.0.8",
     "strftime": "0.8.0",
     "symbol": "0.1.0",
@@ -12,7 +13,6 @@
   "devDependencies": {
     "blanket": "1.x",
     "coveralls": "2.x",
-    "dbug": "0.x",
     "debug": "0.x",
     "insist": "0.x",
     "jshint": "2.x",

@@ -2,12 +2,14 @@
 
 ## Current dev
 
+- added direct integration with `dbug` module
 - added `Logger.removeAllHandlers()`
 - added `formatFn` for Formatters and `regex`, `flags`, and `function` for Filters to ease `intel.config()`
 - added `Logger#trace` and `intel.TRACE` level
 - added `exception: boolean` and `uncaughtException: boolean` to LogRecord
 - added `Logger.NONE` and `Logger.ALL` levels
 - changed `intel.config` to remove default ROOT console handler
+- changed `intel.console` to remove "lib" from logger names like "connect.lib.session" to be "connect.session"
 - performance improved for `Logger#getEffectiveLevel()`
 
 ## v0.4.0 0 2013-12-04

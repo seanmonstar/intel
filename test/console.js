@@ -6,6 +6,7 @@ const assert = require('insist');
 
 const intel = require('../');
 const consoleUtil = require('./util/console');
+const dbugUtil = require('./util/debarg');
 
 var spy = new intel.handlers.Null();
 spy.handle = function(record) {
@@ -110,21 +111,20 @@ module.exports = {
       assert.equal(spy._lastRecord.level, intel.WARN);
 
     },
-    'intercepts dbug() colorless messages': function() {
-      intel.console({ debug: 'company' });
+    'removes duplicate parts of dbug names': function() {
+      intel.console({ debug: 'test' });
 
-      process.env.DEBUG_COLORS = false;
-      var dbug = require('dbug')('company:bravo');
-      dbug('oscar mike');
-
+      dbugUtil('hut');
       assert(spy._lastRecord);
-      assert.equal(spy._lastRecord.message, 'oscar mike');
-      assert.equal(spy._lastRecord.name, 'test.console.company.bravo');
-      assert.equal(spy._lastRecord.level, intel.DEBUG);
+      assert.equal(spy._lastRecord.name, 'test.util.debarg');
+    },
+    'removes lib from name if matches': function() {
+      intel.console({ debug: 'test' });
 
-      dbug.warn('boom');
-      assert.equal(spy._lastRecord.message, 'boom');
-      assert.equal(spy._lastRecord.level, intel.WARN);
+      var deboog = require('./util/lib/deboog');
+      deboog('hat');
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.name, 'test.util.deboog');
     },
     'intercepts debug() messages': function() {
       intel.console({ debug: 'recon' });
@@ -139,6 +139,19 @@ module.exports = {
       assert.equal(spy._lastRecord.name, 'test.console.recon');
       assert.equal(spy._lastRecord.level, intel.DEBUG);
 
+    },
+    'intercepts debug() colorless messages': function() {
+      intel.console({ debug: 'company:*' });
+      delete require.cache[require.resolve('debug')];
+
+      process.env.DEBUG_COLORS = false;
+      var debug = require('debug')('company:bravo');
+      debug('oscar mike');
+
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.message, 'oscar mike +0ms');
+      assert.equal(spy._lastRecord.name, 'test.console.company.bravo');
+      assert.equal(spy._lastRecord.level, intel.DEBUG);
     },
     'afterEach': function() {
       process.env.DEBUG_COLORS = "";
