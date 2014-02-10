@@ -4,6 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
@@ -31,6 +32,7 @@
 <a name="intel" class="anchor" href="#intel"><span class="octicon octicon-link"></span></a>intel</h1>
 
 <p><a href="https://travis-ci.org/seanmonstar/intel"><img src="https://travis-ci.org/seanmonstar/intel.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/seanmonstar/intel?branch=master"><img src="https://coveralls.io/repos/seanmonstar/intel/badge.png?branch=master" alt="Coverage Status"></a>
 <a href="http://badge.fury.io/js/intel"><img src="https://badge.fury.io/js/intel.png" alt="NPM version"></a></p>
 
 <p>An abbreviation of intelligence. In this case, the acquirement of information.</p>
@@ -130,6 +132,19 @@
 <span class="nx">intel</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="s1">'nobody loves me'</span><span class="p">);</span>
 </pre></div>
 
+<p>All levels by order: (each level has a corresponding method on a Logger)</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">TRACE</span> <span class="c1">// intel.trace()</span>
+<span class="nx">intel</span><span class="p">.</span><span class="nx">VERBOSE</span> <span class="c1">// intel.verbose()</span>
+<span class="nx">intel</span><span class="p">.</span><span class="nx">DEBUG</span> <span class="c1">// intel.debug()</span>
+<span class="nx">intel</span><span class="p">.</span><span class="nx">INFO</span> <span class="c1">// intel.info()</span>
+<span class="nx">intel</span><span class="p">.</span><span class="nx">WARN</span> <span class="c1">// intel.warn()</span>
+<span class="nx">intel</span><span class="p">.</span><span class="nx">ERROR</span> <span class="c1">// intel.error()</span>
+<span class="nx">intel</span><span class="p">.</span><span class="nx">CRITICAL</span> <span class="c1">// intel.critical()</span>
+</pre></div>
+
+<p>Useful levels that don't have accompanying logger methods are <code>intel.NONE</code> and <code>intel.ALL</code>.</p>
+
 <h3>
 <a name="adding-a-handler" class="anchor" href="#adding-a-handler"><span class="octicon octicon-link"></span></a>Adding a Handler</h3>
 
@@ -140,6 +155,8 @@
 
 <span class="nx">intel</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">'going to a file!'</span><span class="p">);</span>
 </pre></div>
+
+<p>You can remove all handlers from a particular logger with <code>logger.removeAllHandlers()</code>.</p>
 
 <h3>
 <a name="getting-a-named-logger" class="anchor" href="#getting-a-named-logger"><span class="octicon octicon-link"></span></a>Getting a Named Logger</h3>
@@ -295,6 +312,8 @@ and optionally exiting afterwards.</p>
 <span class="p">}</span>
 </pre></div>
 
+<p>A list of known Handlers is kept on the <a href="https://github.com/seanmonstar/intel/wiki/Custom-Handlers">wiki</a>.</p>
+
 <h2>
 <a name="filters" class="anchor" href="#filters"><span class="octicon octicon-link"></span></a>Filters</h2>
 
@@ -339,11 +358,14 @@ and optionally exiting afterwards.</p>
 
 <div class="highlight highlight-js"><pre><span class="p">{</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s2">"foo.bar"</span><span class="p">,</span>
-  <span class="nx">level</span><span class="o">:</span> <span class="mi">20</span><span class="p">,</span>
+  <span class="nx">level</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
   <span class="nx">levelname</span><span class="o">:</span> <span class="s2">"DEBUG"</span><span class="p">,</span>
   <span class="nx">timestamp</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
   <span class="nx">message</span><span class="o">:</span> <span class="s2">"all clear"</span><span class="p">,</span>
-  <span class="nx">args</span><span class="o">:</span> <span class="p">[]</span>
+  <span class="nx">args</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="nx">stack</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// if an Error was passed, or trace()</span>
+  <span class="nx">exception</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// if an Error was passed</span>
+  <span class="nx">uncaughtException</span><span class="o">:</span> <span class="kc">false</span> <span class="c1">// if passed Error was from process.on('uncaughtException')</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -452,6 +474,8 @@ and optionally exiting afterwards.</p>
 
 <div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">config</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'./logging.json'</span><span class="p">));</span>
 </pre></div>
+
+<p>Passing a <code>handlers</code> option to <code>intel.config</code> will remove the default ROOT console handler, unless you've previously manually assigned handlers to <code>intel</code>.</p>
 
 <h2>
 <a name="console" class="anchor" href="#console"><span class="octicon octicon-link"></span></a>console</h2>
