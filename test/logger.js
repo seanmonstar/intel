@@ -310,7 +310,7 @@ module.exports = {
         setTimeout(function() {
           assert.equal(handlerSpy.getCallCount(), 1);
           var record = handlerSpy.getLastArgs()[0];
-          assert.equal(record.level, Logger.ERROR);
+          assert.equal(record.level, Logger.CRITICAL);
           assert.equal(record.message, '[Error: catch me if you can]');
           assert.equal(record.uncaughtException, true);
           assert.equal(p.exit.getCallCount(), 1);
