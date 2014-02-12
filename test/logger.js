@@ -126,10 +126,10 @@ module.exports = {
         var spyA = spy();
         a.addHandler({ handle: spyA, level: 0 });
 
-        a.info('foo', { bar: 'baz' });
+        a.info('foo', { bar: 'baz' }, null);
 
         assert.equal(spyA.getCallCount(), 1);
-        assert.equal(spyA.getLastArgs()[0].message, "foo { bar: 'baz' }");
+        assert.equal(spyA.getLastArgs()[0].message, "foo { bar: 'baz' } null");
       },
       'should be usable without alias': function() {
         var n = unique();

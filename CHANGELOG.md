@@ -2,10 +2,11 @@
 
 ## Current dev
 
-## v0.5.1 - 2014-02-11
+## v0.5.1 - 2014-02-12
 
-- added bgMagenta to TRACE
+- added bgBlue to TRACE
 - changed uncaught exceptions log level to CRITICAL
+- fixed error if null was passed an argument to Logger.log()
 
 ## v0.5.0 - 2014-02-10
 
