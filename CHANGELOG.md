@@ -2,6 +2,13 @@
 
 ## Current dev
 
+## v0.5.1 - 2014-02-11
+
+- added bgMagenta to TRACE
+- changed uncaught exceptions log level to CRITICAL
+
+## v0.5.0 - 2014-02-10
+
 - added direct integration with `dbug` module
 - added `Logger.removeAllHandlers()`
 - added `formatFn` for Formatters and `regex`, `flags`, and `function` for Filters to ease `intel.config()`
