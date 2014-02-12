@@ -1,6 +1,19 @@
 # intel ChangeLog
 
-## Current dev
+## v0.5.1 - 2014-02-11
+
+- added bgBlue color to TRACE
+- changed uncaught exceptions log level to CRITICAL
+
+## v0.5.0 - 2014-02-10
+
+## v0.5.1 - 2014-02-12
+
+- added bgBlue to TRACE
+- changed uncaught exceptions log level to CRITICAL
+- fixed error if null was passed an argument to Logger.log()
+
+## v0.5.0 - 2014-02-10
 
 - added direct integration with `dbug` module
 - added `Logger.removeAllHandlers()`

@@ -126,10 +126,10 @@ module.exports = {
         var spyA = spy();
         a.addHandler({ handle: spyA, level: 0 });
 
-        a.info('foo', { bar: 'baz' });
+        a.info('foo', { bar: 'baz' }, null);
 
         assert.equal(spyA.getCallCount(), 1);
-        assert.equal(spyA.getLastArgs()[0].message, "foo { bar: 'baz' }");
+        assert.equal(spyA.getLastArgs()[0].message, "foo { bar: 'baz' } null");
       },
       'should be usable without alias': function() {
         var n = unique();
@@ -310,7 +310,7 @@ module.exports = {
         setTimeout(function() {
           assert.equal(handlerSpy.getCallCount(), 1);
           var record = handlerSpy.getLastArgs()[0];
-          assert.equal(record.level, Logger.ERROR);
+          assert.equal(record.level, Logger.CRITICAL);
           assert.equal(record.message, '[Error: catch me if you can]');
           assert.equal(record.uncaughtException, true);
           assert.equal(p.exit.getCallCount(), 1);
