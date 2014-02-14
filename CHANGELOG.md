@@ -1,13 +1,6 @@
 # intel ChangeLog
 
-## v0.5.1 - 2014-02-11
-
-- added bgBlue color to TRACE
-- changed uncaught exceptions log level to CRITICAL
-
-## v0.5.0 - 2014-02-10
-
-## v0.5.1 - 2014-02-12
+## v0.5.1 - 2014-02-14
 
 - added bgBlue to TRACE
 - changed uncaught exceptions log level to CRITICAL
