@@ -277,7 +277,8 @@ A `Formatter` is used by a [`Handler`](#handlers) to format the message before b
 
 - **format**: A format string that will be used with `printf`. Default: `%(message)s`
 - **datefmt**: A string to be used to format the date. Will replace instances of `%(date)s` in the `format` string. Default: `%Y-%m-%d %H:%M-%S`
-- **colorize**: A boolean for whether to colorize the `levelname`. Default: `false`
+- **strip**: A boolean for whether to strip [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors_and_Styles) from the `message` and `args`. Default: `false`
+- **colorize**: A boolean for whether to colorize the `levelname`. Disabled when `strip` is used. Default: `false`
 
 ### LogRecord
 
@@ -337,7 +338,8 @@ intel.config({
       'colorize': true
     },
     'details': {
-      'format': '[%(date)s] %(name)s.%(levelname)s: %(message)s'
+      'format': '[%(date)s] %(name)s.%(levelname)s: %(message)s',
+      'strip': true
     }
   },
   filters: {
@@ -415,7 +417,7 @@ Options:
 
 - **root** - String to define root logger, defaults to calling module's filename
 - **ignore** - Array of strings of log names that should be ignored and use standard `console` methods. Ex: `['intel.node_modules.mocha']`
-- **debug** - boolean or String. `true` will set `process.env.DEBUG='*'``. Otherwise, String is used, ex: `'request,express'`
+- **debug** - boolean or String. `true` will set `process.env.DEBUG='*'`. Otherwise, String is used, ex: `'request,express'`
 
 ```js
 // file: patrol/index.js
