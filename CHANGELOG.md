@@ -1,6 +1,12 @@
 # intel ChangeLog
 
-## v0.5.1 - 2014-02-14
+## Current dev
+
+## v0.5.2 - 2014-02-19
+
+- added `strip` option to Formatter, which will strip all ANSI code
+
+## v0.5.1 - 2014-02-12
 
 - added bgBlue to TRACE
 - changed uncaught exceptions log level to CRITICAL
