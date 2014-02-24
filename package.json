@@ -5,9 +5,9 @@
     "bluebird": "1.0.x",
     "chalk": "0.4.0",
     "dbug": "0.2.x",
-    "stack-trace": "0.0.8",
+    "stack-trace": "0.0.9",
     "strftime": "0.8.0",
-    "symbol": "0.1.0",
+    "symbol": "0.2.x",
     "utcstring": "0.1.0"
   },
   "devDependencies": {
