@@ -20,6 +20,14 @@ function mockLog() {
   lastMock = arguments;
 }
 
+function clearDebug() {
+  Object.keys(require.cache).filter(function(key) {
+    return key.indexOf('debug') !== -1;
+  }).forEach(function(key) {
+    delete require.cache[key];
+  });
+}
+
 module.exports = {
 
   'console': {
@@ -128,7 +136,7 @@ module.exports = {
     },
     'intercepts debug() messages': function() {
       intel.console({ debug: 'recon' });
-      delete require.cache[require.resolve('debug')];
+      clearDebug();
 
       var debug = require('debug')('recon');
       assert(debug.enabled);
@@ -142,7 +150,7 @@ module.exports = {
     },
     'intercepts debug() colorless messages': function() {
       intel.console({ debug: 'company:*' });
-      delete require.cache[require.resolve('debug')];
+      clearDebug();
 
       process.env.DEBUG_COLORS = false;
       var debug = require('debug')('company:bravo');
