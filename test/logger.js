@@ -199,6 +199,8 @@ module.exports = {
           var n = unique();
           var a = new Logger(n);
           a.addHandler(new intel.handlers.Null());
+          a.addHandler(new intel.handlers.Null());
+          a.addHandler(new intel.handlers.Null());
           a.propagate = false;
 
           a.debug('some foo %s baz', 'bar').done(done);
@@ -254,6 +256,7 @@ module.exports = {
         a.setLevel(Logger.NONE);
 
         a.error('poof');
+        a.trace('nope');
         assert.equal(spyA.getCallCount(), 0);
         a.log(1000, 'hallo');
         assert.equal(spyA.getCallCount(), 0);
