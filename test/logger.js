@@ -200,10 +200,11 @@ module.exports = {
           var a = new Logger(n);
           a.addHandler(new intel.handlers.Null());
           a.addHandler(new intel.handlers.Null());
-          a.addHandler(new intel.handlers.Null());
           a.propagate = false;
 
-          a.debug('some foo %s baz', 'bar').done(done);
+          a.debug('some foo %s baz', 'bar').done(function() {
+            done();
+          }, done);
         },
         'that rejects with an error': function(done) {
           var n = unique();
