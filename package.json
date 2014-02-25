@@ -2,13 +2,13 @@
   "name": "intel",
   "version": "0.6.0-dev",
   "dependencies": {
-    "bluebird": "^1.0.5",
-    "chalk": "^0.4.0",
-    "dbug": "^0.2.1",
-    "stack-trace": "^0.0.9",
-    "strftime": "^0.8.0",
-    "symbol": "^0.1.0",
-    "utcstring": "^0.1.0"
+    "bluebird": "1.0.x",
+    "chalk": "0.4.x",
+    "dbug": ">=0.2.0",
+    "stack-trace": "0.0.x",
+    "strftime": "0.8.x",
+    "symbol": "0.1.0",
+    "utcstring": "0.x"
   },
   "devDependencies": {
     "blanket": "1.x",
