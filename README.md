@@ -10,13 +10,9 @@ An abbreviation of intelligence. In this case, the acquirement of information.
 
 ## Motivation
 
-Really? Another logger? Well, yes. But here's why:
-
-
 - hierarchial named loggers
 - powerful config
-- console injection works with all libraries 
-
+- console injection works with all libraries
 
 ## Table of Contents
 
