@@ -280,6 +280,7 @@ module.exports = {
         assert.equal(record.level, Logger.TRACE);
         assert.equal(record.message, "intrusion");
         assert(record.stack);
+        assert(!record.exception);
 
         a.trace();
         var record = spyA.getLastArgs()[0];
