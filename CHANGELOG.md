@@ -3,6 +3,10 @@
 ## Current dev
 
 - added `intel.console({ logger: str })` to specify a parent logger
+- added `record.v` to indicate log record format
+- added `record.host` equal the `os.hostname()`
+- fixed `logger.trace()` to no longer set `record.exception=true`
+- fixed cirular references in log arguments
 - fixed promises if there were exactly 2 handlers
 - changed `record.message` to smart object
 - changed `record.args`, can now be found on `record.message.args`
