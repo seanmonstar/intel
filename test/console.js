@@ -66,6 +66,12 @@ module.exports = {
 
       intel.console();
     },
+    'can specify a parent logger': function() {
+      intel.console({ logger: 'foo.bar' });
+
+      console.log('baz');
+      assert.equal(spy._lastRecord.name, 'foo.bar.test.console');
+    },
     'overrides console.dir()': function() {
       var obj = { foo: 'bar' };
       console.dir(obj);
@@ -133,6 +139,14 @@ module.exports = {
       deboog('hat');
       assert(spy._lastRecord);
       assert.equal(spy._lastRecord.name, 'test.util.deboog');
+    },
+    'removes index from names': function() {
+      intel.console({ debug: 'test' });
+
+      var deboog = require('./util/lib/index.js');
+      deboog('hat');
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.name, 'test.util');
     },
     'intercepts debug() messages': function() {
       intel.console({ debug: 'recon' });
