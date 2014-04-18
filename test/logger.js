@@ -100,19 +100,19 @@ module.exports = {
       'should make a record with a simple message': function() {
         var n = unique();
         var a = new Logger(n);
-        var record = a.makeRecord(n, intel.DEBUG, "foo", ["foo"]);
+        var record = a.makeRecord(n, intel.DEBUG, ["foo"]);
         assert.equal(record.name, n);
         assert.equal(record.level, intel.DEBUG);
         assert.equal(record.levelname, 'DEBUG');
         assert.equal(record.message, 'foo');
         assert.equal(record.pid, process.pid);
-        assert.equal(record.args.length, 1);
+        assert.equal(record.message.args.length, 1);
       },
       'should make a record without a string message': function() {
         var n = unique();
         var a = new Logger(n);
         var foo = { bar: 'baz' };
-        var record = a.makeRecord(n, intel.DEBUG, foo, [foo, 'quux', true]);
+        var record = a.makeRecord(n, intel.DEBUG, [foo, 'quux', true]);
 
         assert.equal(record.message, '{ bar: \'baz\' } quux true');
       }

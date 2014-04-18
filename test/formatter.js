@@ -3,9 +3,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const assert = require('insist');
-const stacktrace = require('stack-trace');
 
 const intel = require('../');
+
 
 module.exports = {
   'Formatter': {
@@ -60,17 +60,13 @@ module.exports = {
       },
       'should output as JSON with %O': function() {
         var formatter = new intel.Formatter('%O');
-        var e = new Error('boom');
-        var trace = stacktrace.parse(e.stack);
-        trace.shift();
-        var record = {
-          name: 'foo',
-          message: 'oh noes:',
-          args: ['oh noes:', e],
-          stack: trace
-        };
+        var record = new intel.Record('foo', intel.INFO, ['bar', { a: 'b' }]);
 
-        assert.equal(formatter.format(record), JSON.stringify(record));
+        var out = formatter.format(record);
+        assert.equal(out, JSON.stringify(record));
+        var obj = JSON.parse(out);
+        assert.equal(obj.message[0], 'bar');
+        assert.equal(obj.message[1].a, 'b');
       },
       'should handle circular references  in JSON with %O': function() {
         var formatter = new intel.Formatter('%O');

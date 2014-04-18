@@ -2,6 +2,12 @@
 
 ## Current dev
 
+- added `intel.console({ logger: str })` to specify a parent logger
+- fixed promises if there were exactly 2 handlers
+- changed `record.message` to smart object
+- changed `record.args`, can now be found on `record.message.args`
+- performance improved for promise.timeout()
+
 ## v0.5.2 - 2014-02-19
 
 - added `strip` option to Formatter, which will strip all ANSI code
