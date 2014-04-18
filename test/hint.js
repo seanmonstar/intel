@@ -7,7 +7,7 @@ const path = require('path');
 const util = require('util');
 
 const jshint = require('jshint').JSHINT;
-const Promise = require('bluebird');
+const P = require('bluebird');
 const walk = require('walk');
 
 // read jshintrc
@@ -42,8 +42,8 @@ module.exports = {
       this.slow(800); // can be slow reading all the files :(
       var errors = [];
 
-      var read = Promise.promisify(fs.readFile);
-      Promise.all(filesToLint.map(function(fileName) {
+      var read = P.promisify(fs.readFile);
+      P.all(filesToLint.map(function(fileName) {
         return read(String(fileName)).then(function(data) {
           var f = path.relative(process.cwd(), fileName);
           if (!jshint(String(data), jshintrc)) {
