@@ -5,11 +5,14 @@
 - added `intel.console({ logger: str })` to specify a parent logger
 - added `record.v` to indicate log record format
 - added `record.host` equal the `os.hostname()`
+- added `%j` alias to `%O` in printf
+- added `%?` default formatting for an argument
+- added `:4` flag for indenting JSON in printf. such as `%:2j`.
 - fixed `logger.trace()` to no longer set `record.exception=true`
 - fixed cirular references in log arguments
 - fixed promises if there were exactly 2 handlers
-- changed `record.message` to smart object
-- changed `record.args`, can now be found on `record.message.args`
+- changed `log.info('%s', false)` string interpolation to use internal printf
+- changed JSON format of `Record` to not include interpolated `message`, since it already contains `args`
 - performance improved for promise.timeout()
 
 ## v0.5.2 - 2014-02-19
