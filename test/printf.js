@@ -14,8 +14,8 @@ module.exports = {
     },
     'should print args': function() {
       assert.equal(printf('%s,%s,%d', 'a', 2, 3), 'a,2,3');
-      assert.equal(printf('%%s', 'a'), '%s');
-      assert.equal(printf('%Z', 'a'), '%Z');
+      assert.equal(printf('%%s', 'a'), '%s a');
+      assert.equal(printf('%Z', 'a'), '%Z a');
     },
     'should print %O': function() {
       assert.equal(printf('%O', { foo: 'bar' }), '{"foo":"bar"}');
@@ -57,6 +57,7 @@ module.exports = {
       assert.equal(printf('%5.2s', 'abc'), '   bc');
     },
     'should default print extra args without placeholders': function() {
+      assert.equal(printf('foo', 'bar'), 'foo bar');
       assert.equal(
         printf('%s =', 'abc', 3, false, { foo: 'bar' }),
         'abc = 3 false {"foo":"bar"}'
