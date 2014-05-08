@@ -106,7 +106,7 @@ module.exports = {
         assert.equal(record.levelname, 'DEBUG');
         assert.equal(record.message, 'foo');
         assert.equal(record.pid, process.pid);
-        assert.equal(record.message.args.length, 1);
+        assert.equal(record.args.length, 1);
       },
       'should make a record without a string message': function() {
         var n = unique();
@@ -114,7 +114,7 @@ module.exports = {
         var foo = { bar: 'baz' };
         var record = a.makeRecord(n, intel.DEBUG, [foo, 'quux', true]);
 
-        assert.equal(record.message, '{ bar: \'baz\' } quux true');
+        assert.equal(record.message, '{"bar":"baz"} quux true');
       }
     },
     'log': {
@@ -129,7 +129,7 @@ module.exports = {
         a.info('foo', { bar: 'baz' }, null);
 
         assert.equal(spyA.getCallCount(), 1);
-        assert.equal(spyA.getLastArgs()[0].message, "foo { bar: 'baz' } null");
+        assert.equal(spyA.getLastArgs()[0].message, 'foo {"bar":"baz"} null');
       },
       'should be usable without alias': function() {
         var n = unique();
@@ -294,7 +294,7 @@ module.exports = {
         
         a.trace({ a: 'b' });
         var record = spyA.getLastArgs()[0];
-        assert.equal(record.message, "Trace { a: 'b' }");
+        assert.equal(record.message, 'Trace {"a":"b"}');
         assert(record.stack);
       }
     },
@@ -316,7 +316,7 @@ module.exports = {
           assert.equal(handlerSpy.getCallCount(), 1);
           var record = handlerSpy.getLastArgs()[0];
           assert.equal(record.level, Logger.CRITICAL);
-          assert.equal(record.message, '[Error: catch me if you can]');
+          assert.equal(record.message, 'Error: catch me if you can');
           assert.equal(record.uncaughtException, true);
           assert.equal(p.exit.getCallCount(), 1);
           done();

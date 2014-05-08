@@ -299,6 +299,33 @@ You can output the values from these properties using the [Formatter](#formatter
 - `%(name)s.%(levelname)s: %(message)s`: foo.bar.DEBUG: all clear
 - `[%(date)s] %(name)s:: %(message)s`: \[2013-09-18 11:29:32\] foo.bar:: all clear
 
+#### printf
+
+The `printf` bundled in intel does basic string interpolation. It can
+get named properties from an argument, or output several arguments. It
+can truncate, pad, or indent, and convert values.
+
+Conversion types:
+
+- `s` - String. Example: `printf('%s', new Error('foo'))` creates `Error: foo`
+- `d` - Number.
+- `j` and `O` - JSON. `JSON.stringify` the value.
+- `?` - Default. Will output a sane default conversion based on argument type.
+
+Conversion flags:
+
+- `:1` - Indent a JSON format with spaces based on number after colon.
+  Example: `printf('%:2j', { a: 'b' })` would indent the `"a": "b"` by 2
+  spaces. Ignored on other conversion types.
+- `3` - A number will pad the output. Example: `printf('%5s', 'abc')`
+  returns `'  abc'`.
+- `-3` - Pads on the right side. Example: `printf('%-5s', 'abc')`
+  returns `'abc  '`.
+- `.2` - Truncates to specified length. Example: `printf('%.3s', 12345)`
+  returns `'345'`.
+- `.-2` - Truncates on the right side. Example: `printf('%.-3s', 12345)`
+  returns `'123'`.
+
 ## config
 
 Once you understand the power of intel's [named loggers](#getting-a-named-logger), you'll appreciate being able to quickly configure logging in your application.
