@@ -33,7 +33,7 @@ function SpyHandler() {
 }
 util.inherits(SpyHandler, intel.Handler);
 SpyHandler.prototype.emit = function spyEmit(record, callback) {
-  this.spy.apply(this, arguments);
+  this.spy(record, callback);
   callback();
 };
 

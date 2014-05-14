@@ -186,14 +186,6 @@ module.exports = {
         assert.equal(spyB.getCallCount(), 1);
         assert.equal(spyC.getCallCount(), 1);
       },
-      'should trigger provided callback': function(done) {
-        var n = unique();
-        var a = new Logger(n);
-        a.addHandler(new intel.handlers.Null());
-        a.propagate = false;
-
-        a.debug('some foo %s baz', 'bar', done);
-      },
       'should return a promise': {
         'that resolves': function(done) {
           var n = unique();

@@ -42,17 +42,20 @@ module.exports = {
     'handle': {
       'requires emit to accept a callback argument': function() {
         var h = new intel.Handler();
-        h.emit = function(){};
 
-        assert.throws(h.handle.bind(h), function(err) {
-          return err.message === 'Handler.emit requires a callback argument';
+        assert.throws(function() {
+          h.emit = function(){};
+        }, function(err) {
+          return err.message ===
+            'emit must accept 2 arguments (record, callback)';
         });
 
         h = new intel.Handler();
-        h.emit = function(record, callback){
-          record = callback;
-        };
-        assert.doesNotThrow(h.handle.bind(h));
+        assert.doesNotThrow(function() {
+          h.emit = function(record, callback){
+            record = callback;
+          };
+        });
       },
       'should use filters on record': function(done) {
         var h = new intel.Handler();

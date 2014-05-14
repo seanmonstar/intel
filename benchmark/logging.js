@@ -19,7 +19,10 @@ stdout.write = function (out, encoding, cb) {
 };
 
 var _console = new Console(stdout, stdout);
-intel.addHandler(new intel.handlers.Stream(stdout));
+intel.basicConfig({
+  stream: stdout,
+  level: intel.INFO
+});
 
 winston.add(winston.transports.File, { stream: stdout });
 winston.remove(winston.transports.Console);
@@ -48,6 +51,41 @@ module.exports = {
       },
       'winston': function() {
         winston.info('foo', 'bar');
+      }
+    }
+  },
+  'disabled': {
+    'before': function() {
+      intel.setLevel(intel.WARN);
+      winston.level = 'warn';
+    },
+    'bench': {
+      'console': function() {
+        _console.info('foo', 'bar');
+      },
+      'intel': function() {
+        intel.info('foo', 'bar');
+      },
+      'winston': function() {
+        winston.info('foo', 'bar');
+      }
+    }
+  },
+  'disabled child loggers': {
+    'before': function() {
+      intel.setLevel(intel.INFO);
+      this.one = intel.getLogger('foo');
+      intel.getLogger('foo.bar');
+      intel.getLogger('foo.bar.baz');
+      this.two = intel.getLogger('foo.bar.baz.quux');
+      intel.setLevel(intel.WARN);
+    },
+    'bench': {
+      'foo': function() {
+        this.one.info('foo', 'bar');
+      },
+      'foo.bar.baz.quux': function() {
+        this.two.info('foo', 'bar');
       }
     }
   }

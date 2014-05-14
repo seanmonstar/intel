@@ -15,7 +15,7 @@ module.exports = {
         var formatter = new intel.Formatter('%(level)s');
         assert.equal(formatter._format, '%(level)s');
         assert.equal(formatter._datefmt, intel.Formatter.prototype._datefmt);
-        assert.equal(formatter._colorize, false);
+        assert(!formatter._colorize);
         assert.equal(formatter._strip, false);
       },
       'should accept options': function() {
@@ -60,7 +60,8 @@ module.exports = {
       },
       'should output as JSON with %O': function() {
         var formatter = new intel.Formatter('%O');
-        var record = new intel.Record('foo', intel.INFO, ['bar', { a: 'b' }]);
+        var Record = require('../lib/record');
+        var record = new Record('foo', intel.INFO, ['bar', { a: 'b' }]);
 
         var out = formatter.format(record);
         assert.equal(out, JSON.stringify(record));
