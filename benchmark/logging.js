@@ -21,7 +21,8 @@ stdout.write = function (out, encoding, cb) {
 var _console = new Console(stdout, stdout);
 intel.basicConfig({
   stream: stdout,
-  level: intel.INFO
+  level: intel.INFO,
+  format: '%O'
 });
 
 winston.add(winston.transports.File, { stream: stdout });
@@ -56,6 +57,11 @@ module.exports = {
   },
   'disabled': {
     'before': function() {
+      intel.setLevel(intel.INFO);
+      intel.getLogger('foo');
+      intel.getLogger('foo.bar');
+      intel.getLogger('foo.bar.baz');
+      this.intel = intel.getLogger('foo.bar.baz.quux');
       intel.setLevel(intel.WARN);
       winston.level = 'warn';
     },
@@ -64,28 +70,10 @@ module.exports = {
         _console.info('foo', 'bar');
       },
       'intel': function() {
-        intel.info('foo', 'bar');
+        this.intel.info('foo', 'bar');
       },
       'winston': function() {
         winston.info('foo', 'bar');
-      }
-    }
-  },
-  'disabled child loggers': {
-    'before': function() {
-      intel.setLevel(intel.INFO);
-      this.one = intel.getLogger('foo');
-      intel.getLogger('foo.bar');
-      intel.getLogger('foo.bar.baz');
-      this.two = intel.getLogger('foo.bar.baz.quux');
-      intel.setLevel(intel.WARN);
-    },
-    'bench': {
-      'foo': function() {
-        this.one.info('foo', 'bar');
-      },
-      'foo.bar.baz.quux': function() {
-        this.two.info('foo', 'bar');
       }
     }
   }
