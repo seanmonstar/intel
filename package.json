@@ -4,7 +4,7 @@
   "dependencies": {
     "bluebird": "~1.2.0",
     "chalk": "~0.4.0",
-    "dbug": "~0.4.0",
+    "dbug": "~0.4.1",
     "stack-trace": "~0.0.9",
     "strftime": "~0.8.0",
     "symbol": "~0.2.0",
