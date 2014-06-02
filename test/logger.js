@@ -113,7 +113,7 @@ module.exports = {
         var a = new Logger(n);
         var foo = { bar: 'baz' };
         var record = a.makeRecord(n, intel.DEBUG, [foo, 'quux', true]);
-
+        record.timestamp;
         assert.equal(record.message, '{"bar":"baz"} quux true');
       }
     },
@@ -258,7 +258,7 @@ module.exports = {
       'o_O should alias warn': aliasLog('o_O', 'warn'),
       'O_O should alias error': aliasLog('O_O', 'error')
     },
-    
+
     'trace': {
       'should include a stacktrace in message': function() {
         var a = new Logger(unique());
@@ -266,7 +266,7 @@ module.exports = {
         a.setLevel(Logger.TRACE);
         var spyA = spy();
         a.addHandler({ handle: spyA, level: 0 });
-        
+
         a.trace('intrusion');
         var record = spyA.getLastArgs()[0];
         assert.equal(record.level, Logger.TRACE);
@@ -278,16 +278,27 @@ module.exports = {
         var record = spyA.getLastArgs()[0];
         assert.equal(record.message, "Trace");
         assert(record.stack);
-        
+
         a.trace('red %s', 'alert');
         var record = spyA.getLastArgs()[0];
         assert.equal(record.message, "red alert");
         assert(record.stack);
-        
+
         a.trace({ a: 'b' });
         var record = spyA.getLastArgs()[0];
         assert.equal(record.message, 'Trace {"a":"b"}');
         assert(record.stack);
+      },
+      'should overwrite Trace.toJSON': function() {
+        var a = new Logger(unique());
+        a.propagate = false;
+        a.setLevel(Logger.TRACE);
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+
+        a.trace('intrusion');
+        var record = spyA.getLastArgs()[0];
+        assert.equal(JSON.stringify(record.args[1]), '"[object Trace]"');
       }
     },
 
