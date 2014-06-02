@@ -11,8 +11,10 @@
 - fixed `logger.trace()` to no longer set `record.exception=true`
 - fixed cirular references in log arguments
 - fixed promises if there were exactly 2 handlers
+- fixed `intel.console(debug)` with uncolored output
 - changed `log.info('%s', false)` string interpolation to use internal printf
 - changed JSON format of `Record` to not include interpolated `message`, since it already contains `args`
+- changed node engine to >=0.10.0
 - performance **HUGE BOOST ACROSS THE BOARD**
 
 ## v0.5.2 - 2014-02-19
