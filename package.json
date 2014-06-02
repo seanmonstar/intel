@@ -43,7 +43,7 @@
     "url": "https://github.com/seanmonstar/intel.git"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "keywords": [
     "log",
