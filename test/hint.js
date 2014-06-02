@@ -39,7 +39,7 @@ module.exports = {
     },
 
     'should yield no errors': function(done) {
-      this.slow(800); // can be slow reading all the files :(
+      this.slow(2000); // can be slow reading all the files :(
       var errors = [];
 
       var read = P.promisify(fs.readFile);
