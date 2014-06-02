@@ -14,6 +14,7 @@ spy.emit = function(record, callback) {
   callback();
 };
 
+var __log = require('dbug').__log;
 var prevLog = console.log;
 var lastMock;
 function mockLog() {
@@ -55,7 +56,7 @@ module.exports = {
       assert.equal(spy._lastRecord.name, 'test.util.console');
     },
     'can ignore paths': function() {
-      intel.console({ ignore: ['test.util'] });
+      intel.console({ ignore: 'test.util' });
 
       console.log('quux');
       assert.equal(spy._lastRecord.message, 'quux');
@@ -109,6 +110,16 @@ module.exports = {
       intel.console({ debug: 'foo:bar,baz'});
       assert.equal(process.env.DEBUG, 'quux,foo:bar,baz');
     },
+    'with string sets DEBUG if empty': function() {
+      delete process.env.DEBUG;
+      intel.console({ debug: 'foo:bar,baz'});
+      assert.equal(process.env.DEBUG, 'foo:bar,baz');
+    },
+    'with false sets DEBUG to empty': function() {
+      process.env.DEBUG = 'fooz';
+      intel.console({ debug: false });
+      assert(!process.env.DEBUG);
+    },
     'intercepts dbug() messages': function() {
       intel.console({ debug: 'platoon' });
 
@@ -124,6 +135,20 @@ module.exports = {
       assert.equal(spy._lastRecord.message, 'boom');
       assert.equal(spy._lastRecord.level, intel.WARN);
 
+    },
+    'intercepts dbug() colorless messages': function() {
+      intel.console({ debug: 'company' });
+
+      var _dbug = require('dbug');
+      _dbug.__log = __log;
+      var dbug = _dbug('company:bravo');
+      dbug.colored = false;
+      dbug('oscar mike');
+
+      assert(spy._lastRecord);
+      assert.equal(spy._lastRecord.message, 'oscar mike');
+      assert.equal(spy._lastRecord.name, 'test.console.company.bravo');
+      assert.equal(spy._lastRecord.level, intel.DEBUG);
     },
     'removes duplicate parts of dbug names': function() {
       intel.console({ debug: 'test' });
@@ -161,19 +186,6 @@ module.exports = {
       assert.equal(spy._lastRecord.name, 'test.console.recon');
       assert.equal(spy._lastRecord.level, intel.DEBUG);
 
-    },
-    'intercepts debug() colorless messages': function() {
-      intel.console({ debug: 'company:*' });
-      clearDebug();
-
-      process.env.DEBUG_COLORS = false;
-      var debug = require('debug')('company:bravo');
-      debug('oscar mike');
-
-      assert(spy._lastRecord);
-      assert.equal(spy._lastRecord.message, 'oscar mike +0ms');
-      assert.equal(spy._lastRecord.name, 'test.console.company.bravo');
-      assert.equal(spy._lastRecord.level, intel.DEBUG);
     },
     'afterEach': function() {
       process.env.DEBUG_COLORS = "";

@@ -44,6 +44,12 @@ module.exports = {
         var h = new intel.Handler();
 
         assert.throws(function() {
+          h.emit = 1;
+        }, function(err) {
+          return err.message === 'emit must be a function';
+        });
+
+        assert.throws(function() {
           h.emit = function(){};
         }, function(err) {
           return err.message ===
@@ -285,6 +291,14 @@ module.exports = {
         }).then(function(){
           assert.equal(fs.statSync(filename).size, 62);
         }).done(done);
+      },
+      'with 0 maxSize should do nothing': function() {
+        var filename = tmp();
+        var handler = new intel.handlers.Rotating({
+          file: filename,
+          maxSize: 0
+        });
+        return handler.handle({ message: bytes(10) });
       }
     }
   }

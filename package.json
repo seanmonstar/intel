@@ -11,7 +11,7 @@
     "utcstring": "~0.1.0"
   },
   "devDependencies": {
-    "blanket": "1.x",
+    "blanket": "~1.1.6",
     "coveralls": "2.x",
     "debug": "0.x",
     "insist": "0.x",
@@ -27,12 +27,13 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "mocha --check-leaks --ui exports",
+    "coverage": "mocha --ui exports --require blanket --reporter html-cov > coverage.html",
     "matcha": "matcha -I exports"
   },
   "config": {
     "blanket": {
       "pattern": "lib",
-      "data-cover-never": "node_modules"
+      "data-cover-never": ["node_modules", "test"]
     }
   },
   "bugs": "https://github.com/seanmonstar/intel/issues",
