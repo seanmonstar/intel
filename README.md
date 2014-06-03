@@ -1,7 +1,7 @@
 # intel
 
 [![Build Status](https://travis-ci.org/seanmonstar/intel.png?branch=master)](https://travis-ci.org/seanmonstar/intel)
-[![Coverage Status](https://coveralls.io/repos/seanmonstar/intel/badge.png?branch=master)](https://coveralls.io/r/seanmonstar/intel?branch=master)
+![Coverage Status](./coverage.png)
 [![NPM version](https://badge.fury.io/js/intel.png)](http://badge.fury.io/js/intel)
 
 An abbreviation of intelligence. In this case, the acquirement of information.
