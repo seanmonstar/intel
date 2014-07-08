@@ -2,8 +2,8 @@
   "name": "intel",
   "version": "1.0.0-b3",
   "dependencies": {
-    "bluebird": "~1.2.0",
-    "chalk": "~0.4.0",
+    "bluebird": "^2.2.1",
+    "chalk": "~0.5.0",
     "dbug": "~0.4.1",
     "stack-trace": "~0.0.9",
     "strftime": "~0.8.0",
@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "blanket": "~1.1.6",
-    "debug": "0.x",
+    "debug": "~1.0.2",
     "insist": "0.x",
     "jshint": "2.x",
     "matcha": "0.x",
