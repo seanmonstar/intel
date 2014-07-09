@@ -3,7 +3,7 @@
   "version": "1.0.0-b3",
   "dependencies": {
     "bluebird": "^2.2.1",
-    "chalk": "~0.5.0",
+    "chalk": "~0.5.1",
     "dbug": "~0.4.1",
     "stack-trace": "~0.0.9",
     "strftime": "~0.8.0",
