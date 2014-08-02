@@ -32,9 +32,8 @@ function SpyHandler() {
   this.spy = spy();
 }
 util.inherits(SpyHandler, intel.Handler);
-SpyHandler.prototype.emit = function spyEmit(record, callback) {
-  this.spy(record, callback);
-  callback();
+SpyHandler.prototype.emit = function spyEmit(record) {
+  this.spy(record);
 };
 
 var oldBasic;
@@ -45,12 +44,11 @@ module.exports = {
       oldBasic = intel.basicConfig;
       oldLevel = intel._level;
     },
-    'root logger calls basicConfig': function(done) {
+    'root logger calls basicConfig': function() {
       var val;
       var stream = {
-        write: function(out, cb) {
+        write: function(out) {
           val = out;
-          cb();
         }
       };
 
@@ -58,11 +56,9 @@ module.exports = {
         oldBasic({ stream: stream });
       };
 
-      intel.info('danger').then(function() {
-        assert.equal(val, 'root.INFO: danger\n');
-        assert.equal(intel._level, oldLevel);
-      }).done(done);
-
+      intel.info('danger');
+      assert.equal(val, 'root.INFO: danger\n');
+      assert.equal(intel._level, oldLevel);
     },
     'only works once': function() {
       intel.basicConfig();
@@ -93,7 +89,7 @@ module.exports = {
     }
   },
   'config': {
-    'should be able to configure logging': function(done) {
+    'should be able to configure logging': function() {
       intel.config({
         formatters: {
           'basic': {
@@ -149,18 +145,15 @@ module.exports = {
       var msg = handler.format({ message: 'hi', levelname: 'BAR'});
       assert.equal(msg, 'foo! BAR: hi');
 
-      log.debug('user').then(function() {
-        assert.equal(handler.spy.getCallCount(), 0);
+      log.debug('user');
+      assert.equal(handler.spy.getCallCount(), 0);
 
-        return log.info('user foo');
-      }).then(function() {
-        assert.equal(handler.spy.getCallCount(), 1);
-        assert.equal(handler.spy.getLastArgs()[0].message, 'user foo');
+      log.info('user foo');
+      assert.equal(handler.spy.getCallCount(), 1);
+      assert.equal(handler.spy.getLastArgs()[0].message, 'user foo');
 
-        return log.info('ignore me');
-      }).then(function() {
-        assert.equal(handler.spy.getCallCount(), 1);
-      }).done(done);
+      log.info('ignore me');
+      assert.equal(handler.spy.getCallCount(), 1);
     },
     'should be able to config with just JSON': function() {
       intel.config(require('./util/config.json'));

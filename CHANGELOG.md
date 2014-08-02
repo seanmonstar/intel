@@ -15,6 +15,7 @@
 - changed `log.info('%s', false)` string interpolation to use internal printf
 - changed JSON format of `Record` to not include interpolated `message`, since it already contains `args`
 - changed node engine to >=0.10.0
+- removed `Promise`s being returned from log methods. Not useful, slows it down.
 - removed `Rotating` handler from core. Use `intel-rotating` on npm.
 - performance **HUGE BOOST ACROSS THE BOARD**
 

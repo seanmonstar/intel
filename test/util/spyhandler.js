@@ -11,8 +11,7 @@ function Spy() {
 }
 util.inherits(Spy, intel.Handler);
 
-Spy.prototype.emit = function(record, callback) {
-  callback();
+Spy.prototype.emit = function() {
 };
 
 module.exports = Spy;

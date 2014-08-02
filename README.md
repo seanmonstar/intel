@@ -23,7 +23,6 @@ An abbreviation of intelligence. In this case, the acquirement of information.
   - [Adding a Handler](#adding-a-handler)
   - [Getting Named Loggers](#getting-a-named-logger)
   - [Logging Exceptions](#logging-exceptions)
-  - [Async Logging](#async-logging)
 - [Handlers](#handlers)
   - [ConsoleHandler](#consolehandler)
   - [StreamHandler](#streamhandler)
@@ -140,19 +139,11 @@ logger.handleExceptions(exitOnError);
 
 Pass a boolean for `exitOnError`. Default is `true` if no value is passed.
 
-### Async logging
-
-With Nodejs' async nature, many handlers will be dealing with asynchronous APIs. In most cases, that shouldn't be your concern, and you can ignore this. However, if you need to execute code after a log message has been completely handled, every log method returns a promise. The promise only gets resolved after all handlers have finished handling that message.
-
-```js
-require('intel').warn('report in').then(rogerThat);
-```
-
 ## Handlers
 
 Loggers build a message and try to pass the message to all of it's handlers and to it's parent. Handlers determine exactly what to do with that message, whether it's sending it to console, to a file, over a socket, or nothing at all.
 
-All Handlers have a `level`, `timeout`, and a [`Formatter`](#formatters). The `timeout` will cause the promise returned by `log` to be rejected if the handler doesn't complete within the time frame.
+All Handlers have a `level` and a [`Formatter`](#formatters).
 
 ```js
 new intel.Handler({

@@ -9,9 +9,8 @@ const consoleUtil = require('./util/console');
 const dbugUtil = require('./util/debarg');
 
 var spy = new intel.handlers.Null();
-spy.emit = function(record, callback) {
+spy.emit = function(record) {
   this._lastRecord = record;
-  callback();
 };
 
 var __log = require('dbug').__log;

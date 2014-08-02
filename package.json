@@ -2,9 +2,9 @@
   "name": "intel",
   "version": "1.0.0-b4",
   "dependencies": {
-    "bluebird": "^2.2.1",
     "chalk": "~0.5.1",
     "dbug": "~0.4.1",
+    "depd": "/home/sean0.4.4",
     "stack-trace": "~0.0.9",
     "strftime": "~0.8.0",
     "symbol": "~0.2.0",
@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "blanket": "~1.1.6",
+    "bluebird": "2.2.2",
     "debug": "~1.0.2",
     "insist": "0.x",
     "jshint": "2.x",
@@ -25,14 +26,17 @@
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha --check-leaks --ui exports",
+    "test": "mocha --check-leaks --ui exports -R dot",
     "coverage": "mocha --ui exports --require blanket -R ../../../test/util/reporter",
     "bench": "matcha -I exports"
   },
   "config": {
     "blanket": {
       "pattern": "lib",
-      "data-cover-never": ["node_modules", "test"]
+      "data-cover-never": [
+        "node_modules",
+        "test"
+      ]
     }
   },
   "bugs": "https://github.com/seanmonstar/intel/issues",
@@ -53,10 +57,12 @@
     "console"
   ],
   "author": "Sean McArthur <sean.monstar@gmail.com> (http://seanmonstar.com)",
-  "licenses" : [{
-    "type": "MPL 2.0",
-    "url": "https://mozilla.org/MPL/2.0/"
-  }],
+  "licenses": [
+    {
+      "type": "MPL 2.0",
+      "url": "https://mozilla.org/MPL/2.0/"
+    }
+  ],
   "files": [
     "LICENSE",
     "lib"

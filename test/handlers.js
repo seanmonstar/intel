@@ -2,21 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const EventEmitter = require('events').EventEmitter;
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-
 const assert = require('insist');
 
 const intel = require('../');
-
-const NOW = Date.now();
-var counter = 1;
-function tmp() {
-  return path.join(os.tmpDir(),
-      'intel-' + NOW + '-' + process.pid + '-' + (counter++));
-}
 
 module.exports = {
   'Handler': {
@@ -40,54 +28,28 @@ module.exports = {
           return err.message === 'emit must be a function';
         });
 
-        assert.throws(function() {
-          h.emit = function(){};
-        }, function(err) {
-          return err.message ===
-            'emit must accept 2 arguments (record, callback)';
-        });
-
         h = new intel.Handler();
         assert.doesNotThrow(function() {
-          h.emit = function(record, callback){
-            record = callback;
-          };
+          h.emit = function() {};
         });
       },
-      'should use filters on record': function(done) {
+      'should use filters on record': function() {
         var h = new intel.Handler();
         var lastRecord;
-        h.emit = function(record, callback){
+        h.emit = function(record){
           lastRecord = record;
-          callback();
         };
 
         var filter = new intel.Filter('foo');
         h.addFilter(filter);
-        h.handle({ name: 'foo' }).then(function() {
-          assert.equal(lastRecord.name, 'foo');
-          return h.handle({ name: 'foobar' });
-        }).then(function() {
-          assert.notEqual(lastRecord.name, 'foobar');
+        h.handle({ name: 'foo' });
+        assert.equal(lastRecord.name, 'foo');
+        h.handle({ name: 'foobar' });
+        assert.notEqual(lastRecord.name, 'foobar');
 
-          h.removeFilter(filter);
-          return h.handle({ name: 'foobar' });
-        }).then(function() {
-          assert.equal(lastRecord.name, 'foobar');
-        }).done(done);
-      },
-      'should timeout if taking too long': function(done) {
-        var h = new intel.Handler({ timeout: 10 });
-        h.emit = function(record, callback) {
-          record = callback;
-          // never call callback, so it should timeout
-        };
-
-        h.handle({ message: 'foo' }).then(function() {
-          assert(false); // shouldn't be called
-        }, function(reason) {
-          assert(reason);
-        }).done(done);
+        h.removeFilter(filter);
+        h.handle({ name: 'foobar' });
+        assert.equal(lastRecord.name, 'foobar');
       }
     },
     'emit': {
@@ -118,41 +80,33 @@ module.exports = {
       }
     },
     'emit': {
-      'should write message to stream': function(done) {
+      'should write message to stream': function() {
         var out;
         var stream = {
-          write: function(msg, fn) {
+          write: function(msg) {
             out = msg;
-            fn();
           }
         };
 
         var handler = new intel.handlers.Stream(stream);
-        handler.handle({ message: 'foo' }).then(function() {
-          assert.equal(out, 'foo\n');
-          done();
-        });
-      },
-      'should wait for flush on slow streams': function(done) {
-        var out;
-        var stream = new EventEmitter();
-        stream.write = function write(data, fn) {
-          setTimeout(function() {
-            out = data;
-            fn();
-          }, 1);
-        };
-        var handler = new intel.handlers.Stream(stream);
-        handler.handle({ message: 'secret' }).then(function() {
-          assert.equal(out, 'secret\n');
-        }).done(done);
+        handler.handle({ message: 'foo' });
+        assert.equal(out, 'foo\n');
       }
     }
   },
   'File': {
+    'before': function() {
+      intel.handlers.File.prototype._open = function() {
+        return {
+          write: function(val) {
+            this._val = val;
+          }
+        };
+      };
+    },
     'constructor': {
       'should accept options': function() {
-        var filename = tmp();
+        var filename = 'foo';
         var handler = new intel.handlers.File({
           level: intel.WARN,
           file: filename
@@ -162,23 +116,18 @@ module.exports = {
         assert.equal(handler._file, filename);
       },
       'should accept a filename': function() {
-        var filename = tmp();
+        var filename = 'bar';
         var handler = new intel.handlers.File(filename);
 
         assert.equal(handler._file, filename);
       }
     },
     'handle': {
-      'should write to the file': function(done) {
-        var filename = tmp();
+      'should write to the file': function() {
+        var filename = 'baz';
         var handler = new intel.handlers.File(filename);
-        handler.handle({ message: 'recon' }).then(function() {
-          fs.readFile(filename, function(err, contents) {
-            assert.ifError(err);
-            assert.equal(contents.toString(), 'recon\n');
-            done();
-          });
-        }).done();
+        handler.handle({ message: 'recon' });
+        assert.equal(handler._stream._val, 'recon\n');
       }
     }
   },
@@ -196,35 +145,31 @@ module.exports = {
       }
     },
     'handle': {
-      'should send low priority messages to stdout': function(done) {
+      'should send low priority messages to stdout': function() {
         var h = new intel.handlers.Console();
         var val;
         h._out._stream = {
-          write: function(out, callback) {
+          write: function(out) {
             val = out;
-            callback();
             return true;
           }
         };
 
-        h.handle({ level: intel.INFO, message: 'oscar mike' }).then(function() {
-          assert.equal(val, 'oscar mike\n');
-        }).done(done);
+        h.handle({ level: intel.INFO, message: 'oscar mike' });
+        assert.equal(val, 'oscar mike\n');
       },
-      'should send warn and higher messages to stderr': function(done) {
+      'should send warn and higher messages to stderr': function() {
         var h = new intel.handlers.Console();
         var val;
         h._err._stream = {
-          write: function(out, callback) {
+          write: function(out) {
             val = out;
-            callback();
             return true;
           }
         };
 
-        h.handle({ level: intel.WARN, message: 'mayday' }).then(function() {
-          assert.equal(val, 'mayday\n');
-        }).done(done);
+        h.handle({ level: intel.WARN, message: 'mayday' });
+        assert.equal(val, 'mayday\n');
       }
     }
   }

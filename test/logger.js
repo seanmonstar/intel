@@ -186,35 +186,6 @@ module.exports = {
         assert.equal(spyB.getCallCount(), 1);
         assert.equal(spyC.getCallCount(), 1);
       },
-      'should return a promise': {
-        'that resolves': function(done) {
-          var n = unique();
-          var a = new Logger(n);
-          a.addHandler(new intel.handlers.Null());
-          a.addHandler(new intel.handlers.Null());
-          a.propagate = false;
-
-          a.debug('some foo %s baz', 'bar').done(function() {
-            done();
-          }, done);
-        },
-        'that rejects with an error': function(done) {
-          var n = unique();
-          var a = new Logger(n);
-          var h = new intel.Handler();
-          h.emit = function(record, callback) {
-            /*jshint unused:false*/
-            throw new Error('foo');
-          };
-
-          a.addHandler(h);
-          a.propagate = false;
-
-          a.debug('some foo %s baz', 'bar').then(null, function(reason) {
-            assert.equal(reason.message, 'foo');
-          }).done(done);
-        }
-      },
       'should format stacktraces': function() {
         var a = new Logger(unique());
         a.propagate = false;
@@ -303,32 +274,29 @@ module.exports = {
     },
 
     'handleExceptions': {
-      'should catch uncaughtErrors': function(done) {
+      'should catch uncaughtErrors': function() {
         var logger = new Logger(unique());
         var p = logger._process = new EventEmitter();
-        p.exit = spy();
 
         var handlerSpy = spy();
         logger.addHandler({ handle: handlerSpy, level: 0 });
         logger.propagate = false;
 
         logger.handleExceptions();
+        logger._exit = spy();
         p.emit('uncaughtException', new Error("catch me if you can"));
 
-        setTimeout(function() {
-          assert.equal(handlerSpy.getCallCount(), 1);
-          var record = handlerSpy.getLastArgs()[0];
-          assert.equal(record.level, Logger.CRITICAL);
-          assert.equal(record.message, 'Error: catch me if you can');
-          assert.equal(record.uncaughtException, true);
-          assert.equal(p.exit.getCallCount(), 1);
-          done();
-        }, 10);
+        assert.equal(handlerSpy.getCallCount(), 1);
+        var record = handlerSpy.getLastArgs()[0];
+        assert.equal(record.level, Logger.CRITICAL);
+        assert.equal(record.message, 'Error: catch me if you can');
+        assert.equal(record.uncaughtException, true);
+        assert.equal(logger._exit.getCallCount(), 1);
       },
-      'should not exit if exitOnError is false': function(done) {
+      'should not exit if exitOnError is false': function() {
         var logger = new Logger(unique());
         var p = logger._process = new EventEmitter();
-        p.exit = spy();
+        logger._exit = spy();
 
         var handlerSpy = spy();
         logger.addHandler({ handle: handlerSpy, level: 0 });
@@ -337,17 +305,13 @@ module.exports = {
         logger.handleExceptions(false);
         p.emit('uncaughtException', new Error("catch me if you can"));
 
-        setTimeout(function() {
-          assert.equal(p.exit.getCallCount(), 0);
-          done();
-        }, 10);
+        assert.equal(logger._exit.getCallCount(), 0);
       }
     },
     'unhandleExceptions': {
       'should remove exception listener': function() {
         var logger = new Logger(unique());
         var p = logger._process = new EventEmitter();
-        p.exit = spy();
 
         var handlerSpy = spy();
         logger.addHandler({ handle: handlerSpy, level: 0 });
