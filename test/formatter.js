@@ -66,8 +66,8 @@ module.exports = {
         var out = formatter.format(record);
         assert.equal(out, JSON.stringify(record));
         var obj = JSON.parse(out);
-        assert.equal(obj.message[0], 'bar');
-        assert.equal(obj.message[1].a, 'b');
+        assert.equal(obj.args[0], 'bar');
+        assert.equal(obj.args[1].a, 'b');
       },
       'should handle circular references  in JSON with %O': function() {
         var formatter = new intel.Formatter('%O');
