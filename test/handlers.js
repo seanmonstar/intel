@@ -18,15 +18,6 @@ function tmp() {
       'intel-' + NOW + '-' + process.pid + '-' + (counter++));
 }
 
-
-function bytes(x) {
-  var b = new Buffer(x);
-  b[0] = '<'.charCodeAt(0);
-  b[b.length - 1] = '>'.charCodeAt(0);
-  b.fill('a', 1, b.length - 1);
-  return b.toString();
-}
-
 module.exports = {
   'Handler': {
     'constructor': {
@@ -234,71 +225,6 @@ module.exports = {
         h.handle({ level: intel.WARN, message: 'mayday' }).then(function() {
           assert.equal(val, 'mayday\n');
         }).done(done);
-      }
-    }
-  },
-  'RotatingFileHandler': {
-    'handle': {
-      'with maxSize should create new files': function(done) {
-        this.timeout(5000);
-
-        var filename = tmp();
-        var handler = new intel.handlers.Rotating({
-          file: filename,
-          maxSize: 64
-        });
-
-        assert.equal(handler._file, filename);
-        handler.handle({ message: bytes(60) });
-        handler.handle({ message: bytes(50) });
-        handler.handle({ message: bytes(45) }).then(function() {
-          assert.equal(fs.statSync(filename).size, 46);
-          assert.equal(fs.statSync(filename + '.1').size, 51);
-          assert.equal(fs.statSync(filename + '.2').size, 61);
-        }).done(done);
-      },
-      'with maxFiles should not create more than max': function(done) {
-        this.timeout(5000);
-
-        var filename = tmp();
-        var handler = new intel.handlers.Rotating({
-          file: filename,
-          maxSize: 64,
-          maxFiles: 3
-        });
-
-        handler.handle({ message: bytes(50) });
-        handler.handle({ message: bytes(55) });
-        handler.handle({ message: bytes(60) });
-        handler.handle({ message: bytes(45) }).then(function() {
-          assert.equal(fs.statSync(filename).size, 46);
-          assert.equal(fs.statSync(filename + '.1').size, 61);
-          assert.equal(fs.statSync(filename + '.2').size, 56);
-          assert(!fs.existsSync(filename + '.3'));
-        }).done(done);
-      },
-      'should continue to write after buffer is flushed': function(done) {
-        this.timeout(5000);
-
-        var filename = tmp();
-        var handler = new intel.handlers.Rotating({
-          file: filename,
-          maxSize: 64
-        });
-
-        handler.handle({ message: bytes(29) }).then(function(){
-          return handler.handle({ message: bytes(31) });
-        }).then(function(){
-          assert.equal(fs.statSync(filename).size, 62);
-        }).done(done);
-      },
-      'with 0 maxSize should do nothing': function() {
-        var filename = tmp();
-        var handler = new intel.handlers.Rotating({
-          file: filename,
-          maxSize: 0
-        });
-        return handler.handle({ message: bytes(10) });
       }
     }
   }
