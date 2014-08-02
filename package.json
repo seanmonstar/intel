@@ -4,7 +4,7 @@
   "dependencies": {
     "chalk": "~0.5.1",
     "dbug": "~0.4.1",
-    "depd": "/home/sean0.4.4",
+    "depd": "~0.4.4",
     "stack-trace": "~0.0.9",
     "strftime": "~0.8.0",
     "symbol": "~0.2.0",
