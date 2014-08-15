@@ -75,7 +75,7 @@ module.exports = {
         var stream = {};
         var handler = new intel.handlers.Stream(stream);
 
-        assert.equal(handler.level, intel.NOTSET);
+        assert.equal(handler.level, intel.ALL);
         assert.equal(handler._stream, stream);
       }
     },
@@ -132,45 +132,9 @@ module.exports = {
     }
   },
   'Console': {
-    'constructor': {
-      'should use stdout and stderr': function() {
-        var h = new intel.handlers.Console();
-        assert.equal(h._out._stream, process.stdout);
-        assert.equal(h._err._stream, process.stderr);
-      },
-      'should pass options to StreamHandlers': function() {
-        var f = new intel.Formatter({ colorize: true });
-        var h = new intel.handlers.Console({ formatter: f });
-        assert(h._out._formatter._colorize);
-      }
-    },
-    'handle': {
-      'should send low priority messages to stdout': function() {
-        var h = new intel.handlers.Console();
-        var val;
-        h._out._stream = {
-          write: function(out) {
-            val = out;
-            return true;
-          }
-        };
-
-        h.handle({ level: intel.INFO, message: 'oscar mike' });
-        assert.equal(val, 'oscar mike\n');
-      },
-      'should send warn and higher messages to stderr': function() {
-        var h = new intel.handlers.Console();
-        var val;
-        h._err._stream = {
-          write: function(out) {
-            val = out;
-            return true;
-          }
-        };
-
-        h.handle({ level: intel.WARN, message: 'mayday' });
-        assert.equal(val, 'mayday\n');
-      }
+    'is just a wrapper for stderr StreamHandler': function() {
+      var h = new intel.handlers.Console();
+      assert.equal(h._stream, process.stderr);
     }
   }
 };

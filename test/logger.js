@@ -157,7 +157,7 @@ module.exports = {
         a.debug('bar');
         assert.equal(spyA.getCallCount(), 0);
 
-        a.info('foobar');
+        a.info('foo', 'bar');
         assert.equal(spyA.getCallCount(), 1);
       },
       'should propagate': function() {
@@ -226,8 +226,7 @@ module.exports = {
         assert.equal(spyA.getCallCount(), 0);
       },
       'warning should alias warn': aliasLog('warning', 'warn'),
-      'o_O should alias warn': aliasLog('o_O', 'warn'),
-      'O_O should alias error': aliasLog('O_O', 'error')
+      'fatal should alias critical': aliasLog('fatal', 'critical')
     },
 
     'trace': {

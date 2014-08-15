@@ -26,6 +26,7 @@
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
+    "testt": "mocha --check-leaks --ui exports -R dot",
     "test": "mocha --check-leaks --ui exports --require blanket -R ../../../test/util/reporter",
     "bench": "matcha -I exports"
   },
