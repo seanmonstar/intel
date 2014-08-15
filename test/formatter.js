@@ -110,7 +110,7 @@ module.exports = {
 
           var d = new Date();
           var record = {
-            timestamp: d
+            timestamp: d.getTime()
           };
 
           function pad(val) {
