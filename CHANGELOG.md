@@ -10,7 +10,6 @@
 - added `:4` flag for indenting JSON in printf. such as `%:2j`.
 - fixed `logger.trace()` to no longer set `record.exception=true`
 - fixed cirular references in log arguments
-- fixed promises if there were exactly 2 handlers
 - fixed `intel.console(debug)` with uncolored output
 - changed `log.info('%s', false)` string interpolation to use internal printf
 - changed JSON format of `Record` to not include interpolated `message`, since it already contains `args`
