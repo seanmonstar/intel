@@ -4,7 +4,7 @@
   "dependencies": {
     "chalk": "~0.5.1",
     "dbug": "~0.4.1",
-    "depd": "~0.4.4",
+    "depd": "~1.0.0",
     "stack-trace": "~0.0.9",
     "strftime": "~0.8.0",
     "symbol": "~0.2.0",
@@ -12,8 +12,8 @@
   },
   "devDependencies": {
     "blanket": "~1.1.6",
-    "bluebird": "2.2.2",
-    "debug": "~1.0.2",
+    "bluebird": "~2.3.2",
+    "debug": "~2.0.0",
     "insist": "0.x",
     "jshint": "2.x",
     "matcha": "0.x",
