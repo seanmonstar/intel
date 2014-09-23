@@ -1,6 +1,6 @@
 {
   "name": "intel",
-  "version": "1.0.0-b5",
+  "version": "1.0.0-b6",
   "dependencies": {
     "chalk": "~0.5.1",
     "dbug": "~0.4.1",
