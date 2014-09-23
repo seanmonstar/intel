@@ -1,6 +1,6 @@
 language: node_js
 before_install:
-  - npm install npm@>=2.0.2 -g
+  - npm install npm@next -g
   - npm --version
 node_js:
   - "0.8"
