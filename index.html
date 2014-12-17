@@ -4,9 +4,10 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +21,7 @@
       <div class="inner">
         <h1>intel</h1>
         <h2>I need more intel!</h2>
-        <a href="https://github.com/seanmonstar/intel" class="button"><small>View project on</small>GitHub</a>
+        <a href="https://github.com/seanmonstar/intel" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -28,10 +29,10 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a name="intel" class="anchor" href="#intel"><span class="octicon octicon-link"></span></a>intel</h1>
+<a id="intel" class="anchor" href="#intel" aria-hidden="true"><span class="octicon octicon-link"></span></a>intel</h1>
 
 <p><a href="https://travis-ci.org/seanmonstar/intel"><img src="https://travis-ci.org/seanmonstar/intel.png?branch=master" alt="Build Status"></a>
-<a href="https://coveralls.io/r/seanmonstar/intel?branch=master"><img src="https://coveralls.io/repos/seanmonstar/intel/badge.png?branch=master" alt="Coverage Status"></a>
+<img src="./coverage.png" alt="Coverage Status">
 <a href="http://badge.fury.io/js/intel"><img src="https://badge.fury.io/js/intel.png" alt="NPM version"></a></p>
 
 <p>An abbreviation of intelligence. In this case, the acquirement of information.</p>
@@ -41,16 +42,17 @@
 </blockquote>
 
 <h2>
-<a name="motivation" class="anchor" href="#motivation"><span class="octicon octicon-link"></span></a>Motivation</h2>
-
-<p>Really? Another logger? Well, yes. But here's why:</p>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Motivation</h2>
 
 <ul>
 <li>hierarchial named loggers</li>
 <li>powerful config</li>
-<li>console injection works with all libraries </li>
-</ul><h2>
-<a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+<li>console injection works with all libraries</li>
+<li>fast where possible</li>
+</ul>
+
+<h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
 
 <ul>
 <li>
@@ -63,7 +65,6 @@
 <li><a href="#adding-a-handler">Adding a Handler</a></li>
 <li><a href="#getting-a-named-logger">Getting Named Loggers</a></li>
 <li><a href="#logging-exceptions">Logging Exceptions</a></li>
-<li><a href="#async-logging">Async Logging</a></li>
 </ul>
 </li>
 <li>
@@ -73,7 +74,6 @@
 <li><a href="#consolehandler">ConsoleHandler</a></li>
 <li><a href="#streamhandler">StreamHandler</a></li>
 <li><a href="#filehandler">FileHandler</a></li>
-<li><a href="#rotatingfilehandler">RotatingFileHandler</a></li>
 <li><a href="#nullhandler">NullHandler</a></li>
 <li><a href="#creating-a-custom-handler">Creating a Custom Handler</a></li>
 </ul>
@@ -101,141 +101,123 @@
 <li><a href="#console.debug">debug()</a></li>
 </ul>
 </li>
-</ul><h2>
-<a name="logging" class="anchor" href="#logging"><span class="octicon octicon-link"></span></a>Logging</h2>
+</ul>
+
+<h2>
+<a id="logging" class="anchor" href="#logging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging</h2>
 
 <h3>
-<a name="using-default-logger" class="anchor" href="#using-default-logger"><span class="octicon octicon-link"></span></a>Using Default Logger</h3>
+<a id="using-default-logger" class="anchor" href="#using-default-logger" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using Default Logger</h3>
 
 <p>To get started right away, intel provides a default logger. The module itself is an instance of a <code>Logger</code>.</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">info</span><span class="p">(</span><span class="s1">'Hello intel'</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>)<span class="pl-s3">.info</span>(<span class="pl-s1"><span class="pl-pds">'</span>Hello intel<span class="pl-pds">'</span></span>);</pre></div>
 
 <h3>
-<a name="string-interpolation" class="anchor" href="#string-interpolation"><span class="octicon octicon-link"></span></a>String interpolation</h3>
+<a id="string-interpolation" class="anchor" href="#string-interpolation" aria-hidden="true"><span class="octicon octicon-link"></span></a>String interpolation</h3>
 
 <p>You can log messages using interpolation just as you can when using the <code>console.log</code> API:</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">info</span><span class="p">(</span><span class="s1">'Situation %s!'</span><span class="p">,</span> <span class="s1">'NORMAL'</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>)<span class="pl-s3">.info</span>(<span class="pl-s1"><span class="pl-pds">'</span>Situation %s!<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>NORMAL<span class="pl-pds">'</span></span>);</pre></div>
 
 <h3>
-<a name="setting-the-log-level" class="anchor" href="#setting-the-log-level"><span class="octicon octicon-link"></span></a>Setting the Log Level</h3>
+<a id="setting-the-log-level" class="anchor" href="#setting-the-log-level" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting the Log Level</h3>
 
 <p>Loggers have a log level that is compared against log messages. All messages that are of a lower level than the Logger are ignored. This is useful to reduce less important messages in production deployments.</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">intel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">);</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">setLevel</span><span class="p">(</span><span class="nx">intel</span><span class="p">.</span><span class="nx">WARN</span><span class="p">);</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s1">'i made it!'</span><span class="p">);</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="s1">'nobody loves me'</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> intel <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>);
+intel.setLevel(intel.WARN);
+intel<span class="pl-s3">.warn</span>(<span class="pl-s1"><span class="pl-pds">'</span>i made it!<span class="pl-pds">'</span></span>);
+intel.debug(<span class="pl-s1"><span class="pl-pds">'</span>nobody loves me<span class="pl-pds">'</span></span>);</pre></div>
 
 <p>All levels by order: (each level has a corresponding method on a Logger)</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">TRACE</span> <span class="c1">// intel.trace()</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">VERBOSE</span> <span class="c1">// intel.verbose()</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">DEBUG</span> <span class="c1">// intel.debug()</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">INFO</span> <span class="c1">// intel.info()</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">WARN</span> <span class="c1">// intel.warn()</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">ERROR</span> <span class="c1">// intel.error()</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">CRITICAL</span> <span class="c1">// intel.critical()</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>intel.TRACE <span class="pl-c">// intel.trace()</span>
+intel.VERBOSE <span class="pl-c">// intel.verbose()</span>
+intel.DEBUG <span class="pl-c">// intel.debug()</span>
+intel.INFO <span class="pl-c">// intel.info()</span>
+intel.WARN <span class="pl-c">// intel.warn()</span>
+intel.ERROR <span class="pl-c">// intel.error()</span>
+intel.CRITICAL <span class="pl-c">// intel.critical()</span></pre></div>
 
 <p>Useful levels that don't have accompanying logger methods are <code>intel.NONE</code> and <code>intel.ALL</code>.</p>
 
 <h3>
-<a name="adding-a-handler" class="anchor" href="#adding-a-handler"><span class="octicon octicon-link"></span></a>Adding a Handler</h3>
+<a id="adding-a-handler" class="anchor" href="#adding-a-handler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding a Handler</h3>
 
 <p>The default logger will use a <a href="#consolehandler">ConsoleHandler</a> if you don't specify anything else. You can add handlers to any logger:</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">intel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">);</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">(</span><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s1">'/path/to/file.log'</span><span class="p">));</span>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> intel <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>);
+intel.addHandler(<span class="pl-k">new</span> <span class="pl-en">intel.handlers</span>.File(<span class="pl-s1"><span class="pl-pds">'</span>/path/to/file.log<span class="pl-pds">'</span></span>));
 
-<span class="nx">intel</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">'going to a file!'</span><span class="p">);</span>
-</pre></div>
+intel<span class="pl-s3">.info</span>(<span class="pl-s1"><span class="pl-pds">'</span>going to a file!<span class="pl-pds">'</span></span>);</pre></div>
 
 <p>You can remove all handlers from a particular logger with <code>logger.removeAllHandlers()</code>.</p>
 
 <h3>
-<a name="getting-a-named-logger" class="anchor" href="#getting-a-named-logger"><span class="octicon octicon-link"></span></a>Getting a Named Logger</h3>
+<a id="getting-a-named-logger" class="anchor" href="#getting-a-named-logger" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting a Named Logger</h3>
 
 <p>Using named loggers gives you a lot of power in <code>intel</code>. First, the logger name can be included in the log message, so you can more easily understand where log messages are happening inside your application.</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">log</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">getLogger</span><span class="p">(</span><span class="s1">'foo.bar.baz'</span><span class="p">);</span>
-<span class="nx">log</span><span class="p">.</span><span class="nx">setLevel</span><span class="p">(</span><span class="nx">log</span><span class="p">.</span><span class="nx">INFO</span><span class="p">).</span><span class="nx">warn</span><span class="p">(</span><span class="s1">'baz reporting in'</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> log <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>).getLogger(<span class="pl-s1"><span class="pl-pds">'</span>foo.bar.baz<span class="pl-pds">'</span></span>);
+log.setLevel(log.INFO)<span class="pl-s3">.warn</span>(<span class="pl-s1"><span class="pl-pds">'</span>baz reporting in<span class="pl-pds">'</span></span>);</pre></div>
 
 <p>The names are used to build an hierarchy of loggers. Child loggers can inherit their parents' handlers and log level.</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">intel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">alpha</span> <span class="o">=</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">getLogger</span><span class="p">(</span><span class="s1">'alpha'</span><span class="p">);</span>
-<span class="nx">alpha</span><span class="p">.</span><span class="nx">setLevel</span><span class="p">(</span><span class="nx">intel</span><span class="p">.</span><span class="nx">WARN</span><span class="p">).</span><span class="nx">addHandler</span><span class="p">(</span><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="s1">'alpha.log'</span><span class="p">));</span>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> intel <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>);
+<span class="pl-s">var</span> alpha <span class="pl-k">=</span> intel.getLogger(<span class="pl-s1"><span class="pl-pds">'</span>alpha<span class="pl-pds">'</span></span>);
+alpha.setLevel(intel.WARN).addHandler(<span class="pl-k">new</span> <span class="pl-en">intel.handlers</span>.File(<span class="pl-s1"><span class="pl-pds">'</span>alpha.log<span class="pl-pds">'</span></span>));
 
-<span class="kd">var</span> <span class="nx">bravo</span> <span class="o">=</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">getLogger</span><span class="p">(</span><span class="s1">'alpha.bravo'</span><span class="p">);</span>
-<span class="nx">bravo</span><span class="p">.</span><span class="nx">verbose</span><span class="p">(</span><span class="s1">'hungry'</span><span class="p">)</span> <span class="c1">// ignored, since alpha has level of WARN</span>
-<span class="nx">bravo</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s1">'enemy spotted'</span><span class="p">);</span> <span class="c1">// logged to alpha.log</span>
-</pre></div>
+<span class="pl-s">var</span> bravo <span class="pl-k">=</span> intel.getLogger(<span class="pl-s1"><span class="pl-pds">'</span>alpha.bravo<span class="pl-pds">'</span></span>);
+bravo.verbose(<span class="pl-s1"><span class="pl-pds">'</span>hungry<span class="pl-pds">'</span></span>) <span class="pl-c">// ignored, since alpha has level of WARN</span>
+bravo<span class="pl-s3">.warn</span>(<span class="pl-s1"><span class="pl-pds">'</span>enemy spotted<span class="pl-pds">'</span></span>); <span class="pl-c">// logged to alpha.log</span></pre></div>
 
 <p>The power of logger hierarchies can seen more when using <a href="#config">intel.config</a>.</p>
 
 <h3>
-<a name="logging-exceptions" class="anchor" href="#logging-exceptions"><span class="octicon octicon-link"></span></a>Logging Exceptions</h3>
+<a id="logging-exceptions" class="anchor" href="#logging-exceptions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging Exceptions</h3>
 
 <p>Any time you pass an exception (an <code>Error</code>!) to a log method, the stack
 will be included in the output. In most cases, it will be appended at
 the end of the message. If the format is <code>%O</code>, meaning JSON output, a
 stack property will be included.</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'ermahgawd'</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">'boom'</span><span class="p">));</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>intel<span class="pl-s3">.error</span>(<span class="pl-s1"><span class="pl-pds">'</span>ermahgawd<span class="pl-pds">'</span></span>, <span class="pl-k">new</span> <span class="pl-en">Error</span>(<span class="pl-s1"><span class="pl-pds">'</span>boom<span class="pl-pds">'</span></span>));</pre></div>
 
 <p>Loggers can also handle <code>uncaughtException</code>, passing it to its handlers,
 and optionally exiting afterwards.</p>
 
-<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">getLogger</span><span class="p">(</span><span class="s1">'medbay'</span><span class="p">);</span>
-<span class="nx">logger</span><span class="p">.</span><span class="nx">handleExceptions</span><span class="p">(</span><span class="nx">exitOnError</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> logger <span class="pl-k">=</span> intel.getLogger(<span class="pl-s1"><span class="pl-pds">'</span>medbay<span class="pl-pds">'</span></span>);
+logger.handleExceptions(exitOnError);</pre></div>
 
 <p>Pass a boolean for <code>exitOnError</code>. Default is <code>true</code> if no value is passed.</p>
 
-<h3>
-<a name="async-logging" class="anchor" href="#async-logging"><span class="octicon octicon-link"></span></a>Async logging</h3>
-
-<p>With Nodejs' async nature, many handlers will be dealing with asynchronous APIs. In most cases, that shouldn't be your concern, and you can ignore this. However, if you need to execute code after a log message has been completely handled, every log method returns a promise. The promise only gets resolved after all handlers have finished handling that message.</p>
-
-<div class="highlight highlight-js"><pre><span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">warn</span><span class="p">(</span><span class="s1">'report in'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">rogerThat</span><span class="p">);</span>
-</pre></div>
-
 <h2>
-<a name="handlers" class="anchor" href="#handlers"><span class="octicon octicon-link"></span></a>Handlers</h2>
+<a id="handlers" class="anchor" href="#handlers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handlers</h2>
 
 <p>Loggers build a message and try to pass the message to all of it's handlers and to it's parent. Handlers determine exactly what to do with that message, whether it's sending it to console, to a file, over a socket, or nothing at all.</p>
 
-<p>All Handlers have a <code>level</code>, <code>timeout</code>, and a <a href="#formatters"><code>Formatter</code></a>. The <code>timeout</code> will cause the promise returned by <code>log</code> to be rejected if the handler doesn't complete within the time frame.</p>
+<p>All Handlers have a <code>level</code> and a <a href="#formatters"><code>Formatter</code></a>.</p>
 
-<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">Handler</span><span class="p">({</span>
-  <span class="nx">level</span><span class="o">:</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">WARN</span><span class="p">,</span> <span class="c1">// default is NOTSET</span>
-  <span class="nx">formatter</span><span class="o">:</span> <span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">Formatter</span><span class="p">(),</span> <span class="c1">// default formatter</span>
-  <span class="nx">timeout</span><span class="o">:</span> <span class="mi">5000</span> <span class="c1">// default is 5seconds</span>
-<span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-k">new</span> <span class="pl-en">intel.Handler</span>({
+  level<span class="pl-k">:</span> intel.WARN, <span class="pl-c">// default is NOTSET</span>
+  formatter<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">intel.Formatter</span>(), <span class="pl-c">// default formatter</span>
+  timeout<span class="pl-k">:</span> <span class="pl-c1">5000</span> <span class="pl-c">// default is 5seconds</span>
+});</pre></div>
 
 <p>Just like Loggers, if a message's level is not equal to or greater than the Handler's level, the Handler won't even be given the message.</p>
 
 <h3>
-<a name="consolehandler" class="anchor" href="#consolehandler"><span class="octicon octicon-link"></span></a>ConsoleHandler</h3>
+<a id="consolehandler" class="anchor" href="#consolehandler" aria-hidden="true"><span class="octicon octicon-link"></span></a>ConsoleHandler</h3>
 
-<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">Console</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-k">new</span> <span class="pl-en">intel.handlers</span>.Console(options);</pre></div>
 
 <p>The Console handler outputs messages to the <code>stdio</code>, just like <code>console.log()</code> would.</p>
 
 <h3>
-<a name="streamhandler" class="anchor" href="#streamhandler"><span class="octicon octicon-link"></span></a>StreamHandler</h3>
+<a id="streamhandler" class="anchor" href="#streamhandler" aria-hidden="true"><span class="octicon octicon-link"></span></a>StreamHandler</h3>
 
-<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">Stream</span><span class="p">(</span><span class="nx">streamOrOptions</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-k">new</span> <span class="pl-en">intel.handlers</span>.Stream(streamOrOptions);</pre></div>
 
 <p>The Stream handler can take any writable stream, and will write messages to the stream. The <a href="#consolehandler">Console</a> handler essentially uses 2 Stream handlers internally pointed at <code>process.stdout</code> and <code>process.stdin</code>.</p>
 
@@ -245,13 +227,14 @@ and optionally exiting afterwards.</p>
 </li>
 <li>Plus options from <a href="#handlers">Handler</a>
 </li>
-</ul><p>As a shortcut, you can pass the <code>stream</code> directly to the constructor, and all other options will just use default values.</p>
+</ul>
+
+<p>As a shortcut, you can pass the <code>stream</code> directly to the constructor, and all other options will just use default values.</p>
 
 <h3>
-<a name="filehandler" class="anchor" href="#filehandler"><span class="octicon octicon-link"></span></a>FileHandler</h3>
+<a id="filehandler" class="anchor" href="#filehandler" aria-hidden="true"><span class="octicon octicon-link"></span></a>FileHandler</h3>
 
-<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">File</span><span class="p">(</span><span class="nx">filenameOrOptions</span><span class="p">);</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-k">new</span> <span class="pl-en">intel.handlers</span>.File(filenameOrOptions);</pre></div>
 
 <p>The File handler will write messages to a file on disk. It extends the <a href="#streamhandler">Stream</a> handler, by using the <code>WritableStream</code> created from the filename.</p>
 
@@ -260,68 +243,49 @@ and optionally exiting afterwards.</p>
 <strong>file</strong>: A string of a filename to write messages to.</li>
 <li>Plus options from <a href="#handlers">Handler</a>
 </li>
-</ul><p>As a shortcut, you can pass the <code>file</code> String directly to the constructor, and all other options will just use default values.</p>
+</ul>
+
+<p>As a shortcut, you can pass the <code>file</code> String directly to the constructor, and all other options will just use default values.</p>
 
 <h3>
-<a name="rotatingfilehandler" class="anchor" href="#rotatingfilehandler"><span class="octicon octicon-link"></span></a>RotatingFileHandler</h3>
+<a id="nullhandler" class="anchor" href="#nullhandler" aria-hidden="true"><span class="octicon octicon-link"></span></a>NullHandler</h3>
 
-<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">Rotating</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
-</pre></div>
-
-<p>The Rotating handler extends the <a href="#filehandler">File</a> handler, making sure log files don't go over a specified size.</p>
-
-<ul>
-<li>
-<strong>maxSize</strong> - A number of bytes to restrict the size of log files.</li>
-<li>
-<strong>maxFiles</strong> - A number of log files to create after the size restriction is met.</li>
-</ul><p>As files reach the max size, the files will get moved to a the same name, with a number attached to the end. So, <code>intel.log</code> will become <code>intel.log.1</code>, and <code>intel.log.1</code> would move to <code>intel.log.2</code>, up to the maxFiles number.</p>
-
-<h3>
-<a name="nullhandler" class="anchor" href="#nullhandler"><span class="octicon octicon-link"></span></a>NullHandler</h3>
-
-<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">Null</span><span class="p">();</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-k">new</span> <span class="pl-en">intel.handlers</span>.Null();</pre></div>
 
 <p>The Null handler will do nothing with received messages. This can useful if there's instances where you wish to quiet certain loggers when in production (or enemy territory).</p>
 
 <h3>
-<a name="creating-custom-handlers" class="anchor" href="#creating-custom-handlers"><span class="octicon octicon-link"></span></a>Creating Custom Handlers</h3>
+<a id="creating-custom-handlers" class="anchor" href="#creating-custom-handlers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating Custom Handlers</h3>
 
 <p>Adding a new custom handler that isn't included in intel is a snap. Just make a subclass of <a href="#handlers">Handler</a>, and implement the <code>emit</code> method.</p>
 
-<div class="highlight highlight-js"><pre><span class="kr">const</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'util'</span><span class="p">);</span>
-<span class="kr">const</span> <span class="nx">intel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="pl-s">const</span> util <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>util<span class="pl-pds">'</span></span>);
+<span class="pl-s">const</span> intel <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>);
 
-<span class="kd">function</span> <span class="nx">CustomHandler</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">intel</span><span class="p">.</span><span class="nx">Handler</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
-  <span class="c1">// whatever setup you need</span>
-<span class="p">}</span>
-<span class="c1">// don't forget to inhert from Handler (or a subclass, like Stream)</span>
-<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">CustomHandler</span><span class="p">,</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">Handler</span><span class="p">);</span>
+<span class="pl-st">function</span> <span class="pl-en">CustomHandler</span>(<span class="pl-vpf">options</span>) {
+  intel.Handler.<span class="pl-s3">call</span>(<span class="pl-v">this</span>, options);
+  <span class="pl-c">// whatever setup you need</span>
+}
+<span class="pl-c">// don't forget to inhert from Handler (or a subclass, like Stream)</span>
+util.inherits(CustomHandler, intel.Handler);
 
-<span class="nx">CustomHandler</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">emit</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">customEmit</span><span class="p">(</span><span class="nx">record</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// do whatever you need to with the log record</span>
-  <span class="c1">// this could be storing it in a db, or sending an email, or sending an HTTP request...</span>
-  <span class="c1">// if you want the message formatted:</span>
-  <span class="c1">// str = this.format(record);</span>
-
-  <span class="c1">// The callback should be called indicating whether there was an error or not.</span>
-  <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
+<span class="pl-s3">CustomHandler</span>.<span class="pl-sc">prototype</span>.<span class="pl-en">emit</span> <span class="pl-k">=</span> <span class="pl-st">function</span> <span class="pl-en">customEmit</span>(<span class="pl-vpf">record</span>) {
+  <span class="pl-c">// do whatever you need to with the log record</span>
+  <span class="pl-c">// this could be storing it in a db, or sending an email, or sending an HTTP request...</span>
+  <span class="pl-c">// if you want the message formatted:</span>
+  <span class="pl-c">// str = this.format(record);</span>
+}</pre></div>
 
 <p>A list of known Handlers is kept on the <a href="https://github.com/seanmonstar/intel/wiki/Custom-Handlers">wiki</a>.</p>
 
 <h2>
-<a name="filters" class="anchor" href="#filters"><span class="octicon octicon-link"></span></a>Filters</h2>
+<a id="filters" class="anchor" href="#filters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filters</h2>
 
 <p>You can already plug together handlers and loggers, with varying levels, to get powerful filtering of messages. However, sometimes you really need to filter on a specific detail on a message. You can add these filters to a <a href="#handlers">Handler</a> or <a href="#logging">Logger</a>.</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">addFilter</span><span class="p">(</span><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">Filter</span><span class="p">(</span><span class="sr">/^foo/g</span><span class="p">));</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">addFilter</span><span class="p">(</span><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">Filter</span><span class="p">(</span><span class="s1">'patrol.db'</span><span class="p">));</span>
-<span class="nx">intel</span><span class="p">.</span><span class="nx">addFilter</span><span class="p">(</span><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">Filter</span><span class="p">(</span><span class="nx">filterFunction</span><span class="p">));</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>intel.addFilter(<span class="pl-k">new</span> <span class="pl-en">intel.Filter</span>(<span class="pl-sr"><span class="pl-pds">/</span><span class="pl-k">^</span>foo<span class="pl-pds">/</span>g</span>));
+intel.addFilter(<span class="pl-k">new</span> <span class="pl-en">intel.Filter</span>(<span class="pl-s1"><span class="pl-pds">'</span>patrol.db<span class="pl-pds">'</span></span>));
+intel.addFilter(<span class="pl-k">new</span> <span class="pl-en">intel.Filter</span>(filterFunction));</pre></div>
 
 <p>Filters come in 3 forms:</p>
 
@@ -332,11 +296,12 @@ and optionally exiting afterwards.</p>
 <strong>regexp</strong> - pass a RegExp to filter based on the text content of the log message. So, <code>Filter(/^foo/g)</code> will allow messages like <code>log.info('foo bar')</code> but not <code>log.info('bar baz foo')</code>;</li>
 <li>
 <strong>function</strong> - pass a function that receives a <a href="#logrecord">LogRecord</a> object, and returns true if the record meets the filter.</li>
-</ul><h2>
-<a name="formatters" class="anchor" href="#formatters"><span class="octicon octicon-link"></span></a>Formatters</h2>
+</ul>
 
-<div class="highlight highlight-js"><pre><span class="k">new</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">Formatter</span><span class="p">(</span><span class="nx">formatOrOptions</span><span class="p">);</span>
-</pre></div>
+<h2>
+<a id="formatters" class="anchor" href="#formatters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Formatters</h2>
+
+<div class="highlight highlight-js"><pre><span class="pl-k">new</span> <span class="pl-en">intel.Formatter</span>(formatOrOptions);</pre></div>
 
 <p>A <code>Formatter</code> is used by a <a href="#handlers"><code>Handler</code></a> to format the message before being sent out. An useful example is wanting logs that go to the <a href="#consolehandler">Console</a> to be terse and easy to read, but messages sent to a <a href="#filehandler">File</a> to include a lot more detail.</p>
 
@@ -348,25 +313,29 @@ and optionally exiting afterwards.</p>
 <strong>datefmt</strong>: A string to be used to format the date. Will replace instances of <code>%(date)s</code> in the <code>format</code> string. Default: <code>%Y-%m-%d %H:%M-%S</code>
 </li>
 <li>
-<strong>colorize</strong>: A boolean for whether to colorize the <code>levelname</code>. Default: <code>false</code>
+<strong>strip</strong>: A boolean for whether to strip <a href="http://en.wikipedia.org/wiki/ANSI_escape_code#Colors_and_Styles">ANSI escape codes</a> from the <code>message</code> and <code>args</code>. Default: <code>false</code>
 </li>
-</ul><h3>
-<a name="logrecord" class="anchor" href="#logrecord"><span class="octicon octicon-link"></span></a>LogRecord</h3>
+<li>
+<strong>colorize</strong>: A boolean for whether to colorize the <code>levelname</code>. Disabled when <code>strip</code> is used. Default: <code>false</code>
+</li>
+</ul>
+
+<h3>
+<a id="logrecord" class="anchor" href="#logrecord" aria-hidden="true"><span class="octicon octicon-link"></span></a>LogRecord</h3>
 
 <p>The record that is created by loggers is passed to each handler, and handlers pass it to formatters to do their formatting.</p>
 
-<div class="highlight highlight-js"><pre><span class="p">{</span>
-  <span class="nx">name</span><span class="o">:</span> <span class="s2">"foo.bar"</span><span class="p">,</span>
-  <span class="nx">level</span><span class="o">:</span> <span class="mi">30</span><span class="p">,</span>
-  <span class="nx">levelname</span><span class="o">:</span> <span class="s2">"DEBUG"</span><span class="p">,</span>
-  <span class="nx">timestamp</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
-  <span class="nx">message</span><span class="o">:</span> <span class="s2">"all clear"</span><span class="p">,</span>
-  <span class="nx">args</span><span class="o">:</span> <span class="p">[],</span>
-  <span class="nx">stack</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="c1">// if an Error was passed, or trace()</span>
-  <span class="nx">exception</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// if an Error was passed</span>
-  <span class="nx">uncaughtException</span><span class="o">:</span> <span class="kc">false</span> <span class="c1">// if passed Error was from process.on('uncaughtException')</span>
-<span class="p">}</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>{
+  name<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>foo.bar<span class="pl-pds">"</span></span>,
+  level<span class="pl-k">:</span> <span class="pl-c1">30</span>,
+  levelname<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>DEBUG<span class="pl-pds">"</span></span>,
+  timestamp<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>(),
+  message<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>all clear<span class="pl-pds">"</span></span>,
+  args<span class="pl-k">:</span> [],
+  stack<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if an Error was passed, or trace()</span>
+  exception<span class="pl-k">:</span> <span class="pl-c1">false</span>, <span class="pl-c">// if an Error was passed</span>
+  uncaughtException<span class="pl-k">:</span> <span class="pl-c1">false</span> <span class="pl-c">// if passed Error was from process.on('uncaughtException')</span>
+}</pre></div>
 
 <p>You can output the values from these properties using the <a href="#formatters">Formatter</a> and a string with <code>%(property)s</code>. Some example format strings:</p>
 
@@ -375,23 +344,66 @@ and optionally exiting afterwards.</p>
 <code>%(name)s.%(levelname)s: %(message)s</code>: foo.bar.DEBUG: all clear</li>
 <li>
 <code>[%(date)s] %(name)s:: %(message)s</code>: [2013-09-18 11:29:32] foo.bar:: all clear</li>
-</ul><h2>
-<a name="config" class="anchor" href="#config"><span class="octicon octicon-link"></span></a>config</h2>
+</ul>
+
+<h4>
+<a id="printf" class="anchor" href="#printf" aria-hidden="true"><span class="octicon octicon-link"></span></a>printf</h4>
+
+<p>The <code>printf</code> bundled in intel does basic string interpolation. It can
+get named properties from an argument, or output several arguments. It
+can truncate, pad, or indent, and convert values.</p>
+
+<p>Conversion types:</p>
+
+<ul>
+<li>
+<code>s</code> - String. Example: <code>printf('%s', new Error('foo'))</code> creates <code>Error: foo</code>
+</li>
+<li>
+<code>d</code> - Number.</li>
+<li>
+<code>j</code> and <code>O</code> - JSON. <code>JSON.stringify</code> the value.</li>
+<li>
+<code>?</code> - Default. Will output a sane default conversion based on argument type.</li>
+</ul>
+
+<p>Conversion flags:</p>
+
+<ul>
+<li>
+<code>:1</code> - Indent a JSON format with spaces based on number after colon.
+Example: <code>printf('%:2j', { a: 'b' })</code> would indent the <code>"a": "b"</code> by 2
+spaces. Ignored on other conversion types.</li>
+<li>
+<code>3</code> - A number will pad the output. Example: <code>printf('%5s', 'abc')</code>
+returns <code>'  abc'</code>.</li>
+<li>
+<code>-3</code> - Pads on the right side. Example: <code>printf('%-5s', 'abc')</code>
+returns <code>'abc  '</code>.</li>
+<li>
+<code>.2</code> - Truncates to specified length. Example: <code>printf('%.3s', 12345)</code>
+returns <code>'345'</code>.</li>
+<li>
+<code>.-2</code> - Truncates on the right side. Example: <code>printf('%.-3s', 12345)</code>
+returns <code>'123'</code>.</li>
+</ul>
+
+<h2>
+<a id="config" class="anchor" href="#config" aria-hidden="true"><span class="octicon octicon-link"></span></a>config</h2>
 
 <p>Once you understand the power of intel's <a href="#getting-a-named-logger">named loggers</a>, you'll appreciate being able to quickly configure logging in your application.</p>
 
 <h3>
-<a name="basicconfig" class="anchor" href="#basicconfig"><span class="octicon octicon-link"></span></a>basicConfig</h3>
+<a id="basicconfig" class="anchor" href="#basicconfig" aria-hidden="true"><span class="octicon octicon-link"></span></a>basicConfig</h3>
 
 <p>The basicConfig is useful if you don't wish to do any complicated configuration (no way, really?). It's a quick way to setup the root default logger in one function call. Note that if you don't setup any handlers before logging, <code>basicConfig</code> will be called to setup the default logger.</p>
 
-<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">basicConfig</span><span class="p">({</span>
-  <span class="s1">'file'</span><span class="o">:</span> <span class="s1">'/path/to/file.log'</span><span class="p">,</span> <span class="c1">// file and stream are exclusive. only pass 1</span>
-  <span class="s1">'stream'</span><span class="o">:</span> <span class="nx">stream</span><span class="p">,</span>
-  <span class="s1">'format'</span><span class="o">:</span> <span class="s1">'%(message)s'</span><span class="p">,</span>
-  <span class="s1">'level'</span><span class="o">:</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">INFO</span>
-<span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>intel.basicConfig({
+  <span class="pl-s1"><span class="pl-pds">'</span>file<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>/path/to/file.log<span class="pl-pds">'</span></span>, <span class="pl-c">// file and stream are exclusive. only pass 1</span>
+  <span class="pl-s1"><span class="pl-pds">'</span>stream<span class="pl-pds">'</span></span><span class="pl-k">:</span> stream,
+  <span class="pl-s1"><span class="pl-pds">'</span>format<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>%(message)s<span class="pl-pds">'</span></span>,
+  <span class="pl-s1"><span class="pl-pds">'</span>level<span class="pl-pds">'</span></span><span class="pl-k">:</span> intel.INFO
+});</pre></div>
 
 <p>The options passed to basicConfig can include:</p>
 
@@ -404,83 +416,82 @@ and optionally exiting afterwards.</p>
 <strong>format</strong> - a format string</li>
 <li>
 <strong>level</strong> - the log level</li>
-</ul><p>You cannot pass a <code>file</code> and <code>stream</code> to basicConfig. If you don't provide either, a <a href="#consolehandler">Console</a> handler will be used. If you wish to specify multiple or different handlers, take a look at the more comprehensive <a href="#full-configuration">config</a>.</p>
+</ul>
+
+<p>You cannot pass a <code>file</code> and <code>stream</code> to basicConfig. If you don't provide either, a <a href="#consolehandler">Console</a> handler will be used. If you wish to specify multiple or different handlers, take a look at the more comprehensive <a href="#full-configuration">config</a>.</p>
 
 <h3>
-<a name="full-configuration" class="anchor" href="#full-configuration"><span class="octicon octicon-link"></span></a>Full Configuration</h3>
+<a id="full-configuration" class="anchor" href="#full-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Full Configuration</h3>
 
-<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
-  <span class="nx">formatters</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s1">'simple'</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'format'</span><span class="o">:</span> <span class="s1">'[%(levelname)s] %(message)s'</span><span class="p">,</span>
-      <span class="s1">'colorize'</span><span class="o">:</span> <span class="kc">true</span>
-    <span class="p">},</span>
-    <span class="s1">'details'</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'format'</span><span class="o">:</span> <span class="s1">'[%(date)s] %(name)s.%(levelname)s: %(message)s'</span>
-    <span class="p">}</span>
-  <span class="p">},</span>
-  <span class="nx">filters</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s1">'db'</span><span class="o">:</span> <span class="s1">'patrol.db'</span>
-  <span class="p">},</span>
-  <span class="nx">handlers</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s1">'terminal'</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'class'</span><span class="o">:</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">Console</span><span class="p">,</span>
-      <span class="s1">'formatter'</span><span class="o">:</span> <span class="s1">'simple'</span><span class="p">,</span>
-      <span class="s1">'level'</span><span class="o">:</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">VERBOSE</span>
-    <span class="p">},</span>
-    <span class="s1">'logfile'</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'class'</span><span class="o">:</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">handlers</span><span class="p">.</span><span class="nx">File</span><span class="p">,</span>
-      <span class="s1">'level'</span><span class="o">:</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">WARN</span><span class="p">,</span>
-      <span class="s1">'file'</span><span class="o">:</span> <span class="s1">'/var/log/report.log'</span><span class="p">,</span>
-      <span class="s1">'formatter'</span><span class="o">:</span> <span class="s1">'details'</span><span class="p">,</span>
-      <span class="s1">'filters'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'db'</span><span class="p">]</span>
-    <span class="p">}</span>
-  <span class="p">},</span>
-  <span class="nx">loggers</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s1">'patrol'</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'handlers'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'terminal'</span><span class="p">],</span>
-      <span class="s1">'level'</span><span class="o">:</span> <span class="s1">'INFO'</span><span class="p">,</span>
-      <span class="s1">'handleExceptions'</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-      <span class="s1">'exitOnError'</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-      <span class="s1">'propagate'</span><span class="o">:</span> <span class="kc">false</span>
-    <span class="p">},</span>
-    <span class="s1">'patrol.db'</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s1">'handlers'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'logfile'</span><span class="p">],</span>
-      <span class="s1">'level'</span><span class="o">:</span> <span class="nx">intel</span><span class="p">.</span><span class="nx">ERROR</span>
-    <span class="p">},</span>
-    <span class="s1">'patrol.node_modules.express'</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// huh what? see below :)</span>
-      <span class="s1">'handlers'</span><span class="o">:</span> <span class="p">[</span><span class="s1">'logfile'</span><span class="p">],</span>
-      <span class="s1">'level'</span><span class="o">:</span> <span class="s1">'WARN'</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>intel.config({
+  formatters<span class="pl-k">:</span> {
+    <span class="pl-s1"><span class="pl-pds">'</span>simple<span class="pl-pds">'</span></span><span class="pl-k">:</span> {
+      <span class="pl-s1"><span class="pl-pds">'</span>format<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>[%(levelname)s] %(message)s<span class="pl-pds">'</span></span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>colorize<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span>
+    },
+    <span class="pl-s1"><span class="pl-pds">'</span>details<span class="pl-pds">'</span></span><span class="pl-k">:</span> {
+      <span class="pl-s1"><span class="pl-pds">'</span>format<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>[%(date)s] %(name)s.%(levelname)s: %(message)s<span class="pl-pds">'</span></span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>strip<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span>
+    }
+  },
+  filters<span class="pl-k">:</span> {
+    <span class="pl-s1"><span class="pl-pds">'</span>db<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>patrol.db<span class="pl-pds">'</span></span>
+  },
+  handlers<span class="pl-k">:</span> {
+    <span class="pl-s1"><span class="pl-pds">'</span>terminal<span class="pl-pds">'</span></span><span class="pl-k">:</span> {
+      <span class="pl-s1"><span class="pl-pds">'</span>class<span class="pl-pds">'</span></span><span class="pl-k">:</span> intel.handlers.Console,
+      <span class="pl-s1"><span class="pl-pds">'</span>formatter<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>simple<span class="pl-pds">'</span></span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>level<span class="pl-pds">'</span></span><span class="pl-k">:</span> intel.VERBOSE
+    },
+    <span class="pl-s1"><span class="pl-pds">'</span>logfile<span class="pl-pds">'</span></span><span class="pl-k">:</span> {
+      <span class="pl-s1"><span class="pl-pds">'</span>class<span class="pl-pds">'</span></span><span class="pl-k">:</span> intel.handlers.File,
+      <span class="pl-s1"><span class="pl-pds">'</span>level<span class="pl-pds">'</span></span><span class="pl-k">:</span> intel.WARN,
+      <span class="pl-s1"><span class="pl-pds">'</span>file<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>/var/log/report.log<span class="pl-pds">'</span></span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>formatter<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>details<span class="pl-pds">'</span></span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>filters<span class="pl-pds">'</span></span><span class="pl-k">:</span> [<span class="pl-s1"><span class="pl-pds">'</span>db<span class="pl-pds">'</span></span>]
+    }
+  },
+  loggers<span class="pl-k">:</span> {
+    <span class="pl-s1"><span class="pl-pds">'</span>patrol<span class="pl-pds">'</span></span><span class="pl-k">:</span> {
+      <span class="pl-s1"><span class="pl-pds">'</span>handlers<span class="pl-pds">'</span></span><span class="pl-k">:</span> [<span class="pl-s1"><span class="pl-pds">'</span>terminal<span class="pl-pds">'</span></span>],
+      <span class="pl-s1"><span class="pl-pds">'</span>level<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>INFO<span class="pl-pds">'</span></span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>handleExceptions<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>exitOnError<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">false</span>,
+      <span class="pl-s1"><span class="pl-pds">'</span>propagate<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-c1">false</span>
+    },
+    <span class="pl-s1"><span class="pl-pds">'</span>patrol.db<span class="pl-pds">'</span></span><span class="pl-k">:</span> {
+      <span class="pl-s1"><span class="pl-pds">'</span>handlers<span class="pl-pds">'</span></span><span class="pl-k">:</span> [<span class="pl-s1"><span class="pl-pds">'</span>logfile<span class="pl-pds">'</span></span>],
+      <span class="pl-s1"><span class="pl-pds">'</span>level<span class="pl-pds">'</span></span><span class="pl-k">:</span> intel.ERROR
+    },
+    <span class="pl-s1"><span class="pl-pds">'</span>patrol.node_modules.express<span class="pl-pds">'</span></span><span class="pl-k">:</span> { <span class="pl-c">// huh what? see below :)</span>
+      <span class="pl-s1"><span class="pl-pds">'</span>handlers<span class="pl-pds">'</span></span><span class="pl-k">:</span> [<span class="pl-s1"><span class="pl-pds">'</span>logfile<span class="pl-pds">'</span></span>],
+      <span class="pl-s1"><span class="pl-pds">'</span>level<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>WARN<span class="pl-pds">'</span></span>
+    }
+  }
+});</pre></div>
 
 <p>We set up 2 handlers, one <a href="#consolehandler">Console</a> with a level of <code>VERBOSE</code> and a simple format, and one <a href="#filehandler">File</a> with a level of <code>WARN</code> and a detailed format. We then set up a few options on loggers. Not all loggers need to be defined here, as child loggers will inherit from their parents. So, the root logger that we'll use in this application is <code>patrol</code>. It will send all messages that are <code>INFO</code> and greater to the the terminal. We also specifically want database errors to be logged to the our log file. And, there's a logger for express? What's that all about? See the <a href="#console">intel.console</a> section.</p>
 
 <p>Config also accepts JSON, simply put a require path in any <code>class</code> properties.</p>
 
-<div class="highlight highlight-js"><pre><span class="c1">// logging.json</span>
-<span class="p">{</span>
-  <span class="s2">"handlers"</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">"foo"</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s2">"class"</span><span class="o">:</span> <span class="s2">"intel/handlers/console"</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="c1">// ...</span>
-<span class="p">}</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-c">// logging.json</span>
+{
+  <span class="pl-s1"><span class="pl-pds">"</span>handlers<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+    <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+      <span class="pl-s1"><span class="pl-pds">"</span>class<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>intel/handlers/console<span class="pl-pds">"</span></span>
+    }
+  }
+  <span class="pl-c">// ...</span>
+}</pre></div>
 
-<div class="highlight highlight-js"><pre><span class="nx">intel</span><span class="p">.</span><span class="nx">config</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'./logging.json'</span><span class="p">));</span>
-</pre></div>
+<div class="highlight highlight-js"><pre>intel.config(<span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>./logging.json<span class="pl-pds">'</span></span>));</pre></div>
 
 <p>Passing a <code>handlers</code> option to <code>intel.config</code> will remove the default ROOT console handler, unless you've previously manually assigned handlers to <code>intel</code>.</p>
 
 <h2>
-<a name="console" class="anchor" href="#console"><span class="octicon octicon-link"></span></a>console</h2>
+<a id="console" class="anchor" href="#console" aria-hidden="true"><span class="octicon octicon-link"></span></a>console</h2>
 
-<div class="highlight highlight-js"><pre><span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">console</span><span class="p">();</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>).<span class="pl-en">console</span>();</pre></div>
 
 <p>So, a problem with logging libraries is trying to get them to work with 3rd party modules. Many libraries may benefit from logging when certain things occur, but can't really pick a logging library, since that sort of choice should be up to the app developer. The only real options they have are to not log anything, or to use <code>console.log</code>. So really, they should <a href="http://seanmonstar.com/post/56448644049/console-log-all-the-things">console.log() all the the things</a>, and <code>intel</code> can work just fine with that.</p>
 
@@ -497,31 +508,31 @@ and optionally exiting afterwards.</p>
 <strong>ignore</strong> - Array of strings of log names that should be ignored and use standard <code>console</code> methods. Ex: <code>['intel.node_modules.mocha']</code>
 </li>
 <li>
-<strong>debug</strong> - boolean or String. <code>true</code> will set <code>process.env.DEBUG='*'</code><code>. Otherwise, String is used, ex:</code>'request,express'`</li>
-</ul><div class="highlight highlight-js"><pre><span class="c1">// file: patrol/index.js</span>
-<span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">console</span><span class="p">();</span> <span class="c1">// root is '/path/to/patrol'</span>
-</pre></div>
+<strong>debug</strong> - boolean or String. <code>true</code> will set <code>process.env.DEBUG='*'</code>. Otherwise, String is used, ex: <code>'request,express'</code>
+</li>
+</ul>
+
+<div class="highlight highlight-js"><pre><span class="pl-c">// file: patrol/index.js</span>
+<span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>).<span class="pl-en">console</span>(); <span class="pl-c">// root is '/path/to/patrol'</span></pre></div>
 
 <p>If you override the console in a file deep inside some directories, you can manually set the root as an option:</p>
 
-<div class="highlight highlight-js"><pre><span class="c1">// file: patrol/lib/utils/log.js</span>
-<span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">console</span><span class="p">({</span> <span class="nx">root</span><span class="o">:</span> <span class="s1">'/path/to/patrol'</span> <span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-js"><pre><span class="pl-c">// file: patrol/lib/utils/log.js</span>
+<span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>).<span class="pl-en">console</span>({ root<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>/path/to/patrol<span class="pl-pds">'</span></span> });</pre></div>
 
 <h3>
-<a name="consoledebug" class="anchor" href="#consoledebug"><span class="octicon octicon-link"></span></a>console.debug</h3>
+<a id="consoledebug" class="anchor" href="#consoledebug" aria-hidden="true"><span class="octicon octicon-link"></span></a>console.debug</h3>
 
 <p>The <code>debug</code> option for <code>intel.console()</code>, huh? Yea, so many libraries use the <code>debug()</code> library to handle their internal logging needs. It works by not outputing any logs unless you opt-in with an environment variable. In many case, it would make sense to just leave this off, to keep the noise down. However, you can use this option to turn on a libraries logging, and route it into properly named loggers. Since the <code>debug</code> module checks <code>process.env</code> at require time, you will need to use this option firstmost, before requiring anything else that may require <code>debug</code>.</p>
 
 <p>Example</p>
 
-<div class="highlight highlight-js"><pre><span class="c1">// file: patrol/index.js</span>
-<span class="nx">require</span><span class="p">(</span><span class="s1">'intel'</span><span class="p">).</span><span class="nx">console</span><span class="p">({</span> <span class="nx">debug</span><span class="o">:</span> <span class="s1">'request,express'</span> <span class="p">});</span>
-<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'request'</span><span class="p">);</span>
+<div class="highlight highlight-js"><pre><span class="pl-c">// file: patrol/index.js</span>
+<span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>intel<span class="pl-pds">'</span></span>).<span class="pl-en">console</span>({ debug<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>request,express<span class="pl-pds">'</span></span> });
+<span class="pl-s">var</span> request <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>request<span class="pl-pds">'</span></span>);
 
-<span class="nx">request</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://example.domain'</span><span class="p">);</span>
-<span class="c1">// log messages will appear from "patrol.node_modules.request"</span>
-</pre></div>
+request.get(<span class="pl-s1"><span class="pl-pds">'</span>http://example.domain<span class="pl-pds">'</span></span>);
+<span class="pl-c">// log messages will appear from "patrol.node_modules.request"</span></pre></div>
         </section>
 
         <aside id="sidebar">
