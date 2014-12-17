@@ -126,10 +126,10 @@ module.exports = {
         var spyA = spy();
         a.addHandler({ handle: spyA, level: 0 });
 
-        a.info('foo', { bar: 'baz' }, null);
+        a.info('foo', { bar: 'baz' });
 
         assert.equal(spyA.getCallCount(), 1);
-        assert.equal(spyA.getLastArgs()[0].message, 'foo {"bar":"baz"} null');
+        assert.equal(spyA.getLastArgs()[0].message, 'foo {"bar":"baz"}');
       },
       'should be usable without alias': function() {
         var n = unique();
@@ -157,7 +157,7 @@ module.exports = {
         a.debug('bar');
         assert.equal(spyA.getCallCount(), 0);
 
-        a.info('foobar');
+        a.info('foobar', 'baz', null);
         assert.equal(spyA.getCallCount(), 1);
       },
       'should propagate': function() {
@@ -274,16 +274,18 @@ module.exports = {
     },
 
     'handleExceptions': {
-      'should catch uncaughtErrors': function() {
+      'should catch uncaughtErrors': function(done) {
         var logger = new Logger(unique());
         var p = logger._process = new EventEmitter();
+        p.exit = spy();
 
         var handlerSpy = spy();
         logger.addHandler({ handle: handlerSpy, level: 0 });
         logger.propagate = false;
 
         logger.handleExceptions();
-        logger._exit = spy();
+        logger._process = p;
+        logger._exitTimeout = 10;
         p.emit('uncaughtException', new Error("catch me if you can"));
 
         assert.equal(handlerSpy.getCallCount(), 1);
@@ -291,7 +293,11 @@ module.exports = {
         assert.equal(record.level, Logger.CRITICAL);
         assert.equal(record.message, 'Error: catch me if you can');
         assert.equal(record.uncaughtException, true);
-        assert.equal(logger._exit.getCallCount(), 1);
+
+        setTimeout(function() {
+          assert.equal(p.exit.getCallCount(), 1);
+          done();
+        }, 50);
       },
       'should not exit if exitOnError is false': function() {
         var logger = new Logger(unique());

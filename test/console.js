@@ -20,6 +20,13 @@ function mockLog() {
   lastMock = arguments;
 }
 
+var prevStdErr = process.stderr.write;
+var lastStdErr;
+function mockStdErr() {
+  lastStdErr = arguments;
+  return true;
+}
+
 function clearDebug() {
   Object.keys(require.cache).filter(function(key) {
     return key.indexOf('debug') !== -1;
@@ -99,6 +106,7 @@ module.exports = {
     },
     'beforeEach': function() {
       delete spy._lastRecord;
+      process.stderr.write = mockStdErr;
     },
     'with true sets debug to star': function() {
       intel.console({ debug: true });
@@ -173,7 +181,7 @@ module.exports = {
       assert.equal(spy._lastRecord.name, 'test.util');
     },
     'intercepts debug() messages': function() {
-      intel.console({ debug: 'recon' });
+      intel.console({ debug: 'recon,escapes', ignore: 'test.console.escapes' });
       clearDebug();
 
       var debug = require('debug')('recon');
@@ -185,10 +193,17 @@ module.exports = {
       assert.equal(spy._lastRecord.name, 'test.console.recon');
       assert.equal(spy._lastRecord.level, intel.DEBUG);
 
+      var escapes = require('debug')('escapes');
+      assert(escapes.enabled);
+      escapes('fugitive');
+      assert(lastStdErr[0].indexOf('fugitive') !== -1);
+
+
     },
     'afterEach': function() {
       process.env.DEBUG_COLORS = "";
       intel.console.restore();
+      process.stderr.write = prevStdErr;
     },
     'after': function() {
       intel.setLevel(intel.DEBUG);
