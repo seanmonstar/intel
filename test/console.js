@@ -188,9 +188,9 @@ module.exports = {
     },
     'afterEach': function() {
       process.env.DEBUG_COLORS = "";
+      intel.console.restore();
     },
     'after': function() {
-      intel.console.restore();
       intel.setLevel(intel.DEBUG);
       console.log = prevLog;
       intel._handlers = [];
