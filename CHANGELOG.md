@@ -1,6 +1,6 @@
 # intel ChangeLog
 
-## Current dev
+## v1.0.0 - 2014-12-17
 
 - added `intel.console({ logger: str })` to specify a parent logger
 - added `record.v` to indicate log record format
@@ -15,7 +15,7 @@
 - changed JSON format of `Record` to not include interpolated `message`, since it already contains `args`
 - changed Record.timestamp to use Date.now() instead of new Date()
 - removed `Promise`s being returned from log methods. Not useful, slows it down.
-- removed `Rotating` handler from core. Use `intel-rotating` on npm.
+- removed `Rotating` handler from core. Use [logrotate-stream](https://npmjs.org/package/logrotate-stream) or similar.
 - performance **HUGE BOOST ACROSS THE BOARD**
 
 ## v0.5.2 - 2014-02-19

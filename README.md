@@ -13,6 +13,7 @@ An abbreviation of intelligence. In this case, the acquirement of information.
 - hierarchial named loggers
 - powerful config
 - console injection works with all libraries
+- fast where possible
 
 ## Table of Contents
 
@@ -27,7 +28,6 @@ An abbreviation of intelligence. In this case, the acquirement of information.
   - [ConsoleHandler](#consolehandler)
   - [StreamHandler](#streamhandler)
   - [FileHandler](#filehandler)
-  - [RotatingFileHandler](#rotatingfilehandler)
   - [NullHandler](#nullhandler)
   - [Creating a Custom Handler](#creating-a-custom-handler)
 - [Filters](#filters)
@@ -189,19 +189,6 @@ The File handler will write messages to a file on disk. It extends the [Stream](
 
 As a shortcut, you can pass the `file` String directly to the constructor, and all other options will just use default values.
 
-### RotatingFileHandler
-
-```js
-new intel.handlers.Rotating(options);
-```
-
-The Rotating handler extends the [File](#filehandler) handler, making sure log files don't go over a specified size.
-
-- **maxSize** - A number of bytes to restrict the size of log files.
-- **maxFiles** - A number of log files to create after the size restriction is met.
-
-As files reach the max size, the files will get moved to a the same name, with a number attached to the end. So, `intel.log` will become `intel.log.1`, and `intel.log.1` would move to `intel.log.2`, up to the maxFiles number.
-
 ### NullHandler
 
 ```js
@@ -225,14 +212,11 @@ function CustomHandler(options) {
 // don't forget to inhert from Handler (or a subclass, like Stream)
 util.inherits(CustomHandler, intel.Handler);
 
-CustomHandler.prototype.emit = function customEmit(record, callback) {
+CustomHandler.prototype.emit = function customEmit(record) {
   // do whatever you need to with the log record
   // this could be storing it in a db, or sending an email, or sending an HTTP request...
   // if you want the message formatted:
   // str = this.format(record);
-
-  // The callback should be called indicating whether there was an error or not.
-  callback(err);
 }
 ```
 
