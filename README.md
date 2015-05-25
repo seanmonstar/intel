@@ -247,7 +247,7 @@ new intel.Formatter(formatOrOptions);
 A `Formatter` is used by a [`Handler`](#handlers) to format the message before being sent out. An useful example is wanting logs that go to the [Console](#consolehandler) to be terse and easy to read, but messages sent to a [File](#filehandler) to include a lot more detail.
 
 - **format**: A format string that will be used with `printf`. Default: `%(message)s`
-- **datefmt**: A string to be used to format the date. Will replace instances of `%(date)s` in the `format` string. Default: `%Y-%m-%d %H:%M-%S`
+- **datefmt**: A string to be used to format the date. Will replace instances of `%(date)s` in the `format` string. Default: `%Y-%m-%d %H:%M-%S`. See [samsonjs/strftime](https://github.com/samsonjs/strftime#supported-specifiers) for supported specifiers.
 - **strip**: A boolean for whether to strip [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors_and_Styles) from the `message` and `args`. Default: `false`
 - **colorize**: A boolean for whether to colorize the `levelname`. Disabled when `strip` is used. Default: `false`
 
