@@ -1,5 +1,10 @@
 # intel ChangeLog
 
+## v1.0.1 - 2015-08-19
+
+- fixed Filter bug when more than 1 filter was added
+- fixed debug() interception when using intel.console()
+
 ## v1.0.0 - 2014-12-17
 
 - added `intel.console({ logger: str })` to specify a parent logger
