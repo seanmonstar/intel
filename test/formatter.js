@@ -137,7 +137,7 @@ module.exports = {
           };
 
           assert.equal(formatter.format(record),
-              '\u001b[31m\u001b[1mERROR\u001b[22m\u001b[39m: foo');
+              '\u001b[1m\u001b[31mERROR\u001b[39m\u001b[22m: foo');
         }
       },
       'strip': {
