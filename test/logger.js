@@ -153,6 +153,7 @@ module.exports = {
         a.addHandler({ handle: spyA, level: 0 });
 
         a.addFilter(new intel.Filter(/^foo/g));
+        a.addFilter(new intel.Filter(/^foo/g));
 
         a.debug('bar');
         assert.equal(spyA.getCallCount(), 0);
