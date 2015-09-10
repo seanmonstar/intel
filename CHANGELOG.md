@@ -1,5 +1,9 @@
 # intel ChangeLog
 
+## v1.0.2 - 2015-09-10
+
+- fixed formatting of RegExps by default
+
 ## v1.0.1 - 2015-08-19
 
 - fixed Filter bug when more than 1 filter was added
