@@ -62,6 +62,10 @@ module.exports = {
         printf('%s =', 'abc', 3, false, { foo: 'bar' }),
         'abc = 3 false {"foo":"bar"}'
       );
+    },
+    'should default regexps as strings': function() {
+      assert.equal(printf('%?', /ba[rz]/g), '/ba[rz]/g');
+      assert.equal(printf('%?', new RegExp('ba[rz]', 'gi')), '/ba[rz]/gi');
     }
   }
 };

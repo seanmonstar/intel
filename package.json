@@ -12,7 +12,7 @@
   "devDependencies": {
     "blanket": "~1.1.6",
     "bluebird": "^2.9.0",
-    "debug": "~2.1.0",
+    "debug": "~2.2.0",
     "insist": "0.x",
     "jshint": "2.x",
     "matcha": "0.x",
