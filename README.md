@@ -169,7 +169,7 @@ The Console handler outputs messages to the `stdio`, just like `console.log()` w
 new intel.handlers.Stream(streamOrOptions);
 ```
 
-The Stream handler can take any writable stream, and will write messages to the stream. The [Console](#consolehandler) handler essentially uses 2 Stream handlers internally pointed at `process.stdout` and `process.stdin`.
+The Stream handler can take any writable stream, and will write messages to the stream. The [Console](#consolehandler) handler essentially uses 2 Stream handlers internally pointed at `process.stdout` and `process.stderr`.
 
 - **stream**: Any [WritableStream](http://nodejs.org/api/stream.html#stream_class_stream_writable)
 - Plus options from [Handler](#handlers)
