@@ -1,8 +1,8 @@
 # intel
 
-[![Build Status](https://travis-ci.org/seanmonstar/intel.png?branch=master)](https://travis-ci.org/seanmonstar/intel)
+[![Build Status](https://travis-ci.org/seanmonstar/intel.svg?branch=master)](https://travis-ci.org/seanmonstar/intel)
 ![Coverage Status](./coverage.png)
-[![NPM version](https://badge.fury.io/js/intel.png)](http://badge.fury.io/js/intel)
+[![NPM version](https://badge.fury.io/js/intel.svg)](http://badge.fury.io/js/intel)
 
 An abbreviation of intelligence. In this case, the acquirement of information.
 
@@ -442,4 +442,3 @@ var request = require('request');
 request.get('http://example.domain');
 // log messages will appear from "patrol.node_modules.request"
 ```
-
