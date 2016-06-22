@@ -7,20 +7,20 @@
     "dbug": "~0.4.2",
     "stack-trace": "~0.0.9",
     "strftime": "~0.9.2",
-    "symbol": "~0.2.0",
+    "symbol": "~0.3.0",
     "utcstring": "~0.1.0"
   },
   "devDependencies": {
     "blanket": "1.1.6",
-    "bluebird": "^2.9.0",
+    "bluebird": "^3.4",
     "debug": "~2.2.0",
-    "insist": "0.x",
+    "insist": "^1.0",
     "jshint": "2.x",
     "matcha": "0.x",
     "mocha": "2.x",
     "mocha-text-cov": "~0.1.0",
     "walk": "2.x",
-    "winston": "^1.0.1"
+    "winston": "^2.0"
   },
   "readmeFilename": "README.md",
   "description": "I need more intel.",
