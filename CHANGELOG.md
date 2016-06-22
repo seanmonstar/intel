@@ -1,5 +1,9 @@
 # intel ChangeLog
 
+#### v1.1.1 - 2016-06-22
+
+- fixed error message when handler is undefined in `intel.config()`
+
 ### v1.1.0 - 2015-12-14
 
 - added `basename` option to `intel.console()`
