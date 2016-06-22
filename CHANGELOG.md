@@ -1,10 +1,14 @@
 # intel ChangeLog
 
-## v1.0.2 - 2015-09-10
+### v1.1.0 - 2015-12-14
+
+- added `basename` option to `intel.console()`
+
+#### v1.0.2 - 2015-09-10
 
 - fixed formatting of RegExps by default
 
-## v1.0.1 - 2015-08-19
+#### v1.0.1 - 2015-08-19
 
 - fixed Filter bug when more than 1 filter was added
 - fixed debug() interception when using intel.console()
@@ -27,17 +31,17 @@
 - removed `Rotating` handler from core. Use [logrotate-stream](https://npmjs.org/package/logrotate-stream) or similar.
 - performance **HUGE BOOST ACROSS THE BOARD**
 
-## v0.5.2 - 2014-02-19
+#### v0.5.2 - 2014-02-19
 
 - added `strip` option to Formatter, which will strip all ANSI code
 
-## v0.5.1 - 2014-02-12
+#### v0.5.1 - 2014-02-12
 
 - added bgBlue to TRACE
 - changed uncaught exceptions log level to CRITICAL
 - fixed error if null was passed an argument to Logger.log()
 
-## v0.5.0 - 2014-02-10
+### v0.5.0 - 2014-02-10
 
 - added direct integration with `dbug` module
 - added `Logger.removeAllHandlers()`
@@ -49,16 +53,16 @@
 - changed `intel.console` to remove "lib" from logger names like "connect.lib.session" to be "connect.session"
 - performance improved for `Logger#getEffectiveLevel()`
 
-## v0.4.0 - 2013-12-04
+### v0.4.0 - 2013-12-04
 
 - added intel.console({ debug: 'foo' }) option
 - performance gains
 
-## v0.3.1 - 2013-11-04
+#### v0.3.1 - 2013-11-04
 
 - fixed Rotating handler writing lock (thanks @chopachom)
 
-## v0.3.0 - 2013-10-22
+### v0.3.0 - 2013-10-22
 
 - added intel.handlers.Rotating
 - added ignore options to intel.console()
@@ -71,7 +75,7 @@
 - fixed Console handler from using accepting format options
 - optimizations for common cases, big boost
 
-## v0.2.0 - 2013-10-04
+### v0.2.0 - 2013-10-04
 
 - added Filters for Handlers and Loggers
 - added Handler timeout option
@@ -82,6 +86,6 @@
 - changed internal forEach to faster while loops
 - removed node v0.6 support (it didn't work anyways)
 
-## v0.1.0 - 2013-09-30
+### v0.1.0 - 2013-09-30
 
 - Initial release.
