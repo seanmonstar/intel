@@ -202,6 +202,19 @@ module.exports = {
         assert(obj[0].fileName);
         assert.equal(record.exception, true);
       },
+      'should be with empty stack if NONE err.stack': function(){
+        var a = new Logger(unique());
+        a.propagate = false;
+        var spyA = spy();
+        a.addHandler({ handle: spyA, level: 0 });
+
+        var error = new Error('foo');
+        delete error.stack;
+        a.error(error);
+
+        var record = spyA.getLastArgs()[0];
+        assert.equal(record.stack, undefined);
+      },
       'ALL should receive all levels': function() {
         var a = new Logger(unique());
         a.propagate = false;
