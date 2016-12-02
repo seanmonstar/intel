@@ -1,5 +1,9 @@
 # intel ChangeLog
 
+#### v1.1.2 - 2016-12-02
+
+- fixed error when error does not have a stack property
+
 #### v1.1.1 - 2016-06-22
 
 - fixed error message when handler is undefined in `intel.config()`
