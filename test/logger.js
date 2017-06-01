@@ -288,7 +288,7 @@ module.exports = {
     },
 
     'handleExceptions': {
-      'should catch uncaughtErrors': function(done) {
+      'should catch uncaughtErrors': function() {
         var logger = new Logger(unique());
         var p = logger._process = new EventEmitter();
         p.exit = spy();
@@ -299,7 +299,6 @@ module.exports = {
 
         logger.handleExceptions();
         logger._process = p;
-        logger._exitTimeout = 10;
         p.emit('uncaughtException', new Error("catch me if you can"));
 
         assert.equal(handlerSpy.getCallCount(), 1);
@@ -308,10 +307,7 @@ module.exports = {
         assert.equal(record.message, 'Error: catch me if you can');
         assert.equal(record.uncaughtException, true);
 
-        setTimeout(function() {
-          assert.equal(p.exit.getCallCount(), 1);
-          done();
-        }, 50);
+        assert.equal(p.exit.getCallCount(), 1);
       },
       'should not exit if exitOnError is false': function() {
         var logger = new Logger(unique());
@@ -346,4 +342,3 @@ module.exports = {
     }
   }
 };
-
