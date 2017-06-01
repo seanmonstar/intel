@@ -25,7 +25,7 @@
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "nyc mocha --check-leaks --ui exports -R dot",
+    "test": "nyc mocha --ui exports -R dot",
     "bench": "matcha -I exports"
   },
   "bugs": "https://github.com/seanmonstar/intel/issues",
