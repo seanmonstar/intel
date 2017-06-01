@@ -188,6 +188,17 @@ module.exports = {
         });
       }, /function parameter did not parse as a function$/);
     },
+    'should error if cannot find handler': function() {
+      assert.throws(function() {
+        intel.config({
+          loggers: {
+            'missingHandler': {
+              handlers: ['nope']
+            }
+          }
+        });
+      }, /Handler "nope" is not defined in config$/);
+    },
     'should assign a NullHandler to ROOT if handlers object': function() {
       intel._handlers = [];
       intel.config({
