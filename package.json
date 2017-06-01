@@ -3,7 +3,7 @@
   "version": "1.1.2",
   "license": "MPL-2.0",
   "dependencies": {
-    "chalk": "~1.1.0",
+    "chalk": "^1.1.0",
     "dbug": "~0.4.2",
     "stack-trace": "~0.0.9",
     "strftime": "~0.10.0",
