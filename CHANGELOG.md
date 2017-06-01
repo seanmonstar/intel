@@ -1,5 +1,10 @@
 # intel ChangeLog
 
+### v1.2.0 - 2017-06-01
+
+- changed handleExceptions exitOnError to exit immediately, instead of
+  on a timout.
+
 #### v1.1.2 - 2016-12-02
 
 - fixed error when error does not have a stack property
