@@ -6,19 +6,18 @@
     "chalk": "~1.1.0",
     "dbug": "~0.4.2",
     "stack-trace": "~0.0.9",
-    "strftime": "~0.9.2",
+    "strftime": "~0.10.0",
     "symbol": "~0.3.0",
     "utcstring": "~0.1.0"
   },
   "devDependencies": {
-    "blanket": "1.1.6",
-    "bluebird": "^3.4",
+    "bluebird": "^3.5",
     "debug": "~2.2.0",
     "insist": "^1.0",
     "jshint": "2.x",
     "matcha": "0.x",
-    "mocha": "2.x",
-    "mocha-text-cov": "~0.1.0",
+    "mocha": "3.x",
+    "nyc": "^11.0.1",
     "walk": "2.x",
     "winston": "^2.0"
   },
@@ -26,17 +25,8 @@
   "description": "I need more intel.",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha --check-leaks --ui exports --require blanket -R ../../../test/util/reporter",
+    "test": "nyc mocha --check-leaks --ui exports -R dot",
     "bench": "matcha -I exports"
-  },
-  "config": {
-    "blanket": {
-      "pattern": "lib",
-      "data-cover-never": [
-        "node_modules",
-        "test"
-      ]
-    }
   },
   "bugs": "https://github.com/seanmonstar/intel/issues",
   "homepage": "http://seanmonstar.github.io/intel",
@@ -45,8 +35,7 @@
     "url": "https://github.com/seanmonstar/intel.git"
   },
   "engines": {
-    "node": ">=0.8.0",
-    "npm": ">=1.4.7"
+    "node": ">=4.0.0"
   },
   "keywords": [
     "log",
